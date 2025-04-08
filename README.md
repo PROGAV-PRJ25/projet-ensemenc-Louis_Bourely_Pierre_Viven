@@ -4,6 +4,5 @@
 test 08/04
 
 
-test pierre allez la avec la b
-onne branche
-it add -A
+test pierre
+sans probeleme avec template un chat la
