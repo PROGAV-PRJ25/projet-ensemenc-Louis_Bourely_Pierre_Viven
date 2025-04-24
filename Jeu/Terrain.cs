@@ -1,35 +1,35 @@
 public abstract class Terrain
 {
-    public double[] Temperature{get; set;}
-    public double[]  Humidite {get; set;}
-    public double[] Pluie {get; set;}
-    public double[] Ensoleillement {get; set;}
+    public double[] Temperature { get; set; }
+    public double[] Humidite { get; set; }
+    public double[] Pluie { get; set; }
+    public double[] Ensoleillement { get; set; }
 
-    public Plante[,] Potager {get; set;}
-    public int ColonnesDispos {get; set;}
+    public Plante[,] Potager { get; set; }
+    public int ColonnesDispos { get; set; }
 
     public Terrain(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement)
     {
-        Temperature=temperature;
-        Humidite=humidite;
-        Pluie=pluie;
-        Ensoleillement=ensoleillement;
+        Temperature = temperature;
+        Humidite = humidite;
+        Pluie = pluie;
+        Ensoleillement = ensoleillement;
 
-        ColonnesDispos=10;
-        Potager =  new Plante[10,20]; 
-        for(int i=0; i<Potager.GetLength(0);i++)
+        ColonnesDispos = 10;
+        Potager = new Plante[10, 20];
+        for (int i = 0; i < Potager.GetLength(0); i++)
         {
-            for(int j=0; j<Potager.GetLength(1);j++)
+            for (int j = 0; j < Potager.GetLength(1); j++)
             {
-                if(j<ColonnesDispos)
+                if (j < ColonnesDispos)
                 {
-                    Potager[i,j]=new SolSimple("Vierge");
+                    Potager[i, j] = new SolSimple("Vierge");
                 }
                 else
                 {
-                    Potager[i,j]=new SolSimple("Friche");
+                    Potager[i, j] = new SolSimple("Friche");
                 }
-                
+
             }
         }
     }
@@ -43,132 +43,161 @@ public abstract class Terrain
 
     public void AgrandirPotager(int nombreColonne)
     {
-        ColonnesDispos+=nombreColonne;
-        for(int i=0; i<Potager.GetLength(0);i++)
+        ColonnesDispos += nombreColonne;
+        for (int i = 0; i < Potager.GetLength(0); i++)
         {
-            for(int j=0; j<Potager.GetLength(1);j++)
+            for (int j = 0; j < Potager.GetLength(1); j++)
             {
-                if(Potager[i,j].Affichage=='%' && j<ColonnesDispos)
+                if (Potager[i, j].Affichage == '%' && j < ColonnesDispos)
                 {
-                    Potager[i,j]=new SolSimple("Vierge");
-                }                
+                    Potager[i, j] = new SolSimple("Vierge");
+                }
             }
         }
     }
 
     public double RecupererTemprature(int saison)
     {
-        return Temperature[saison]*GenererNombreAleatoire(0.8,1.2,1);
+        return Temperature[saison] * GenererNombreAleatoire(0.8, 1.2, 1);
     }
 
 
     public double RecupererPluie(int saison)
     {
-        return Pluie[saison]*GenererNombreAleatoire(0.8,1.2,1);
+        return Pluie[saison] * GenererNombreAleatoire(0.8, 1.2, 1);
     }
 
 
-    public void Planter(Plante plante)
+    public void Planter(Plante plante, int a, int b)
     {
-        for(int i=0; i<Potager.GetLength(0);i++)
+        if (Potager[a, b].Affichage == '•')
         {
-            for(int j=0; j<Potager.GetLength(1);j++)
-            {
-                if(Potager[i,j].Affichage=='•')
-                {
-                    Potager[i,j]=plante;
-                }                
-            }
+            Potager[a, b] = plante;
         }
+        else
+        {
+            Console.WriteLine("Il n'est pas possible de planter à cette condition");
+        }
+
     }
 
     public int[] Recolter()
     {
-        int[] recolte = new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-        for(int i=0; i<Potager.GetLength(0);i++)
+        int[] recolte = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        for (int i = 0; i < Potager.GetLength(0); i++)
         {
-            for(int j=0; j<Potager.GetLength(1);j++)
+            for (int j = 0; j < Potager.GetLength(1); j++)
             {
-                switch(Potager[i,j].Affichage) 
+                switch (Potager[i, j].Affichage)
                 {
                     case 'A':
-                        recolte[0]+=1;
-                        Potager[i,j]=new SolSimple("Vierge");
+                        recolte[0] += 1;
+                        Potager[i, j] = new SolSimple("Vierge");
                         break;
                     case 'B':
-                        recolte[1]+=1;
-                        Potager[i,j]=new SolSimple("Vierge");
+                        recolte[1] += 1;
+                        Potager[i, j] = new SolSimple("Vierge");
                         break;
                     case 'C':
-                        recolte[2]+=1;
-                        Potager[i,j]=new SolSimple("Vierge");
+                        recolte[2] += 1;
+                        Potager[i, j] = new SolSimple("Vierge");
                         break;
                     case 'D':
-                        recolte[3]+=1;
-                        Potager[i,j]=new SolSimple("Vierge");
+                        recolte[3] += 1;
+                        Potager[i, j] = new SolSimple("Vierge");
                         break;
                     case 'E':
-                        recolte[4]+=1;
-                        Potager[i,j]=new SolSimple("Vierge");
+                        recolte[4] += 1;
+                        Potager[i, j] = new SolSimple("Vierge");
                         break;
                     case 'F':
-                        recolte[5]+=1;
-                        Potager[i,j]=new SolSimple("Vierge");
+                        recolte[5] += 1;
+                        Potager[i, j] = new SolSimple("Vierge");
                         break;
                     case 'G':
-                        recolte[6]+=1;
-                        Potager[i,j]=new SolSimple("Vierge");
+                        recolte[6] += 1;
+                        Potager[i, j] = new SolSimple("Vierge");
                         break;
                     case 'H':
-                        recolte[7]+=1;
-                        Potager[i,j]=new SolSimple("Vierge");
+                        recolte[7] += 1;
+                        Potager[i, j] = new SolSimple("Vierge");
                         break;
                     case 'I':
-                        recolte[8]+=1;
-                        Potager[i,j]=new SolSimple("Vierge");
+                        recolte[8] += 1;
+                        Potager[i, j] = new SolSimple("Vierge");
                         break;
                     case 'J':
-                        recolte[9]+=1;
-                        Potager[i,j]=new SolSimple("Vierge");
+                        recolte[9] += 1;
+                        Potager[i, j] = new SolSimple("Vierge");
                         break;
                     case 'M':
-                        recolte[10]+=1;
-                        Potager[i,j]=new SolSimple("Vierge");
+                        recolte[10] += 1;
+                        Potager[i, j] = new SolSimple("Vierge");
                         break;
                     case 'N':
-                        recolte[11]+=1;
-                        Potager[i,j]=new SolSimple("Vierge");
+                        recolte[11] += 1;
+                        Potager[i, j] = new SolSimple("Vierge");
                         break;
                     case 'P':
-                        recolte[12]+=1;
-                        Potager[i,j]=new SolSimple("Vierge");
+                        recolte[12] += 1;
+                        Potager[i, j] = new SolSimple("Vierge");
                         break;
                     case 'Q':
-                        recolte[13]+=1;
-                        Potager[i,j]=new SolSimple("Vierge");
+                        recolte[13] += 1;
+                        Potager[i, j] = new SolSimple("Vierge");
                         break;
                     case 'Z':
-                        recolte[14]+=1;
-                        Potager[i,j]=new SolSimple("Vierge");
+                        recolte[14] += 1;
+                        Potager[i, j] = new SolSimple("Vierge");
                         break;
                     default:
                         break;
-                }            
+                }
             }
         }
         return recolte;
+    }
+    public void DetruirePlante(int a, int b)
+    {
+
     }
 
 }
 
 
 
- public class Plaines : Terrain
- {
-    public Plaines(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement) : base(temperature, humidite, pluie, ensoleillement)
+public class TerrainSimple : Terrain
+{
+    public TerrainSimple(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement) : base(temperature, humidite, pluie, ensoleillement)
     {
+
     }
 
+}
+public class TerrainMiné : TerrainSimple
+{
+    public TerrainMiné(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement) : base(temperature, humidite, pluie, ensoleillement)
+    {
 
- }
+    }
+    public void VerifTerrain()
+    {
+        for (int i = 0; i < Potager.GetLength(0); i++)
+        {
+            for (int j = 0; j < Potager.GetLength(1); j++)
+            {
+                Random rng = new Random();
+                int chance = rng.Next(0, 256);
+                if (chance==13)
+                {
+                    Potager[i, j] = new SolSimple("Friche");
+                }
+            }
+        }
+    }
+}
+// public class TerrainAJachère : TerrainSimple
+// {
+
+// }
 

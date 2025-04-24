@@ -54,4 +54,18 @@ public class PlanteSimple : Plante
         PrixVente=prixVente;
         Croissance=croissance;
     }
+   
+     public void TourDeJeu()
+    {
+        // for (int i=0; i<Terrain.Potager.GetLength(0);i++)
+        // {
+        //     for(int j=0; j<Terrain.Potager.GetLength(1);j++)
+            {
+                //VerifCroissance()
+                //VerifEtat(i,j)
+
+            }
+            // }
+    }
+        
 }
