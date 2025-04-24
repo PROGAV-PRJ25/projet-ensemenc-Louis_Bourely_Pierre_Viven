@@ -1,7 +1,7 @@
 public class Partie
 {
     public string Nom {get; set;}
-    public int Difficulte{get; set;}
+    //public int Difficulte{get; set;}
     public double VerdaMoula {get; set;}
     public int[] ListePlantes {get; set;}
     public int[] ListeSemis {get; set;}
@@ -9,10 +9,10 @@ public class Partie
     //public Terrain[] ListeTerrain {get; set;}
     public int Semaine {get; set;}
 
-    public Partie(string nom, int difficulte)
+    public Partie(string nom)      //ajouter difficulte
     {
         Nom=nom;
-        Difficulte=difficulte;
+        //Difficulte=difficulte;
         Semaine=1;
         ListePlantes =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
         ListeSemis =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
