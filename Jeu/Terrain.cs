@@ -198,11 +198,18 @@ public class TerrainMiné : TerrainSimple
 }
 public class TerrainAJachère : TerrainSimple
 {
-    public int?[,] Jachere;
+    public int[,] Jachere;
 
     public TerrainAJachère(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement) : base(temperature, humidite, pluie, ensoleillement)
     {
-        DemarrerJachère();
+        Jachere= new int[Potager.GetLength(0),Potager.GetLength(1)];
+        for (int i = 0; i < Potager.GetLength(0); i++)
+        {
+            for (int j = 0; j < Potager.GetLength(1); j++)
+            {
+                Jachere[i, j] = 0;
+            }
+        }
     }
     public void DemarrerJachère()
     {
