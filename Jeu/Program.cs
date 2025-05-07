@@ -1,6 +1,6 @@
 ﻿int largeurConsole = Console.WindowWidth;
 int hauteurConsole = Console.WindowHeight;
-
+Console.Clear();
 while(largeurConsole <160 || hauteurConsole<40)
 {
     largeurConsole = Console.WindowWidth;
@@ -8,9 +8,8 @@ while(largeurConsole <160 || hauteurConsole<40)
     Console.Clear();
     if(largeurConsole <160 || hauteurConsole<40)
     {
-        Console.WriteLine($"Taille de votre console : {largeurConsole} x {hauteurConsole}");
-        Console.WriteLine($"Pour une expérience de jeu optimale veuillez ajuster la taille de votre console pour une taille de minimum 160 x 40");
-        Console.WriteLine($"\nTapez 'ENTRÉE' quand votre écran est à la bonne taille.");
+        Console.WriteLine($"Pour une expérience de jeu optimale veuillez ajuster la taille de votre console pour une taille de minimum 160 x 40 \n(vous pouvez utiliser la flèche à gauche de la croix de votre console: Maximse Panel Size)");
+        Console.WriteLine($"\nTapez 'ENTRÉE' quand votre écran est à la bonne taille ({largeurConsole} x {hauteurConsole} actuellement)");
         while(Console.ReadKey().Key!=ConsoleKey.Enter)
         {
         }
@@ -22,24 +21,29 @@ while(largeurConsole <160 || hauteurConsole<40)
 bool jeu=true;
 while(jeu)
 {
-    Console.WriteLine("Pour créer une nouvelle partie tapez N");
-    Console.WriteLine("Pour charger une partie tapez C");
-    Console.WriteLine("Pour quitter tapez Q");
+    Console.Clear();
+    Console.WriteLine("Pour créer une nouvelle partie appuyez sur 'N' ");
+    Console.WriteLine("Pour charger une partie sauvegardée appuyez sur 'S' ");
+    Console.WriteLine("Pour quitter tapez Q ");
 
     switch(Console.ReadKey().Key)
     {
         case ConsoleKey.N:
-        Console.Write("Tapez le nom de votre nouveau monde : ");
+            Console.Clear();
+            Console.Write("Tapez le nom de votre nouveau monde : ");
             string nom=Console.ReadLine()!;
             GestionJeu partieEnCours = new GestionJeu(nom);
             partieEnCours.Jouer();
             break;
-        case ConsoleKey.C:
+        case ConsoleKey.S:
+            Console.Clear();
+            Console.Write("Tapez le nom de votre sauvegarde  : ");
             string partieSauvegarde=Console.ReadLine()!;
-            //chercher la sauvegarde
+            Console.WriteLine("");
+            Console.WriteLine($"recherche de {partieSauvegarde}");
+            //recherche sauvegarde
             break;
         case ConsoleKey.Q:
-            Console.WriteLine("q");
             jeu=false;
             break;
         default :
