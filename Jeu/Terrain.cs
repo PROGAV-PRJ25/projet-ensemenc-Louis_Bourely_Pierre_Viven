@@ -159,7 +159,7 @@ public abstract class Terrain
     }
     public void DetruirePlante(int a, int b)
     {
-
+        Potager[a, b].Affichage = '/';
     }
 
 }
@@ -188,7 +188,7 @@ public class TerrainMiné : TerrainSimple
             {
                 Random rng = new Random();
                 int chance = rng.Next(0, 256);
-                if (chance==13)
+                if (chance == 13)
                 {
                     Potager[i, j] = new SolSimple("Friche");
                 }
@@ -196,8 +196,53 @@ public class TerrainMiné : TerrainSimple
         }
     }
 }
-// public class TerrainAJachère : TerrainSimple
-// {
+public class TerrainAJachère : TerrainSimple
+{
+    public int[,] Jachere;
 
-// }
+    public TerrainAJachère(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement) : base(temperature, humidite, pluie, ensoleillement)
+    {
+        Jachere= new int[Potager.GetLength(0),Potager.GetLength(1)];
+        for (int i = 0; i < Potager.GetLength(0); i++)
+        {
+            for (int j = 0; j < Potager.GetLength(1); j++)
+            {
+                Jachere[i, j] = 0;
+            }
+        }
+    }
+    public void DemarrerJachère()
+    {
+        for (int i = 0; i < Potager.GetLength(0); i++)
+        {
+            for (int j = 0; j < Potager.GetLength(1); j++)
+            {
+                Jachere[i, j] = 0;
+            }
+        }
+    }
+    public void VerifTerrain()
+    {
+
+        for (int i = 0; i < Potager.GetLength(0); i++)
+        {
+            for (int j = 0; j < Potager.GetLength(1); j++)
+            {
+                if (Potager[i, j].Affichage == '/')
+                {
+                    Potager[i, j] = new SolSimple("Jachère");
+                    Jachere[i, j] = 5;
+                }
+                if (Jachere[i, j] == 0)
+                {
+                    Potager[i, j] = new SolSimple("Laboure");
+                }
+                if (Jachere[i, j] != 5)
+                {
+                    Jachere[i, j]--;
+                }
+            }
+        }
+    }
+}
 

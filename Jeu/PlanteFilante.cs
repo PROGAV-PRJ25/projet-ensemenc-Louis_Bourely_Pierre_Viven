@@ -12,7 +12,7 @@ public class PlanteFilante : PlanteSimple
         Extension = extension;
     }
 
-    public void Etendre(int i, int j)
+    public void Etendre(Plante PlanteFilante, int i, int j)
     {
         // if ((i != 0) && (Terrain.Potager[i - 1, j].Affichage == "•"))
         // {
@@ -38,9 +38,25 @@ public class PlanteFilante : PlanteSimple
         int aleatoire = random.Next(0, 3);
         // if ((Extension == false) && (Croissance == ) && (aleatoire == 1))
         {
-            Etendre(i, j);
+            //Etendre(i, j);
+            Extension = true;
         }
 
 
+    }
+    public PlanteFilante CreerGorhy()
+    {
+        PlanteFilante nouvellePlante = new PlanteFilante('g', "Gorhy", 20, 120, 4);
+        return nouvellePlante;
+    }
+    public PlanteFilante CreerJaunille()
+    {
+        PlanteFilante nouvellePlante = new PlanteFilante('j', "Jaunille", 300, 1800, 4);
+        return nouvellePlante;
+    }
+    public PlanteFilante CreerZolia()
+    {
+        PlanteFilante nouvellePlante = new PlanteFilante('z', "Zolia", 100, 1000, 10);
+        return nouvellePlante;
     }
 }
