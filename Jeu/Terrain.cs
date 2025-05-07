@@ -76,7 +76,7 @@ public abstract class Terrain
         }
         else
         {
-            Console.WriteLine("Il n'est pas possible de planter à cette condition");
+            Console.WriteLine("Il n'est pas possible de planter à cette position");
         }
 
     }
@@ -191,6 +191,7 @@ public class TerrainMiné : TerrainSimple
                 if (chance == 13)
                 {
                     Potager[i, j] = new SolSimple("Friche");
+                    DetruirePlante(i, j);
                 }
             }
         }
@@ -202,17 +203,7 @@ public class TerrainAJachère : TerrainSimple
 
     public TerrainAJachère(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement) : base(temperature, humidite, pluie, ensoleillement)
     {
-        Jachere= new int[Potager.GetLength(0),Potager.GetLength(1)];
-        for (int i = 0; i < Potager.GetLength(0); i++)
-        {
-            for (int j = 0; j < Potager.GetLength(1); j++)
-            {
-                Jachere[i, j] = 0;
-            }
-        }
-    }
-    public void DemarrerJachère()
-    {
+        Jachere = new int[Potager.GetLength(0), Potager.GetLength(1)];
         for (int i = 0; i < Potager.GetLength(0); i++)
         {
             for (int j = 0; j < Potager.GetLength(1); j++)
@@ -223,7 +214,6 @@ public class TerrainAJachère : TerrainSimple
     }
     public void VerifTerrain()
     {
-
         for (int i = 0; i < Potager.GetLength(0); i++)
         {
             for (int j = 0; j < Potager.GetLength(1); j++)
