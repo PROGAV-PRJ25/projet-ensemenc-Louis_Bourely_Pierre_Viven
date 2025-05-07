@@ -125,10 +125,10 @@ public class PlanteSimple : Plante
     public virtual void SimulerCroissance(Terrain terrain)
     {
         int condition = 0;
-        if (terrain.Temperature >= Temperature[0] && terrain.Temperature <= Temperature[1]) condition++;
-        if (terrain.Humidité >= Humidité[0] && terrain.Humidité <= Humidité[1]) condition++;
-        if (terrain.Pluie >= Pluie[0] && terrain.Pluie <= Pluie[1]) condition++;
-        if (terrain.Ensoleillement >= Ensoleillement[0] && terrain.Ensoleillement <= Ensoleillement[1]) condition++;
+       // if (terrain.Temperature >= Temperature[0] && terrain.Temperature <= Temperature[1]) condition++;
+        //if (terrain.Humidité >= Humidité[0] && terrain.Humidité <= Humidité[1]) condition++;
+        //if (terrain.Pluie >= Pluie[0] && terrain.Pluie <= Pluie[1]) condition++;
+        //if (terrain.Ensoleillement >= Ensoleillement[0] && terrain.Ensoleillement <= Ensoleillement[1]) condition++;
 
         bool estTerrainFavori = (TerrainFavori == terrain.Nom);
         if ((estTerrainFavori && condition >= 2) || (!estTerrainFavori && condition >= 3))
