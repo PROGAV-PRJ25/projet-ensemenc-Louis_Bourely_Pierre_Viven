@@ -69,14 +69,6 @@ public class PlanteSimple : Plante
         Pluie = pluie;
         Humidité = humidité;
     }
-
-    public void TourDeJeuPlante(Terrain terrain)
-    {
-        {
-            //SimulerCroissance(terrain)
-        }
-
-    }
     public PlanteSimple CreerErdomania()
     {
         PlanteSimple nouvellePlante = new PlanteSimple('e', "Erdomania", 3, 12, 2, "Comestible", "Plaines Paisibles", [14, 18], [7, 8], [4, 6], [15, 20]);
@@ -122,13 +114,13 @@ public class PlanteSimple : Plante
         PlanteSimple nouvellePlante = new PlanteSimple('i', "Ivoina", 80, 480, 5, "Comestible", "Foret Facetieuse", [9, 18], [4, 6], [3, 4], [35, 45]);
         return nouvellePlante;
     }
-    public virtual void SimulerCroissance(Terrain terrain)
+    public virtual void SimulerCroissance(Terrain terrain,int i, int j)
     {
         int condition = 0;
-       // if (terrain.Temperature >= Temperature[0] && terrain.Temperature <= Temperature[1]) condition++;
-        //if (terrain.Humidité >= Humidité[0] && terrain.Humidité <= Humidité[1]) condition++;
-        //if (terrain.Pluie >= Pluie[0] && terrain.Pluie <= Pluie[1]) condition++;
-        //if (terrain.Ensoleillement >= Ensoleillement[0] && terrain.Ensoleillement <= Ensoleillement[1]) condition++;
+        if (terrain.Temperature[4] >= Temperature[0] && terrain.Temperature[4] <= Temperature[1]) condition++;    // dans le tableau terrain.Temperature, la 5è case, soit terrain.Température[4] comprendra toujours la température actuelle du terrain. 
+        if (terrain.Humidite[4] >= Humidité[0] && terrain.Humidite[4] <= Humidité[1]) condition++;
+        if (terrain.Pluie[4] >= Pluie[0] && terrain.Pluie[4] <= Pluie[1]) condition++;
+        if (terrain.Ensoleillement[4] >= Ensoleillement[0] && terrain.Ensoleillement[4] <= Ensoleillement[1]) condition++;
 
         bool estTerrainFavori = (TerrainFavori == terrain.Nom);
         if ((estTerrainFavori && condition >= 2) || (!estTerrainFavori && condition >= 3))
@@ -137,7 +129,7 @@ public class PlanteSimple : Plante
         }
         else if ((estTerrainFavori && condition == 0) || (!estTerrainFavori && condition <= 1))
         {
-            Affichage = '%'; // Représente "plante morte"
+            Affichage = '/'; // Représente "plante morte"
                              // Pour "supprimer réellement la plante", voir explication ci-dessous
         }
         if (Croissance == 0)

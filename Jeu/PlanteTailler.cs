@@ -17,22 +17,21 @@ public class PlanteTailler : PlanteSimple
         Pluie = pluie;
         Humidité = humidité;
     }
-    public override void SimulerCroissance()
+    public override void SimulerCroissance(Terrain terrain,int i, int j)
     {
-        base.SimulerCroissance();
         Random random = new Random();
-        int aleatoire = random.Next(0, 3);
-        // if ((Taillage== true) && (aleatoire == 1))
+        int aleatoire = random.Next(0, 5);
+        if ((Taillage== true) && (aleatoire == 1))
         {
             Taillage = false;
-            //Croissance=;
         }
+        else if (Taillage==true)
+        {base.SimulerCroissance(terrain,i,j);}
+        
     }
     public void Tailler(int i, int j)
     {
-
         Taillage=true;
-        //Croissance=;
     }
     public PlanteTailler CreerGorhy()
     {

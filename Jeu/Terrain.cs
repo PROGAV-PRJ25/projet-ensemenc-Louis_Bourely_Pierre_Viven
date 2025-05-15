@@ -1,5 +1,6 @@
 public abstract class Terrain
 {
+    public string Nom { get; set; }
     public double[] Temperature { get; set; }
     public double[] Humidite { get; set; }
     public double[] Pluie { get; set; }
@@ -8,12 +9,13 @@ public abstract class Terrain
     public Plante[,] Potager { get; set; }
     public int ColonnesDispos { get; set; }
 
-    public Terrain(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement)
+    public Terrain(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement, string nom)
     {
         Temperature = temperature;
         Humidite = humidite;
         Pluie = pluie;
         Ensoleillement = ensoleillement;
+        Nom = nom;
 
         ColonnesDispos = 10;
         Potager = new Plante[10, 20];
@@ -56,15 +58,21 @@ public abstract class Terrain
         }
     }
 
-    public double RecupererTemprature(int saison)
+    public double RecupererTemperature(int saison)
     {
         return Temperature[saison] * GenererNombreAleatoire(0.8, 1.2, 1);
     }
-
-
     public double RecupererPluie(int saison)
     {
         return Pluie[saison] * GenererNombreAleatoire(0.8, 1.2, 1);
+    }
+    public double RecupererHumidite(int saison)
+    {
+        return Humidite[saison];
+    }
+    public double RecupererEnsoleillement(int saison)
+    {
+        return Ensoleillement[saison];
     }
 
 
@@ -161,6 +169,23 @@ public abstract class Terrain
     {
         Potager[a, b].Affichage = '/';
     }
+    public virtual void VerifTerrain(Terrain terrain, int saison)
+    {
+        terrain.Temperature[4] = RecupererTemperature(saison);
+        terrain.Humidite[4] = RecupererHumidite(saison);
+        terrain.Pluie[4] = RecupererPluie(saison);
+        terrain.Ensoleillement[4] = RecupererEnsoleillement(saison);
+        for (int i = 0; i < Potager.GetLength(0); i++)
+        {
+            for (int j = 0; j < Potager.GetLength(1); j++)
+            {
+                if (Potager[i, j] is PlanteSimple plante)
+                {
+                    plante.SimulerCroissance(terrain, i, j);
+                }
+            }
+        }
+    }
 
 }
 
@@ -168,7 +193,7 @@ public abstract class Terrain
 
 public class TerrainSimple : Terrain
 {
-    public TerrainSimple(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement) : base(temperature, humidite, pluie, ensoleillement)
+    public TerrainSimple(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement, string nom) : base(temperature, humidite, pluie, ensoleillement, nom)
     {
 
     }
@@ -176,12 +201,13 @@ public class TerrainSimple : Terrain
 }
 public class TerrainMiné : TerrainSimple
 {
-    public TerrainMiné(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement) : base(temperature, humidite, pluie, ensoleillement)
+    public TerrainMiné(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement, string nom) : base(temperature, humidite, pluie, ensoleillement, nom)
     {
 
     }
-    public void VerifTerrain()
+    public override void VerifTerrain(Terrain terrain,int saison)
     {
+        base.VerifTerrain(terrain,saison);
         for (int i = 0; i < Potager.GetLength(0); i++)
         {
             for (int j = 0; j < Potager.GetLength(1); j++)
@@ -201,7 +227,7 @@ public class TerrainAJachère : TerrainSimple
 {
     public int[,] Jachere;
 
-    public TerrainAJachère(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement) : base(temperature, humidite, pluie, ensoleillement)
+    public TerrainAJachère(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement, string nom) : base(temperature, humidite, pluie, ensoleillement, nom)
     {
         Jachere = new int[Potager.GetLength(0), Potager.GetLength(1)];
         for (int i = 0; i < Potager.GetLength(0); i++)
@@ -212,8 +238,9 @@ public class TerrainAJachère : TerrainSimple
             }
         }
     }
-    public void VerifTerrain()
+    public override void VerifTerrain(Terrain terrain,int saison)
     {
+        base.VerifTerrain(terrain,saison);
         for (int i = 0; i < Potager.GetLength(0); i++)
         {
             for (int j = 0; j < Potager.GetLength(1); j++)
@@ -227,7 +254,7 @@ public class TerrainAJachère : TerrainSimple
                 {
                     Potager[i, j] = new SolSimple("Laboure");
                 }
-                if (Jachere[i, j] != 5)
+                else if (Jachere[i, j] != 0)
                 {
                     Jachere[i, j]--;
                 }

@@ -18,34 +18,79 @@ public class PlanteFilante : PlanteSimple
         Humidité = humidité;
     }
 
-    public void Etendre(Plante PlanteFilante, int i, int j)
+    public void Etendre(int i, int j, Terrain terrain)
     {
-        // if ((i != 0) && (Terrain.Potager[i - 1, j].Affichage == "•"))
-        // {
-        //     Terrain.Planter(new PlanteFilante(), i - 1, j);
-        // }
-        // else if ((j != Terrain.Potager.GetLength(1)) && (Terrain.Potager[i, j + 1].Affichage == "•"))
-        // {
-        //     Terrain.Planter(new PlanteFilante(), i, j + 1);
-        // }
-        // else if ((i != Terrain.Potager.GetLength(0)) && (Terrain.Potager[i + 1, j].Affichage == "•"))
-        // {
-        //     Terrain.Planter(new PlanteFilante(), i + 1, j);
-        // }
-        // else if ((j != 0) && (Terrain.Potager[i, j - 1].Affichage == "•"))
-        // {
-        //     Terrain.Planter(new PlanteFilante(), i, j - 1);
-        // }
-        // else { }
+        if ((i != 0) && (terrain.Potager[i - 1, j].Affichage == '•'))
+        {
+            if (Nom == "Jaunille")
+            {
+                terrain.Planter(CreerJaunille(), i - 1, j);
+            }
+            else if (Nom == "Gorhy")
+            {
+                terrain.Planter(CreerGorhy(), i - 1, j);
+            }
+            else if (Nom == "Zolia")
+            {
+                terrain.Planter(CreerZolia(), i - 1, j);
+            }
+        }
+        else if ((j != terrain.Potager.GetLength(1)) && (terrain.Potager[i, j + 1].Affichage == '•'))
+        {
+            if (Nom == "Jaunille")
+            {
+                terrain.Planter(CreerJaunille(), i, j+1);
+            }
+            else if (Nom == "Gorhy")
+            {
+                terrain.Planter(CreerGorhy(), i, j+1);
+            }
+            else if (Nom == "Zolia")
+            {
+                terrain.Planter(CreerZolia(), i, j+1);
+            }
+        }
+        else if ((i != terrain.Potager.GetLength(0)) && (terrain.Potager[i + 1, j].Affichage == '•'))
+        {
+            if (Nom == "Jaunille")
+            {
+                terrain.Planter(CreerJaunille(), i+1, j);
+            }
+            else if (Nom == "Gorhy")
+            {
+                terrain.Planter(CreerGorhy(), i+1, j);
+            }
+            else if (Nom == "Zolia")
+            {
+                terrain.Planter(CreerZolia(), i+1, j);
+            }
+        }
+        else if ((j != 0) && (terrain.Potager[i, j - 1].Affichage == '•'))
+        {
+            if (Nom == "Jaunille")
+            {
+                terrain.Planter(CreerJaunille(), i, j-1);
+            }
+            else if (Nom == "Gorhy")
+            {
+                terrain.Planter(CreerGorhy(), i, j-1);
+            }
+            else if (Nom == "Zolia")
+            {
+                terrain.Planter(CreerZolia(), i, j-1);
+            }
+        }
+        else { }
     }
-    public override void SimulerCroissance()
+    public override void SimulerCroissance(Terrain terrain, int i, int j)
     {
-        base.SimulerCroissance();
+        base.SimulerCroissance(terrain,i,j);
         Random random = new Random();
         int aleatoire = random.Next(0, 3);
-        // if ((Extension == false) && (Croissance == ) && (aleatoire == 1))
+
+        if ((Extension == false) && (Croissance != 0) && (aleatoire == 1))
         {
-            //Etendre(i, j);
+            Etendre(i, j, terrain);
             Extension = true;
         }
     }
