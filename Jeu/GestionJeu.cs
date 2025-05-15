@@ -197,16 +197,16 @@ public class GestionJeu
 
 
 
-    public void SimulationSemaine(Partie partie)
+    public void SimulationSemaine()
     {
         Console.Clear();
         Afficher.TexteEnProgressif("Simulation semaine!!!!",100);
         Thread.Sleep(800);
         for(int k=0;k<Partie.ListeTerrain.Length;k++)
         {
-            //Partie.ListeTerrain[k].VerifTerrain(Partie.ListeTerrain[k],Partie.Semaine);
+            Partie.ListeTerrain[k].VerifTerrain(Partie.ListeTerrain[k],Partie.Semaine);
         }
-        partie.Semaine++; 
+        Partie.Semaine++; 
         /* Random random = new Random();
         int urgences = random.Next(1, 51);
         switch(urgences)

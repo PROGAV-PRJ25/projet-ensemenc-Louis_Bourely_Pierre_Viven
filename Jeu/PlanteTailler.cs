@@ -43,7 +43,7 @@ public class PlanteTailler : PlanteSimple
         PlanteTailler nouvellePlante = new PlanteTailler('ù', "Mutina", 750, 3000, 3,"Comestible","Marecages Malins",[20,27],[7,11],[5,9],[60,90]);
         return nouvellePlante;
     }
-    public PlanteTailler CreerQuintefeuille()
+    public PlanteTailler CreerKuintefeuille()
     {
         PlanteTailler nouvellePlante = new PlanteTailler('q', "Quintefeuille", 2000, 16000, 8,"Ornementale","Marecages Malins",[20,27],[7,11],[5,9],[60,90]);
         return nouvellePlante;

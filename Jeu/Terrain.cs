@@ -9,14 +9,13 @@ public abstract class Terrain
     public Plante[,] Potager { get; set; }
     public int ColonnesDispos { get; set; }
 
-    public Terrain(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement, string nom)
+    public Terrain()
     {
-        Temperature = temperature;
-        Humidite = humidite;
-        Pluie = pluie;
-        Ensoleillement = ensoleillement;
-        Nom = nom;
-
+        Temperature = [31];
+        Humidite = [48];
+        Pluie = [33];
+        Ensoleillement = [81];
+        Nom = "@";
         ColonnesDispos = 10;
         Potager = new Plante[10, 20];
         for (int i = 0; i < Potager.GetLength(0); i++)
@@ -31,7 +30,6 @@ public abstract class Terrain
                 {
                     Potager[i, j] = new SolSimple("Friche");
                 }
-
             }
         }
     }
@@ -150,7 +148,7 @@ public abstract class Terrain
                         recolte[12] += 1;
                         Potager[i, j] = new SolSimple("Vierge");
                         break;
-                    case 'Q':
+                    case 'K':
                         recolte[13] += 1;
                         Potager[i, j] = new SolSimple("Vierge");
                         break;
@@ -188,26 +186,59 @@ public abstract class Terrain
     }
 
 }
-
-
-
 public class TerrainSimple : Terrain
 {
-    public TerrainSimple(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement, string nom) : base(temperature, humidite, pluie, ensoleillement, nom)
+    public TerrainSimple(string nom) : base()
     {
-
+        switch (nom)
+        {
+            case "Plaines Paisibles":
+                Temperature = [15, 25, 21, 10, 15];
+                Humidite = [20, 10, 15, 20, 20];
+                Pluie = [28, 14, 42, 56, 28];
+                Ensoleillement = [8, 10, 7, 5, 8];
+                Nom = nom;
+                break;
+            case "Foret Facetieuse":
+                Temperature = [12, 21, 17, 8, 12];
+                Humidite = [40, 20, 30, 40, 40];
+                Pluie = [28, 14, 42, 56, 28];
+                Ensoleillement = [5, 8, 5, 3, 5];
+                Nom = nom;
+                break;
+            case "Volcan Violent":
+                Temperature = [37, 18, 26, 44, 37];
+                Humidite = [10, 15, 15, 5];
+                Pluie = [35, 49, 21, 7, 35];
+                Ensoleillement = [7, 5, 8, 10, 7];
+                Nom = nom;
+                break;
+            default:
+                Temperature = [31];
+                Humidite = [48];
+                Pluie = [33];
+                Ensoleillement = [81];
+                Nom = nom;
+                break;
+        }
     }
-
 }
-public class TerrainMiné : TerrainSimple
-{
-    public TerrainMiné(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement, string nom) : base(temperature, humidite, pluie, ensoleillement, nom)
-    {
 
-    }
-    public override void VerifTerrain(Terrain terrain,int saison)
+
+
+public class TerrainMine : Terrain
+{
+    public TerrainMine(string nom) : base()
     {
-        base.VerifTerrain(terrain,saison);
+        Temperature = [30, 30, 18, 18, 30];
+        Humidite = [0, 0, 0, 0, 0];
+        Pluie = [0, 0, 14, 28, 0];
+        Ensoleillement = [14, 14, 8, 8, 14];
+        Nom = "Desert Delicat";
+    }
+    public override void VerifTerrain(Terrain terrain, int saison)
+    {
+        base.VerifTerrain(terrain, saison);
         for (int i = 0; i < Potager.GetLength(0); i++)
         {
             for (int j = 0; j < Potager.GetLength(1); j++)
@@ -223,12 +254,17 @@ public class TerrainMiné : TerrainSimple
         }
     }
 }
-public class TerrainAJachère : TerrainSimple
+public class TerrainAJachere : Terrain
 {
     public int[,] Jachere;
 
-    public TerrainAJachère(double[] temperature, double[] humidite, double[] pluie, double[] ensoleillement, string nom) : base(temperature, humidite, pluie, ensoleillement, nom)
+    public TerrainAJachere(string nom) : base()
     {
+        Temperature = [25, 18, 18, 25, 25];
+        Humidite = [65, 95, 95, 65, 65];
+        Pluie = [56, 42, 70, 84, 56];
+        Ensoleillement = [8, 10, 7, 5, 8];
+        Nom = "Marecages Malins";
         Jachere = new int[Potager.GetLength(0), Potager.GetLength(1)];
         for (int i = 0; i < Potager.GetLength(0); i++)
         {
@@ -238,9 +274,9 @@ public class TerrainAJachère : TerrainSimple
             }
         }
     }
-    public override void VerifTerrain(Terrain terrain,int saison)
+    public override void VerifTerrain(Terrain terrain, int saison)
     {
-        base.VerifTerrain(terrain,saison);
+        base.VerifTerrain(terrain, saison);
         for (int i = 0; i < Potager.GetLength(0); i++)
         {
             for (int j = 0; j < Potager.GetLength(1); j++)
