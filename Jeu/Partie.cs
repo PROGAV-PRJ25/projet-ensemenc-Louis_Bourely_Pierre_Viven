@@ -18,7 +18,7 @@ public class Partie
         ListePlantes =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
         ListeSemis =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
         ListeItems=[0,0,0,0,0,0,0,0];
-        ListeTerrain=[new TerrainSimple([1],[1],[1],[1]), new TerrainSimple([1],[1],[1],[1]), new TerrainSimple([1],[1],[1],[1]), new TerrainSimple([1],[1],[1],[1]),new TerrainSimple([1],[1],[1],[1])];
+        ListeTerrain=[new TerrainSimple("Plaines Paisibles"), new TerrainSimple([1],[1],[1],[1]), new TerrainSimple([1],[1],[1],[1]), new TerrainSimple([1],[1],[1],[1]),new TerrainSimple([1],[1],[1],[1])];
         //A coder avec les vrais valeurs !!
     }
 }

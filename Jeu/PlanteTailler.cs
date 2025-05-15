@@ -17,22 +17,21 @@ public class PlanteTailler : PlanteSimple
         Pluie = pluie;
         Humidité = humidité;
     }
-    public override void SimulerCroissance()
+    public override void SimulerCroissance(Terrain terrain,int i, int j)
     {
-        base.SimulerCroissance();
         Random random = new Random();
-        int aleatoire = random.Next(0, 3);
-        // if ((Taillage== true) && (aleatoire == 1))
+        int aleatoire = random.Next(0, 5);
+        if ((Taillage== true) && (aleatoire == 1))
         {
             Taillage = false;
-            //Croissance=;
         }
+        else if (Taillage==true)
+        {base.SimulerCroissance(terrain,i,j);}
+        
     }
     public void Tailler(int i, int j)
     {
-
         Taillage=true;
-        //Croissance=;
     }
     public PlanteTailler CreerGorhy()
     {
@@ -44,7 +43,7 @@ public class PlanteTailler : PlanteSimple
         PlanteTailler nouvellePlante = new PlanteTailler('ù', "Mutina", 750, 3000, 3,"Comestible","Marecages Malins",[20,27],[7,11],[5,9],[60,90]);
         return nouvellePlante;
     }
-    public PlanteTailler CreerQuintefeuille()
+    public PlanteTailler CreerKuintefeuille()
     {
         PlanteTailler nouvellePlante = new PlanteTailler('q', "Quintefeuille", 2000, 16000, 8,"Ornementale","Marecages Malins",[20,27],[7,11],[5,9],[60,90]);
         return nouvellePlante;
