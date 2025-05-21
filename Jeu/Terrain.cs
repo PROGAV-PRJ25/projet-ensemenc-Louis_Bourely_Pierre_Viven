@@ -41,9 +41,9 @@ public abstract class Terrain
         return Math.Round(value, decimale);
     }
 
-    public void AgrandirPotager(int nombreColonne)
+    public void AgrandirPotager()
     {
-        ColonnesDispos += nombreColonne;
+        ColonnesDispos += 1;
         for (int i = 0; i < Potager.GetLength(0); i++)
         {
             for (int j = 0; j < Potager.GetLength(1); j++)
@@ -165,7 +165,19 @@ public abstract class Terrain
     }
     public void DetruirePlante(int a, int b)
     {
-        Potager[a, b].Affichage = '/';
+        Potager[a, b]= new SolSimple("Vierge");
+    }
+
+    public void Labourer(int a, int b)
+    {
+        if (Potager[a, b].Affichage == '/')
+        {
+            Potager[a, b] = new SolSimple("Laboure");
+        }
+        else
+        {
+            Console.WriteLine("Il n'est pas possible de planter à cette position");
+        }
     }
     public virtual void VerifTerrain(Terrain terrain, int saison)
     {
@@ -208,7 +220,7 @@ public class TerrainSimple : Terrain
                 break;
             case "Volcan Violent":
                 Temperature = [37, 18, 26, 44, 37];
-                Humidite = [10, 15, 15, 5];
+                Humidite = [10, 15, 15, 5, 10];
                 Pluie = [35, 49, 21, 7, 35];
                 Ensoleillement = [7, 5, 8, 10, 7];
                 Nom = nom;
@@ -228,7 +240,7 @@ public class TerrainSimple : Terrain
 
 public class TerrainMine : Terrain
 {
-    public TerrainMine(string nom) : base()
+    public TerrainMine() : base()
     {
         Temperature = [30, 30, 18, 18, 30];
         Humidite = [0, 0, 0, 0, 0];
@@ -258,7 +270,7 @@ public class TerrainAJachere : Terrain
 {
     public int[,] Jachere;
 
-    public TerrainAJachere(string nom) : base()
+    public TerrainAJachere() : base()
     {
         Temperature = [25, 18, 18, 25, 25];
         Humidite = [65, 95, 95, 65, 65];
@@ -286,11 +298,11 @@ public class TerrainAJachere : Terrain
                     Potager[i, j] = new SolSimple("Jachère");
                     Jachere[i, j] = 5;
                 }
-                if (Jachere[i, j] == 0)
+                if (Jachere[i, j] == 1)
                 {
                     Potager[i, j] = new SolSimple("Laboure");
                 }
-                else if (Jachere[i, j] != 0)
+                else if (Jachere[i, j] > 0)
                 {
                     Jachere[i, j]--;
                 }

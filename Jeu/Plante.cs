@@ -7,12 +7,6 @@ public abstract class Plante
     {
         Affichage = '@';
     }
-
-    public override string ToString()
-    {
-        string mess = $" {Affichage} ";
-        return mess;
-    }
 }
 
 

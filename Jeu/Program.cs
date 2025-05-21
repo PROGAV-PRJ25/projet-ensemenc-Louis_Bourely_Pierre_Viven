@@ -1,6 +1,10 @@
 ﻿int largeurConsole = Console.WindowWidth;
 int hauteurConsole = Console.WindowHeight;
+
+Affichage Afficher =new Affichage();
+
 Console.Clear();
+
 while(largeurConsole <160 || hauteurConsole<40)
 {
     largeurConsole = Console.WindowWidth;
@@ -38,19 +42,25 @@ while(jeu)
         case ConsoleKey.S:
             Console.Clear();
             Console.Write("Tapez le nom de votre sauvegarde  : ");
-            string partieSauvegarde=Console.ReadLine()!;
-            Console.WriteLine("");
-            Console.WriteLine($"recherche de {partieSauvegarde}");
-            //recherche sauvegarde
+            string nomPartieSauvegarde=Console.ReadLine()!;
+            Sauvegarde partieSauvegarde = new Sauvegarde(nomPartieSauvegarde);
+            if(partieSauvegarde.infoSemis=="@")
+            {
+                Afficher.TexteEnProgressif("Sauvegarde non trouvée veuillez réessayer ou créer une nouvelle partie !          ",20);        
+            }
+            else
+            {
+                GestionJeu partieEnCoursSauvegarde = new GestionJeu(partieSauvegarde.CreerPartie());
+                partieEnCoursSauvegarde.Jouer();
+            }
             break;
         case ConsoleKey.Q:
             jeu=false;
             break;
         default :
             break;
-
     }
-
 }
+
 
 

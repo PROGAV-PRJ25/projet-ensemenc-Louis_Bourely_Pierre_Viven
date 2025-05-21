@@ -33,19 +33,19 @@ public class PlanteTailler : PlanteSimple
     {
         Taillage=true;
     }
-    public PlanteTailler CreerGorhy()
+    public PlanteTailler CreerCacruz()
     {
         PlanteTailler nouvellePlante = new PlanteTailler('c', "Cacruz", 150, 600, 3,"Comestible","Desert Delicat",[16,26],[6,9],[1,5],[0,10]);
         return nouvellePlante;
     }
     public PlanteTailler CreerMutina()
     {
-        PlanteTailler nouvellePlante = new PlanteTailler('ù', "Mutina", 750, 3000, 3,"Comestible","Marecages Malins",[20,27],[7,11],[5,9],[60,90]);
+        PlanteTailler nouvellePlante = new PlanteTailler('m', "Mutina", 750, 3000, 3,"Comestible","Marecages Malins",[20,27],[7,11],[5,9],[60,90]);
         return nouvellePlante;
     }
     public PlanteTailler CreerKuintefeuille()
     {
-        PlanteTailler nouvellePlante = new PlanteTailler('q', "Quintefeuille", 2000, 16000, 8,"Ornementale","Marecages Malins",[20,27],[7,11],[5,9],[60,90]);
+        PlanteTailler nouvellePlante = new PlanteTailler('k', "Kuintefeuille", 2000, 16000, 8,"Ornementale","Marecages Malins",[20,27],[7,11],[5,9],[60,90]);
         return nouvellePlante;
     }
 }
