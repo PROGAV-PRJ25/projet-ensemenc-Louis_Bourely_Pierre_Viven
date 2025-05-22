@@ -801,7 +801,7 @@ public class GestionJeu
         }
         Partie.Semaine++;
         Random random = new Random();
-        int urgences = 12;//random.Next(1, 51);
+        int urgences = random.Next(1, 51);
         switch (urgences)
         {
             case 10:
@@ -944,9 +944,9 @@ public class GestionJeu
             switch (Console.ReadKey().Key)
             {
                 case ConsoleKey.O:
-                    if (Partie.ListeItems[1] >= 1)
+                    if (Partie.ListeItems[2] >= 1)
                     {
-                        Partie.ListeItems[1]--;
+                        Partie.ListeItems[2]--;
                         Afficher.TexteEnProgressif("Vous avez éliminé la cheeeeeniiiiillle", 50);
                     }
                     else
@@ -1002,7 +1002,6 @@ public class GestionJeu
 
             Console.WriteLine(chenille);
         }
-
         else
         {
             Console.Clear();
@@ -1011,7 +1010,7 @@ public class GestionJeu
             Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
             for (int i = 0; i < Partie.ListeTerrains.Length; i++)
             {
-                Console.WriteLine();
+                
                 Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
                 Console.WriteLine($"║               📍 Terrain : {Partie.ListeTerrains[i].Nom,-30}                                     ║");
                 Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
