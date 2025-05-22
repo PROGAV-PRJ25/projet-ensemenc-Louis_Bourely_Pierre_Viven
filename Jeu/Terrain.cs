@@ -174,10 +174,6 @@ public abstract class Terrain
         {
             Potager[a, b] = new SolSimple("Laboure");
         }
-        else
-        {
-            Console.WriteLine("Il n'est pas possible de planter à cette position");
-        }
     }
     public virtual void VerifTerrain(Terrain terrain, int saison)
     {
