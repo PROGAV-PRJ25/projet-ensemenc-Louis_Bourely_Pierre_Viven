@@ -2,18 +2,18 @@ using System.Runtime.CompilerServices;
 
 public class GestionJeu
 {
-    Partie Partie {get; set;}
-    Affichage Afficher{get;}
+    Partie Partie { get; set; }
+    Affichage Afficher { get; }
 
     public GestionJeu(Partie partie)
     {
-        Partie=partie;
-        Afficher=new Affichage();
+        Partie = partie;
+        Afficher = new Affichage();
     }
     public GestionJeu(string nom)
     {
-        Partie=new Partie(nom);
-        Afficher=new Affichage();
+        Partie = new Partie(nom);
+        Afficher = new Affichage();
         Tutoriel();
     }
 
@@ -25,10 +25,10 @@ public class GestionJeu
 
     public void Jouer()
     {
-        bool enCours =true;
-        while(enCours)
+        bool enCours = true;
+        while (enCours)
         {
-            switch(Accueil(Partie))
+            switch (Accueil(Partie))
             {
                 case 1:
                     SimulationSemaine();
@@ -41,10 +41,10 @@ public class GestionJeu
                 case 3:
                     Sauvegarde sauvegarde2 = new Sauvegarde(Partie);
                     sauvegarde2.Sauvegarder();
-                    enCours=false;
+                    enCours = false;
                     break;
                 case 4:
-                    enCours=false;
+                    enCours = false;
                     break;
                 case 5:
                     Console.WriteLine("ERREUR @@@");
@@ -58,9 +58,9 @@ public class GestionJeu
     public int Accueil(Partie partie)
     {
         bool semaineEnCours = true;
-        while(semaineEnCours)
+        while (semaineEnCours)
         {
-            
+
             Console.Clear();
             Console.WriteLine($"Bienvenue dans votre monde Verdadura! {partie.Nom}");
             Console.WriteLine($"C'est la semaine {partie.Semaine}");
@@ -69,7 +69,7 @@ public class GestionJeu
             Console.WriteLine($"Vous avez => {Partie.ListePlantes[0]}Plante1,  {Partie.ListePlantes[1]}Plante2,...");
             Console.WriteLine($"Vous avez => {Partie.ListeSemis[0]}Semis1,  {Partie.ListeSemis[1]}Semis2,...");
             Console.WriteLine($"Vous avez => {Partie.ListeItems[0]}Item1,  {Partie.ListeItems[1]}Item2,...");
-            switch(Console.ReadKey().Key)
+            switch (Console.ReadKey().Key)
             {
                 case ConsoleKey.Enter:
                     return 1;
@@ -77,6 +77,9 @@ public class GestionJeu
                     return 3;
                 case ConsoleKey.Q:
                     return 4;
+                case ConsoleKey.B:
+                    BulletinMeteo();
+                    break;
                 case ConsoleKey.D1:
                     VisualisationTerrain(Partie.ListeTerrains[0]);
                     break;
@@ -95,7 +98,7 @@ public class GestionJeu
                 case ConsoleKey.M:
                     Magasin();
                     break;
-                default :
+                default:
                     break;
             }
         }
@@ -107,15 +110,15 @@ public class GestionJeu
     public void VisualisationTerrain(Terrain terrain)
     {
         bool enCours = true;
-        while(enCours)
+        while (enCours)
         {
             Console.Clear();
-            double prixAgrandir = Afficher.Potager(terrain.Potager,terrain.Nom);
+            double prixAgrandir = Afficher.Potager(terrain.Potager, terrain.Nom);
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.WriteLine("Pour planter un Semis🌱 tapez P,\nPour utiliser un Item 🛠️  tapez I,\nPour Récolter les plantes🌳 tapez R,");
             Console.WriteLine($"Pour obtenir la Documentation📄 du terrain tapez D,\nPour Agrandir le terrain ({prixAgrandir} 💰) tapez A,\nPour Quitter❌​ tapez Q");
             Console.ForegroundColor = ConsoleColor.White;
-            
+
 
             switch (Console.ReadKey().Key)
             {
@@ -158,10 +161,10 @@ public class GestionJeu
     public void UtiliserItem(Terrain terrain)
     {
         bool enCours = true;
-        while(enCours)
+        while (enCours)
         {
             Console.Clear();
-            Afficher.Potager(terrain.Potager,terrain.Nom);
+            Afficher.Potager(terrain.Potager, terrain.Nom);
             Console.WriteLine($"Vous avez => {Partie.ListeItems[0]}item1,  {Partie.ListeItems[1]}item2,...");
             Console.WriteLine($"Terrain {terrain} Q pour quitter, Initial de la plante pour plante");
             Console.WriteLine("");
@@ -179,7 +182,7 @@ public class GestionJeu
                         int[] demandeCase = Afficher.DemandeCasePotage();
                         if (demandeCase[0] != 99)
                         {
-                            terrain.Labourer(demandeCase[0],demandeCase[1]);
+                            terrain.Labourer(demandeCase[0], demandeCase[1]);
                             Partie.ListeItems[0]--;
                         }
                     }
@@ -195,7 +198,7 @@ public class GestionJeu
                     }
                     else
                     {
-                        PlanteSimple nouvellePlante = new PlanteTailler('c', "Cacruz", 150, 600, 3,"Comestible","Desert Delicat",[16,26],[6,9],[1,5],[0,10]);
+                        PlanteSimple nouvellePlante = new PlanteTailler('c', "Cacruz", 150, 600, 3, "Comestible", "Desert Delicat", [16, 26], [6, 9], [1, 5], [0, 10]);
                         int[] demandeCase = Afficher.DemandeCasePotage();
                         if (demandeCase[0] != 99)
                         {
@@ -323,7 +326,7 @@ public class GestionJeu
                     }
                     else
                     {
-                        PlanteSimple nouvellePlante = new PlanteTailler('m', "Mutina", 750, 3000, 3,"Comestible","Marecages Malins",[20,27],[7,11],[5,9],[60,90]);
+                        PlanteSimple nouvellePlante = new PlanteTailler('m', "Mutina", 750, 3000, 3, "Comestible", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]);
                         int[] demandeCase = Afficher.DemandeCasePotage();
                         if (demandeCase[0] != 99)
                         {
@@ -371,7 +374,7 @@ public class GestionJeu
                     }
                     else
                     {
-                        PlanteSimple nouvellePlante = new PlanteTailler('k', "Kuintefeuille", 2000, 16000, 8,"Ornementale","Marecages Malins",[20,27],[7,11],[5,9],[60,90]);
+                        PlanteSimple nouvellePlante = new PlanteTailler('k', "Kuintefeuille", 2000, 16000, 8, "Ornementale", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]);
                         int[] demandeCase = Afficher.DemandeCasePotage();
                         if (demandeCase[0] != 99)
                         {
@@ -402,7 +405,7 @@ public class GestionJeu
             }
         }
     }
-    
+
 
     public void Planter(Terrain terrain)
     {
@@ -411,7 +414,7 @@ public class GestionJeu
         {
             Console.Clear();
             Afficher.Potager(terrain.Potager, terrain.Nom);
-            
+
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n🌿 Vos semis disponibles :");
             Console.ResetColor();
@@ -699,15 +702,15 @@ public class GestionJeu
     public void Magasin()
     {
         bool enCours = true;
-        while(enCours)
+        while (enCours)
         {
-            
+
             Console.Clear();
             Afficher.Magasin();
-            switch(Console.ReadKey(true).Key)
+            switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.Q:
-                    enCours=false;
+                    enCours = false;
                     break;
                 case ConsoleKey.D1:
                     MagasinSemis();
@@ -718,7 +721,7 @@ public class GestionJeu
                 case ConsoleKey.D3:
                     MagasinItems();
                     break;
-                default :
+                default:
                     break;
             }
         }
@@ -748,7 +751,7 @@ public class GestionJeu
             Console.WriteLine("║ Semis disponibles :                                                                           ║");
             Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
 
-            List<char> touches = new List<char> { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'M', 'N', 'P', 'K', 'Z'};
+            List<char> touches = new List<char> { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'M', 'N', 'P', 'K', 'Z' };
 
             for (int i = 0; i < 15; i++)
             {
@@ -835,7 +838,7 @@ public class GestionJeu
             Console.WriteLine("║ Vos Plantes :                                                                                 ║");
             Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
 
-            List<char> touches = new List<char> { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'M', 'N', 'P', 'K', 'Z'};
+            List<char> touches = new List<char> { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'M', 'N', 'P', 'K', 'Z' };
 
             for (int i = 0; i < 15; i++)
             {
@@ -897,90 +900,90 @@ public class GestionJeu
         }
     }
 
-    
-    
+
+
     public void MagasinItems()
     {
         bool enCours = true;
-        while(enCours)
+        while (enCours)
         {
             Console.Clear();
             Console.WriteLine($"Verdamoula : {Partie.VerdaMoula}");
             Console.WriteLine($"Vous avez => {Partie.ListeItems[0]}item1,  {Partie.ListeItems[1]}item2,...");
             Console.WriteLine("mets l'initial pour acheter j'espère ta la thunasse");
 
-            switch(Console.ReadKey(true).Key)
+            switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.Q:
-                    enCours=false;
+                    enCours = false;
                     break;
                 case ConsoleKey.A:
-                    if(Partie.VerdaMoula>=5)
+                    if (Partie.VerdaMoula >= 5)
                     {
-                        Partie.VerdaMoula-=5;
+                        Partie.VerdaMoula -= 5;
                         Partie.ListeItems[0]++;
                     }
                     break;
                 case ConsoleKey.B:
-                    if(Partie.VerdaMoula>=5)
+                    if (Partie.VerdaMoula >= 5)
                     {
-                        Partie.VerdaMoula-=5;
+                        Partie.VerdaMoula -= 5;
                         Partie.ListeItems[1]++;
                     }
                     break;
                 case ConsoleKey.C:
-                    if(Partie.VerdaMoula>=150)
+                    if (Partie.VerdaMoula >= 150)
                     {
-                        Partie.VerdaMoula-=150;
+                        Partie.VerdaMoula -= 150;
                         Partie.ListeItems[2]++;
                     }
                     break;
                 case ConsoleKey.D:
-                    if(Partie.VerdaMoula>=10)
+                    if (Partie.VerdaMoula >= 10)
                     {
-                        Partie.VerdaMoula-=10;
+                        Partie.VerdaMoula -= 10;
                         Partie.ListeItems[3]++;
                     }
                     break;
                 case ConsoleKey.E:
-                    if(Partie.VerdaMoula>=3)
+                    if (Partie.VerdaMoula >= 3)
                     {
-                        Partie.VerdaMoula-=3;
+                        Partie.VerdaMoula -= 3;
                         Partie.ListeItems[4]++;
                     }
                     break;
                 case ConsoleKey.F:
-                    if(Partie.VerdaMoula>=30)
+                    if (Partie.VerdaMoula >= 30)
                     {
-                        Partie.VerdaMoula-=30;
+                        Partie.VerdaMoula -= 30;
                         Partie.ListeItems[5]++;
                     }
                     break;
                 case ConsoleKey.G:
-                    if(Partie.VerdaMoula>=20)
+                    if (Partie.VerdaMoula >= 20)
                     {
-                        Partie.VerdaMoula-=20;
+                        Partie.VerdaMoula -= 20;
                         Partie.ListeItems[6]++;
                     }
                     break;
                 case ConsoleKey.H:
-                    if(Partie.VerdaMoula>=8)
+                    if (Partie.VerdaMoula >= 8)
                     {
-                        Partie.VerdaMoula-=8;
+                        Partie.VerdaMoula -= 8;
                         Partie.ListeItems[7]++;
                     }
                     break;
                 case ConsoleKey.I:
-                    if(Partie.VerdaMoula>=80)
+                    if (Partie.VerdaMoula >= 80)
                     {
-                        Partie.VerdaMoula-=80;
+                        Partie.VerdaMoula -= 80;
                         Partie.ListeItems[8]++;
                     }
                     break;
                 case ConsoleKey.J:
-                    if(Partie.VerdaMoula>=300)
+                    if (Partie.VerdaMoula >= 300)
                     {
-                        Partie.VerdaMoula-=300;
+                        Partie.VerdaMoula -= 300;
                         Partie.ListeItems[9]++;
                     }
                     break;
@@ -990,7 +993,7 @@ public class GestionJeu
         }
     }
 
-    
+
 
 
     public void SimulationSemaine()
@@ -1005,14 +1008,17 @@ public class GestionJeu
         }
         Partie.Semaine++;
         Random random = new Random();
-        int urgences = random.Next(1, 51);
-        switch(urgences)
+        int urgences = 12;//random.Next(1, 51);
+        switch (urgences)
         {
             case 10:
                 Rat();
                 break;
             case 11:
                 Galinace();
+                break;
+            case 12:
+                Chenille();
                 break;
             default:
                 break;
@@ -1072,9 +1078,166 @@ public class GestionJeu
         }
     }
 
-    
-    
-    public void Galinace()
-    {}
 
+
+    public void Galinace()
+    {
+        Random random = new Random();
+        int terrain = random.Next(0, 5);
+        Console.Clear();
+        Console.WriteLine($"Oh non un Gallinacé Hargneux est arrivé sur votre terrain {Partie.ListeTerrains[terrain].Nom} utilisez un tir de fusil sinon il va dévorer toutes les plantes comestibles du terrain");
+        Console.Write("Pour utiliser le tir de fusil tapez O sinon tapez N ");
+        bool enCours = true;
+        while (enCours)
+        {
+            switch (Console.ReadKey().Key)
+            {
+                case ConsoleKey.O:
+                    if (Partie.ListeItems[1] >= 1)
+                    {
+                        Partie.ListeItems[1]--;
+                        Afficher.TexteEnProgressif("Le Gallinacé Hargneux part les plumes entre les jambes grâce au tir de fusil    ", 50);
+                    }
+                    else
+                    {
+                        Afficher.TexteEnProgressif("Et non! vous n'avez pas de tir de fusil c'est tchao        ", 50);
+                        for (int i = 0; i < Partie.ListeTerrains[terrain].Potager.GetLength(0); i++)
+                        {
+                            for (int j = 0; j < Partie.ListeTerrains[terrain].Potager.GetLength(1); j++)
+                            {
+                                if (Partie.ListeTerrains[terrain].Potager[i, j] is PlanteSimple plante)
+                                {
+                                    if (plante.Type == "Comestible")
+                                    {
+                                        Partie.ListeTerrains[terrain].DetruirePlante(i, j);
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                    enCours = false;
+                    break;
+                case ConsoleKey.N:
+                    Afficher.TexteEnProgressif("Le Gallinacé Hargneux détruit toutes les plantes comestibles          ", 50);
+                    enCours = false;
+                    for (int i = 0; i < Partie.ListeTerrains[terrain].Potager.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < Partie.ListeTerrains[terrain].Potager.GetLength(1); j++)
+                        {
+                            if (Partie.ListeTerrains[terrain].Potager[i, j] is PlanteSimple plante)
+                            {
+                                if (plante.Type == "Comestible")
+                                {
+                                    Partie.ListeTerrains[terrain].DetruirePlante(i, j);
+                                }
+
+                            }
+                        }
+                    }
+                    break;
+            }
+
+        }
+    }
+    public void Chenille()
+    {
+        Console.Clear();
+        Console.WriteLine($"Oh non une Cheeeeeniiiiiiillllle est apparue, utilisez un insecticide à chenille sinon il va dévorer le bulletin météo de la semaine prochaine");
+        Console.Write("Pour utiliser un insecticide à Chenille tapez O sinon tapez N ");
+        bool enCours = true;
+        while (enCours)
+        {
+            switch (Console.ReadKey().Key)
+            {
+                case ConsoleKey.O:
+                    if (Partie.ListeItems[1] >= 1)
+                    {
+                        Partie.ListeItems[1]--;
+                        Afficher.TexteEnProgressif("Vous avez éliminé la cheeeeeniiiiillle", 50);
+                    }
+                    else
+                    {
+                        Afficher.TexteEnProgressif("Et non! vous n'avez pas d'insecticide, vous pouvez tirer une croix sur votre bulletin météo        ", 50);
+                        Partie.chenille = false;
+                    }
+                    enCours = false;
+                    break;
+                case ConsoleKey.N:
+                    Afficher.TexteEnProgressif("La chenille n'est pas éliminée, vous pouvez alors tirer une croix sur votre bulletin météo de la semaine          ", 50);
+                    Partie.chenille = false;
+                    enCours = false;
+                    break;
+            }
+        }
+    }
+    public void BulletinMeteo()
+    {
+        bool enCours = true;
+        while (enCours)
+        {
+            if (Partie.chenille)
+            {
+                Console.OutputEncoding = System.Text.Encoding.UTF8; // Pour bien afficher les caractères spéciaux
+
+                string chenille = @"
+⠀⠀⣾⣿⠍⠓⢦⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⠖⠛⣿⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠙⠉⠀⠀⠈⢳⠀⠀⠀⠀⠀⠀⠀⡼⠁⠀⠀⠙⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠈⣇⠀⠀⠀⠀⠀⢸⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢀⣤⠿⠒⠒⠒⠒⠒⠚⠦⠤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⣤⠞⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠲⢄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⣠⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⣴⠃⠀⠀⣴⣿⠿⣶⠀⠀⠀⠀⠀⠀⢠⣿⡟⢷⡄⠀⠀⠈⢧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⢰⠃⠀⠀⠀⣿⣿⣷⣿⠀⠀⠀⠀⠀⠀⢸⣿⣷⣿⠇⠀⠀⠀⠈⢧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⢸⠀⠀⠀⠀⠈⠛⠛⠁⠀⠀⠀⠀⠀⠀⠀⠙⠛⠋⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣾⡀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠘⢧⠀⠀⠀⠀⠀⠀⠀⠱⣄⡀⢀⡴⠛⠀⠀⠀⠀⠀⠀⠀⠀⣰⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠈⠙⣶⢤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⡤⠶⡿⢦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⣰⠃⠀⠀⠉⠉⠉⠉⠉⠉⠉⠉⠉⠁⠀⠀⠸⣇⣈⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⢠⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡴⠒⠲⠤⣄⠀⠀⠘⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⣠⠶⠋⢹⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢧⣀⠀⠀⠀⢹⡄⠀⡾⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⢿⣀⣀⡨⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠋⠉⠀⣼⣇⣤⠴⠒⢷⠒⠲⡖⠤⣤⠖⠒⠚⢻⡙⠒⣶⠤⣤⠖⠒⠻⡍⢳⡒⢦⣀⡤⠴⣖⢲⡶⣄⡀⠀⠀⠀⠀
+⠀⠀⠀⠀⠘⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠞⠹⣄⢹⣧⡀⠈⢧⡀⢱⡄⠈⠙⢦⠀⠀⠱⣄⠘⡆⠈⠳⣄⠀⠙⠓⠃⠀⠈⢧⡀⠈⠉⠃⠀⠹⣦⡀⠀⠀
+⠀⠀⠀⠀⠀⢸⠙⠲⢤⣀⡀⠀⠀⠀⠀⢀⣀⣠⠤⠔⠊⠁⠀⠀⠀⠉⠁⡇⠀⠀⠉⠉⠀⠀⠀⠈⢳⡀⠀⠈⠉⠁⠀⠀⠘⡆⠀⠀⠀⠀⠀⠀⢷⠀⠀⠀⠀⠀⢹⠈⠳⡀
+⠀⠀⠀⠀⠀⠘⡆⠀⠀⠀⠉⠉⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠈⡇⠀⠀⠀⠀⠀⠀⠀⢹⠀⠀⠀⠀⠀⠀⢸⡇⠀⠀⣀⠀⢸⢂⣠⠇
+⠀⠀⠀⠀⠀⠀⢣⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⣷⠀⠀⠀⠀⠀⠀⠀⢸⠇⠀⣀⣀⣀⠀⡞⠀⠀⣿⡛⢹⡞⠋⠁⠀
+⠀⠀⠀⠀⠀⠀⠈⢷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣀⡀⠀⠀⣠⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡇⠀⠀⢀⣀⣀⡀⢀⡟⠀⠀⢿⠁⠸⣾⣁⣀⣀⠼⠷⣼⠃⠀⠀⠀
+⠀⠀⠀⠀⠀⣠⠞⠉⠙⢤⡀⠀⠀⠀⠀⠀⠀⠀⠀⣏⠀⠀⠙⣤⡴⠃⠀⠀⠀⠀⠀⣠⡤⢤⡀⢀⡜⠀⠀⠀⢿⠀⠀⢳⣾⣀⣀⣠⡼⢧⣀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠧⣄⠤⠤⠒⠋⠓⠲⠤⠤⣀⣀⣀⣀⣘⣧⣀⠀⢸⡆⠀⠀⠀⠀⠀⠀⣏⠀⠀⢿⡯⢄⣀⡠⠤⠼⢧⠀⢸⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠛⠉⠛⠒⠒⠒⠒⠒⠻⡄⠀⢸⡇⠀⠀⠀⠀⠀⠈⠙⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠓⢛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀";
+
+                Console.WriteLine(chenille);
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
+                Console.WriteLine("║                                     ✦✦ BULLETIN METEO ✦✦                                      ║");
+                Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
+                for (int i = 0; i < Partie.ListeTerrains.Length; i++)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
+                    Console.WriteLine($"║               📍 Terrain : {Partie.ListeTerrains[i].Nom,-30}                                     ║");
+                    Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
+
+                    // Données météo formatées et alignées
+                    Console.WriteLine($"║ 🌡️  Température moyenne    : {Partie.ListeTerrains[i].Temperature[4],-2} °C                                                             ║");
+                    Console.WriteLine($"║ 💧 Humidité moyenne       : {Partie.ListeTerrains[i].Humidite[4],-2} %                                                              ║");
+                    Console.WriteLine($"║ 🌧️  Niveau de pluie moyen  : {Partie.ListeTerrains[i].Pluie[4],-2} mm                                                             ║");
+                    Console.WriteLine($"║ ☀️  Ensoleillement moyen   : {Partie.ListeTerrains[i].Ensoleillement[4],-2} h                                                              ║");
+
+                    Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
+                }
+                switch (Console.ReadKey().Key)
+                {
+                    case ConsoleKey.Q:
+                        enCours = false;
+                        break;
+                }
+            }
+        }
+    }
 }

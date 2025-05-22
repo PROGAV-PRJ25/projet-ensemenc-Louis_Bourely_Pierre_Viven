@@ -181,10 +181,6 @@ public abstract class Terrain
     }
     public virtual void VerifTerrain(Terrain terrain, int saison)
     {
-        terrain.Temperature[4] = RecupererTemperature(saison);
-        terrain.Humidite[4] = RecupererHumidite(saison);
-        terrain.Pluie[4] = RecupererPluie(saison);
-        terrain.Ensoleillement[4] = RecupererEnsoleillement(saison);
         for (int i = 0; i < Potager.GetLength(0); i++)
         {
             for (int j = 0; j < Potager.GetLength(1); j++)
@@ -195,6 +191,10 @@ public abstract class Terrain
                 }
             }
         }
+        terrain.Temperature[4] = RecupererTemperature(saison);
+        terrain.Humidite[4] = RecupererHumidite(saison);
+        terrain.Pluie[4] = RecupererPluie(saison);
+        terrain.Ensoleillement[4] = RecupererEnsoleillement(saison);
     }
 
 }
