@@ -2,20 +2,9 @@ public class PlanteFilante : PlanteSimple
 {
     public bool Extension { get; set; }
 
-    public PlanteFilante(char affichage, string nom, double prixAchat, double prixVente, double croissance, string type, string terrainFavori, double[] temperature, double[] ensoleillement, double[] pluie, double[] humidité, bool extension = false) : base(affichage, nom, prixAchat, prixVente, croissance, type, terrainFavori, temperature, ensoleillement, pluie, humidité)
+    public PlanteFilante(char affichage, string nom, double prixAchat, double prixVente, double croissance, string type, string terrainFavori, double[] temperature, double[] ensoleillement, double[] pluie, double[] humidité) : base(affichage, nom, prixAchat, prixVente, croissance, type, terrainFavori, temperature, ensoleillement, pluie, humidité)
     {
-        Affichage = affichage;
-        Nom = nom;
-        PrixAchat = prixAchat;
-        PrixVente = prixVente;
-        Croissance = croissance;
-        Extension = extension;
-        Type = type;
-        TerrainFavori = terrainFavori;
-        Temperature = temperature;
-        Ensoleillement = ensoleillement;
-        Pluie = pluie;
-        Humidité = humidité;
+        Extension = false;
     }
 
     public void Etendre(int i, int j, Terrain terrain)
