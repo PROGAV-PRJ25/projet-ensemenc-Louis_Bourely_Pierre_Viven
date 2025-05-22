@@ -63,51 +63,7 @@ public class PlanteSimple : Plante
         Pluie = pluie;
         Humidité = humidité;
     }
-    public PlanteSimple CreerErdomania()
-    {
-        PlanteSimple nouvellePlante = new PlanteSimple('e', "Erdomania", 3, 12, 2, "Comestible", "Plaines Paisibles", [14, 18], [7, 8], [4, 6], [15, 20]);
-        return nouvellePlante;
-    }
-    public PlanteSimple CreerBrocélia()
-    {
-        PlanteSimple nouvellePlante = new PlanteSimple('b', "Brocélia", 5, 30, 3, "Comestible", "Plaines Paisibles", [18, 23], [8, 9], [3, 5], [17, 22]);
-        return nouvellePlante;
-    }
-    public PlanteSimple CreerHumalis()
-    {
-        PlanteSimple nouvellePlante = new PlanteSimple('h', "Humalis", 8, 64, 10, "Médicinale", "Plaines Paisibles", [12, 25], [6, 11], [3, 8], [10, 20]);
-        return nouvellePlante;
-    }
-    public PlanteSimple CreerDemonia()
-    {
-        PlanteSimple nouvellePlante = new PlanteSimple('d', "Demonia", 10, 40, 2, "Comestible", "Volcan Violent", [26, 33], [7, 9], [1, 3], [5, 15]);
-        return nouvellePlante;
-    }
-    public PlanteSimple CreerFenecia()
-    {
-        PlanteSimple nouvellePlante = new PlanteSimple('f', "Fenecia", 30, 240, 8, "Ornementale", "Volcan Violent", [28, 44], [8, 11], [1, 2], [5, 15]);
-        return nouvellePlante;
-    }
-    public PlanteSimple CreerArachnéide()
-    {
-        PlanteSimple nouvellePlante = new PlanteSimple('a', "Arachnéide", 500, 5000, 7, "Médicinale", "Desert Delicat", [16, 26], [6, 9], [1, 5], [0, 10]);
-        return nouvellePlante;
-    }
-    public PlanteSimple CreerNénustar()
-    {
-        PlanteSimple nouvellePlante = new PlanteSimple('n', "Nénustar", 1250, 7500, 5, "Comestible", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]);
-        return nouvellePlante;
-    }
-    public PlanteSimple CreerPlacinet()
-    {
-        PlanteSimple nouvellePlante = new PlanteSimple('p', "Placinet", 50, 200, 2, "Comestible", "Foret Facetieuse", [9, 18], [4, 6], [3, 4], [35, 45]);
-        return nouvellePlante;
-    }
-    public PlanteSimple CreerIvoina()
-    {
-        PlanteSimple nouvellePlante = new PlanteSimple('i', "Ivoina", 80, 480, 5, "Comestible", "Foret Facetieuse", [9, 18], [4, 6], [3, 4], [35, 45]);
-        return nouvellePlante;
-    }
+
     public virtual void SimulerCroissance(Terrain terrain,int i, int j)
     {
         int condition = 0;
@@ -121,10 +77,9 @@ public class PlanteSimple : Plante
         {
             Croissance--;
         }
-        else if ((estTerrainFavori && condition == 0) || (!estTerrainFavori && condition <= 1))
+        else if ((estTerrainFavori && condition == 0 && Croissance!=0) || (!estTerrainFavori && condition <= 1 && Croissance!=0))
         {
-            Affichage = '/'; // Représente "plante morte"
-                             // Pour "supprimer réellement la plante", voir explication ci-dessous
+            terrain.DetruirePlante(i, j);
         }
         if (Croissance == 0)
         {
