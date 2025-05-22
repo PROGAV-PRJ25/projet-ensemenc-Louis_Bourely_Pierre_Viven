@@ -4,7 +4,8 @@ public class Partie
     public double VerdaMoula {get; set;}
     public int Semaine {get; set;}
     public int[] ListePlantes {get; set;}
-    public int[] ListeSemis {get; set;}
+    public PlanteSimple[] ListeInfoPlantes {get; set;}
+    public int[] ListeSemis { get; set; }
     public int[] ListeItems {get; set;}
     public Terrain[] ListeTerrains {get; set;}
 
@@ -17,7 +18,24 @@ public class Partie
         ListePlantes =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
         ListeSemis =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
         ListeItems=[0,0,0,0,0,0,0,0,0,0];
-        ListeTerrains=[new TerrainSimple("Plaines Paisibles"), new TerrainSimple("Foret Facetieuse"), new TerrainSimple("Volcan Violent"), new TerrainMine(),new TerrainAJachere()];
+        ListeInfoPlantes = [
+            new PlanteSimple('a', "Arachnéide", 500, 5000, 7, "Médicinale", "Desert Delicat", [16, 26], [6, 9], [1, 5], [0, 10]),
+            new PlanteSimple('b', "Brocélia", 5, 30, 3, "Comestible", "Plaines Paisibles", [18, 23], [8, 9], [3, 5], [17, 22]),
+            new PlanteTailler('c', "Cacruz", 150, 600, 3, "Comestible", "Desert Delicat", [16, 26], [6, 9], [1, 5], [0, 10]),
+            new PlanteSimple('d', "Demonia", 10, 40, 2, "Comestible", "Volcan Violent", [26, 33], [7, 9], [1, 3], [5, 15]),
+            new PlanteSimple('e', "Erdomania", 3, 12, 2, "Comestible", "Plaines Paisibles", [14, 18], [7, 8], [4, 6], [15, 20]),
+            new PlanteSimple('f', "Fenecia", 30, 240, 8, "Ornementale", "Volcan Violent", [28, 44], [8, 11], [1, 2], [5, 15]),
+            new PlanteFilante('g', "Gorhy", 20, 120, 4, "Comestible", "Volcan Violent", [26, 35], [7, 9], [1, 3], [5, 15]),
+            new PlanteSimple('h', "Humalis", 8, 64, 10, "Médicinale", "Plaines Paisibles", [12, 25], [6, 11], [3, 8], [10, 20]),
+            new PlanteSimple('i', "Ivoina", 80, 480, 5, "Comestible", "Foret Facetieuse", [9, 18], [4, 6], [3, 4], [35, 45]),
+            new PlanteFilante('j', "Jaunille", 300, 1800, 4, "Comestible", "Desert Delicat", [16, 26], [6, 9], [1, 5], [0, 10]),
+            new PlanteTailler('m', "Mutina", 750, 3000, 3, "Comestible", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]),
+            new PlanteSimple('n', "Nénustar", 1250, 7500, 5, "Comestible", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]),
+            new PlanteSimple('p', "Placinet", 50, 200, 2, "Comestible", "Foret Facetieuse", [9, 18], [4, 6], [3, 4], [35, 45]),
+            new PlanteTailler('k', "Kuintefeuille", 2000, 16000, 8, "Ornementale", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]),
+            new PlanteFilante('z', "Zolia", 100, 1000, 10, "Ornementale", "Foret Facétieuse", [18, 24], [6, 8], [1, 3], [20, 30])
+        ];
+        ListeTerrains =[new TerrainSimple("Plaines Paisibles"), new TerrainSimple("Foret Facetieuse"), new TerrainSimple("Volcan Violent"), new TerrainMine(),new TerrainAJachere()];
     }
 }
 

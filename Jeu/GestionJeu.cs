@@ -78,19 +78,19 @@ public class GestionJeu
                 case ConsoleKey.Q:
                     return 4;
                 case ConsoleKey.D1:
-                    VisualisationTerrain(1);
+                    VisualisationTerrain(Partie.ListeTerrains[0]);
                     break;
                 case ConsoleKey.D2:
-                    VisualisationTerrain(2);
+                    VisualisationTerrain(Partie.ListeTerrains[1]);
                     break;
                 case ConsoleKey.D3:
-                    VisualisationTerrain(3);
+                    VisualisationTerrain(Partie.ListeTerrains[2]);
                     break;
                 case ConsoleKey.D4:
-                    VisualisationTerrain(4);
+                    VisualisationTerrain(Partie.ListeTerrains[3]);
                     break;
                 case ConsoleKey.D5:
-                    VisualisationTerrain(5);
+                    VisualisationTerrain(Partie.ListeTerrains[4]);
                     break;
                 case ConsoleKey.M:
                     Magasin();
@@ -104,25 +104,50 @@ public class GestionJeu
         return 5;
     }
 
-    public void VisualisationTerrain(int terrain)
+    public void VisualisationTerrain(Terrain terrain)
     {
         bool enCours = true;
         while(enCours)
         {
             Console.Clear();
-            Afficher.Potager(Partie.ListeTerrains[terrain-1].Potager);
-            Console.WriteLine($"Terrain {terrain} {Partie.ListeTerrains[terrain-1].Nom} Q pour quitter, P pour Planter");
+            double prixAgrandir = Afficher.Potager(terrain.Potager,terrain.Nom);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Pour planter un Semis🌱 tapez P,\nPour utiliser un Item 🛠️  tapez I,\nPour Récolter les plantes🌳 tapez R,");
+            Console.WriteLine($"Pour obtenir la Documentation📄 du terrain tapez D,\nPour Agrandir le terrain ({prixAgrandir} 💰) tapez A,\nPour Quitter❌​ tapez Q");
+            Console.ForegroundColor = ConsoleColor.White;
+            
 
-            switch(Console.ReadKey().Key)
+            switch (Console.ReadKey().Key)
             {
                 case ConsoleKey.Q:
-                    enCours=false;
+                    enCours = false;
+                    break;
+                case ConsoleKey.A:
+                    if (Partie.VerdaMoula >= prixAgrandir)
+                    {
+                        terrain.AgrandirPotager();
+                        Partie.VerdaMoula -= prixAgrandir;
+                    }
+                    else
+                    {
+                        Afficher.TexteEnProgressif("Vous êtes a sec c non", 70);
+                    }
+                    break;
+                case ConsoleKey.R:
+                    int[] recolte = terrain.Recolter();
+                    for (int k = 0; k < recolte.Length; k++)
+                    {
+                        Partie.ListePlantes[k] += recolte[k];
+                    }
+                    break;
+                case ConsoleKey.D:
+                    Afficher.InfoTerrain(terrain);
                     break;
                 case ConsoleKey.P:
-                    Planter(Partie.ListeTerrains[terrain-1]);
+                    Planter(terrain);
                     break;
                 case ConsoleKey.I:
-                    UtiliserItem(Partie.ListeTerrains[terrain-1]);
+                    UtiliserItem(terrain);
                     break;
                 default:
                     break;
@@ -136,7 +161,7 @@ public class GestionJeu
         while(enCours)
         {
             Console.Clear();
-            Afficher.Potager(terrain.Potager);
+            Afficher.Potager(terrain.Potager,terrain.Nom);
             Console.WriteLine($"Vous avez => {Partie.ListeItems[0]}item1,  {Partie.ListeItems[1]}item2,...");
             Console.WriteLine($"Terrain {terrain} Q pour quitter, Initial de la plante pour plante");
             Console.WriteLine("");
@@ -147,15 +172,6 @@ public class GestionJeu
                     enCours = false;
                     break;
                 case ConsoleKey.A:
-                    if (Partie.ListeItems[0] >= 1)
-                    {
-                        terrain.AgrandirPotager();
-                        Partie.ListeItems[0]--;
-                    }
-                    else
-                    {
-                        Afficher.TexteEnProgressif("Vous ne possédez pas cette iteme va travailler pour te l'acheter feignasse     ", 50);
-                    }
                     break;
                 case ConsoleKey.B:
                     if (Partie.ListeItems[1] >= 1)
@@ -394,12 +410,41 @@ public class GestionJeu
         while (enCours)
         {
             Console.Clear();
-            Afficher.Potager(terrain.Potager);
-            Console.WriteLine($"Vous avez => {Partie.ListePlantes[0]}Plante1,  {Partie.ListePlantes[1]}Plante2,...");
-            Console.WriteLine($"Terrain {terrain} Q pour quitter, Initial de la plante pour plante");
+            Afficher.Potager(terrain.Potager, terrain.Nom);
+            
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n🌿 Vos semis disponibles :");
+            Console.ResetColor();
+
+            for (int i = 0; i < Partie.ListeSemis.Length; i++)
+            {
+                if (Partie.ListeSemis[i] > 2)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+                else if (Partie.ListeSemis[i] > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                }
+                Console.Write($"{char.ToUpper(Partie.ListeInfoPlantes[i].Affichage)}-{Partie.ListeInfoPlantes[i].Nom,-13} : {Partie.ListePlantes[i]}        ");
+
+                if ((i + 1) % 4 == 0)
+                    Console.WriteLine();
+            }
+            Console.ResetColor();
+
+
+
+
+
+            Console.WriteLine($"\n\nTapez l'initial de la Plante pour la planter🌳 \nTapez Q pour Quitter❌​​");
             Console.WriteLine("");
 
-            switch (Console.ReadKey().Key)
+            switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.Q:
                     enCours = false;
@@ -659,7 +704,7 @@ public class GestionJeu
             
             Console.Clear();
             Afficher.Magasin();
-            switch(Console.ReadKey().Key)
+            switch(Console.ReadKey(true).Key)
             {
                 case ConsoleKey.Q:
                     enCours=false;
@@ -682,254 +727,176 @@ public class GestionJeu
     public void MagasinSemis()
     {
         bool enCours = true;
-        while(enCours)
+        ConsoleColor fondInitial = Console.BackgroundColor;
+        ConsoleColor couleurInitiale = Console.ForegroundColor;
+
+        while (enCours)
         {
             Console.Clear();
-            Console.WriteLine($"Verdamoula : {Partie.VerdaMoula}");
-            Console.WriteLine($"Vous avez => {Partie.ListeSemis[0]}Semis1,  {Partie.ListeSemis[1]}Semis2,...");
-            Console.WriteLine("mets l'initial pour acheter j'espère ta la thunasse");
-            
-            switch(Console.ReadKey().Key)
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║                               ✦✦ ACHETEZ DES SEMIS DE QUALITÉ✦✦                               ║");
+            Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
+            Console.ResetColor();
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"\n💰 Verdamoula actuelle : {Partie.VerdaMoula}\n");
+            Console.ResetColor();
+
+            Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║ Semis disponibles :                                                                           ║");
+            Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
+
+            List<char> touches = new List<char> { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'M', 'N', 'P', 'K', 'Z'};
+
+            for (int i = 0; i < 15; i++)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($" {touches[i]} ");
+                Console.ResetColor();
+                Console.Write($"- {Partie.ListeInfoPlantes[i].Nom,-13} : ");
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write($"{Partie.ListeSemis[i],-3} unités");
+                Console.ResetColor();
+
+                Console.Write("  → ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($"+{Partie.ListeInfoPlantes[i].PrixAchat,-5} Verdamoula");
+                Console.ResetColor();
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝\n");
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Tapez la touche du semis que vous souhaitez achetez (A-Z). Tapez Q pour quitter le magasin.\n");
+            Console.ResetColor();
+
+            ConsoleKeyInfo touche = Console.ReadKey(true);
+            switch (touche.Key)
             {
                 case ConsoleKey.Q:
-                    enCours=false;
+                    enCours = false;
                     break;
                 case ConsoleKey.A:
-                    if(Partie.VerdaMoula>=500)
-                    {
-                        Partie.VerdaMoula-=500;
-                        Partie.ListeSemis[0]++;
-                    }
-                    break;
                 case ConsoleKey.B:
-                    if(Partie.VerdaMoula>=5)
-                    {
-                        Partie.VerdaMoula-=5;
-                        Partie.ListeSemis[1]++;
-                    }
-                    break;
                 case ConsoleKey.C:
-                    if(Partie.VerdaMoula>=150)
-                    {
-                        Partie.VerdaMoula-=150;
-                        Partie.ListeSemis[2]++;
-                    }
-                    break;
                 case ConsoleKey.D:
-                    if(Partie.VerdaMoula>=10)
-                    {
-                        Partie.VerdaMoula-=10;
-                        Partie.ListeSemis[3]++;
-                    }
-                    break;
                 case ConsoleKey.E:
-                    if(Partie.VerdaMoula>=3)
-                    {
-                        Partie.VerdaMoula-=3;
-                        Partie.ListeSemis[4]++;
-                    }
-                    break;
                 case ConsoleKey.F:
-                    if(Partie.VerdaMoula>=30)
-                    {
-                        Partie.VerdaMoula-=30;
-                        Partie.ListeSemis[5]++;
-                    }
-                    break;
                 case ConsoleKey.G:
-                    if(Partie.VerdaMoula>=20)
-                    {
-                        Partie.VerdaMoula-=20;
-                        Partie.ListeSemis[6]++;
-                    }
-                    break;
                 case ConsoleKey.H:
-                    if(Partie.VerdaMoula>=8)
-                    {
-                        Partie.VerdaMoula-=8;
-                        Partie.ListeSemis[7]++;
-                    }
-                    break;
                 case ConsoleKey.I:
-                    if(Partie.VerdaMoula>=80)
-                    {
-                        Partie.VerdaMoula-=80;
-                        Partie.ListeSemis[8]++;
-                    }
-                    break;
                 case ConsoleKey.J:
-                    if(Partie.VerdaMoula>=300)
-                    {
-                        Partie.VerdaMoula-=300;
-                        Partie.ListeSemis[9]++;
-                    }
-                    break;
                 case ConsoleKey.M:
-                    if(Partie.VerdaMoula>=750)
-                    {
-                        Partie.VerdaMoula-=750;
-                        Partie.ListeSemis[10]++;
-                    }
-                    break;
                 case ConsoleKey.N:
-                    if(Partie.VerdaMoula>=1250)
-                    {
-                        Partie.VerdaMoula-=1250;
-                        Partie.ListeSemis[11]++;
-                    }
-                    break;
                 case ConsoleKey.P:
-                    if(Partie.VerdaMoula>=50)
-                    {
-                        Partie.VerdaMoula-=50;
-                        Partie.ListeSemis[12]++;
-                    }
-                    break;
                 case ConsoleKey.K:
-                    if(Partie.VerdaMoula>=2000)
-                    {
-                        Partie.VerdaMoula-=2000;
-                        Partie.ListeSemis[13]++;
-                    }
-                    break;
                 case ConsoleKey.Z:
-                    if(Partie.VerdaMoula>=100)
+                    int index = touches.IndexOf(char.ToUpper(touche.KeyChar));
+                    if (index >= 0 && Partie.VerdaMoula >= Partie.ListeInfoPlantes[index].PrixAchat)
                     {
-                        Partie.VerdaMoula-=100;
-                        Partie.ListeSemis[14]++;
+                        Partie.VerdaMoula -= Partie.ListeInfoPlantes[index].PrixAchat;
+                        Partie.ListeSemis[index]++;
                     }
                     break;
                 default:
                     break;
             }
+
+            Console.BackgroundColor = fondInitial;
+            Console.ForegroundColor = couleurInitiale;
         }
     }
 
     public void MagasinPlantes()
     {
         bool enCours = true;
-        while(enCours)
+        ConsoleColor fondInitial = Console.BackgroundColor;
+        ConsoleColor couleurInitiale = Console.ForegroundColor;
+
+        while (enCours)
         {
             Console.Clear();
-            Console.WriteLine($"Verdamoula : {Partie.VerdaMoula}");
-            Console.WriteLine($"Vous avez => {Partie.ListePlantes[0]}Semis1,  {Partie.ListePlantes[1]}Semis2,...");
-            Console.WriteLine("mets l'initial pour vendre et être à l'aise financierement");
 
-            switch(Console.ReadKey().Key)
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║                           ✦✦ VENDEZ VOS PLANTES AU MEILLEUR PRIX✦✦                            ║");
+            Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
+            Console.ResetColor();
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"\n💰 Verdamoula actuelle : {Partie.VerdaMoula}\n");
+            Console.ResetColor();
+
+            Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║ Vos Plantes :                                                                                 ║");
+            Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
+
+            List<char> touches = new List<char> { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'M', 'N', 'P', 'K', 'Z'};
+
+            for (int i = 0; i < 15; i++)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($" {touches[i]} ");
+                Console.ResetColor();
+                Console.Write($"- {Partie.ListeInfoPlantes[i].Nom,-13} : ");
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write($"{Partie.ListePlantes[i],-3} unités");
+                Console.ResetColor();
+
+                Console.Write("  → ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($"+{Partie.ListeInfoPlantes[i].PrixAchat,-5} Verdamoula");
+                Console.ResetColor();
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝\n");
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Tapez la touche de la plante que vous souhaitez vendre (A-Z). Tapez Q pour quitter le magasin.\n");
+            Console.ResetColor();
+            ConsoleKeyInfo touche = Console.ReadKey(true);
+            switch (touche.Key)
             {
                 case ConsoleKey.Q:
-                    enCours=false;
+                    enCours = false;
                     break;
                 case ConsoleKey.A:
-                    if(Partie.ListePlantes[0]>=1)
-                    {
-                        Partie.VerdaMoula+=5000;
-                        Partie.ListePlantes[0]--;
-                    }
-                    break;
                 case ConsoleKey.B:
-                    if(Partie.ListePlantes[1]>=1)
-                    {
-                        Partie.VerdaMoula+=30;
-                        Partie.ListePlantes[1]--;
-                    }
-                    break;
                 case ConsoleKey.C:
-                    if(Partie.ListePlantes[2]>=1)
-                    {
-                        Partie.VerdaMoula+=600;
-                        Partie.ListePlantes[2]--;
-                    }
-                    break;
                 case ConsoleKey.D:
-                    if(Partie.ListePlantes[3]>=1)
-                    {
-                        Partie.VerdaMoula+=40;
-                        Partie.ListePlantes[3]--;
-                    }
-                    break;
                 case ConsoleKey.E:
-                    if(Partie.ListePlantes[4]>=1)
-                    {
-                        Partie.VerdaMoula+=12;
-                        Partie.ListePlantes[4]--;
-                    }
-                    break;
                 case ConsoleKey.F:
-                    if(Partie.ListePlantes[5]>=1)
-                    {
-                        Partie.VerdaMoula+=240;
-                        Partie.ListePlantes[5]--;
-                    }
-                    break;
                 case ConsoleKey.G:
-                    if(Partie.ListePlantes[6]>=1)
-                    {
-                        Partie.VerdaMoula+=120;
-                        Partie.ListePlantes[6]--;
-                    }
-                    break;
                 case ConsoleKey.H:
-                    if(Partie.ListePlantes[7]>=1)
-                    {
-                        Partie.VerdaMoula+=64;
-                        Partie.ListePlantes[7]--;
-                    }
-                    break;
                 case ConsoleKey.I:
-                    if(Partie.ListePlantes[8]>=1)
-                    {
-                        Partie.VerdaMoula+=480;
-                        Partie.ListePlantes[8]--;
-                    }
-                    break;
                 case ConsoleKey.J:
-                    if(Partie.ListePlantes[9]>=1)
-                    {
-                        Partie.VerdaMoula+=1800;
-                        Partie.ListePlantes[9]--;
-                    }
-                    break;
                 case ConsoleKey.M:
-                    if(Partie.ListePlantes[10]>=1)
-                    {
-                        Partie.VerdaMoula+=3000;
-                        Partie.ListePlantes[10]--;
-                    }
-                    break;
                 case ConsoleKey.N:
-                    if(Partie.ListePlantes[11]>=1)
-                    {
-                        Partie.VerdaMoula+=7500;
-                        Partie.ListePlantes[11]--;
-                    }
-                    break;
                 case ConsoleKey.P:
-                    if(Partie.ListePlantes[12]>=1)
-                    {
-                        Partie.VerdaMoula+=200;
-                        Partie.ListePlantes[12]--;
-                    }
-                    break;
                 case ConsoleKey.K:
-                    if(Partie.ListePlantes[13]>=1)
-                    {
-                        Partie.VerdaMoula+=16000;
-                        Partie.ListePlantes[13]--;
-                    }
-                    break;
                 case ConsoleKey.Z:
-                    if(Partie.ListePlantes[14]>=1)
+                    int index = touches.IndexOf(char.ToUpper(touche.KeyChar));
+                    if (index >= 0 && Partie.ListePlantes[index] >= 1)
                     {
-                        Partie.VerdaMoula+=1000;
-                        Partie.ListePlantes[14]--;
+                        Partie.VerdaMoula += Partie.ListeInfoPlantes[index].PrixAchat;
+                        Partie.ListePlantes[index]--;
                     }
                     break;
                 default:
                     break;
             }
+
+            Console.BackgroundColor = fondInitial;
+            Console.ForegroundColor = couleurInitiale;
         }
     }
+
     
     
     public void MagasinItems()
@@ -942,7 +909,7 @@ public class GestionJeu
             Console.WriteLine($"Vous avez => {Partie.ListeItems[0]}item1,  {Partie.ListeItems[1]}item2,...");
             Console.WriteLine("mets l'initial pour acheter j'espère ta la thunasse");
 
-            switch(Console.ReadKey().Key)
+            switch(Console.ReadKey(true).Key)
             {
                 case ConsoleKey.Q:
                     enCours=false;

@@ -16,7 +16,7 @@ public abstract class Terrain
         Pluie = [33];
         Ensoleillement = [81];
         Nom = "@";
-        ColonnesDispos = 10;
+        ColonnesDispos = 2;
         Potager = new Plante[10, 20];
         for (int i = 0; i < Potager.GetLength(0); i++)
         {
@@ -24,7 +24,7 @@ public abstract class Terrain
             {
                 if (j < ColonnesDispos)
                 {
-                    Potager[i, j] = new SolSimple("Vierge");
+                    Potager[i, j] = new SolSimple("Laboure");
                 }
                 else
                 {
