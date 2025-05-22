@@ -792,6 +792,7 @@ public class GestionJeu
     public void SimulationSemaine()
     {
         Console.Clear();
+        Partie.chenille = false;
         Afficher.TexteEnProgressif("Simulation semaine!!!!", 80);
         Thread.Sleep(800);
         for (int k = 0; k < Partie.ListeTerrains.Length; k++)
@@ -952,13 +953,13 @@ public class GestionJeu
                     else
                     {
                         Afficher.TexteEnProgressif("Et non! vous n'avez pas d'insecticide, vous pouvez tirer une croix sur votre bulletin météo        ", 50);
-                        Partie.chenille = false;
+                        Partie.chenille = true;
                     }
                     enCours = false;
                     break;
                 case ConsoleKey.N:
                     Afficher.TexteEnProgressif("La chenille n'est pas éliminée, vous pouvez alors tirer une croix sur votre bulletin météo de la semaine          ", 50);
-                    Partie.chenille = false;
+                    Partie.chenille = true;
                     enCours = false;
                     break;
             }
