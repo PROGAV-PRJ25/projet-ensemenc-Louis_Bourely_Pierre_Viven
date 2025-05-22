@@ -80,11 +80,6 @@ public abstract class Terrain
         {
             Potager[a, b] = plante;
         }
-        else
-        {
-            Console.WriteLine("Il n'est pas possible de planter à cette position");
-        }
-
     }
 
     public int[] Recolter()

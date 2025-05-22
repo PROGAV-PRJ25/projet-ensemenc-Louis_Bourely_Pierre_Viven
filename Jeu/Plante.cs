@@ -47,9 +47,9 @@ public class PlanteSimple : Plante
     public double[] Temperature { get; set; }
     public double[] Ensoleillement { get; set; }
     public double[] Pluie { get; set; }
-    public double[] Humidité { get; set; }
+    public double[] Humidite { get; set; }
 
-    public PlanteSimple(char affichage, string nom, double prixAchat, double prixVente, double croissance, string type, string terrainFavori, double[] temperature, double[] ensoleillement, double[] pluie, double[] humidité) : base()
+    public PlanteSimple(char affichage, string nom, double prixAchat, double prixVente, double croissance, string type, string terrainFavori, double[] temperature, double[] ensoleillement, double[] pluie, double[] humidite) : base()
     {
         Affichage = affichage;
         Nom = nom;
@@ -61,23 +61,29 @@ public class PlanteSimple : Plante
         Temperature = temperature;
         Ensoleillement = ensoleillement;
         Pluie = pluie;
-        Humidité = humidité;
+        Humidite = humidite;
+    }
+    
+    public PlanteSimple Clone()
+    {
+        return new PlanteSimple(Affichage, Nom, PrixAchat, PrixVente, Croissance, Type, TerrainFavori,Temperature, Ensoleillement,Pluie, Humidite);
     }
 
-    public virtual void SimulerCroissance(Terrain terrain,int i, int j)
+    public virtual void SimulerCroissance(Terrain terrain, int i, int j)
     {
         int condition = 0;
         if (terrain.Temperature[4] >= Temperature[0] && terrain.Temperature[4] <= Temperature[1]) condition++;    // dans le tableau terrain.Temperature, la 5è case, soit terrain.Température[4] comprendra toujours la température actuelle du terrain. 
-        if (terrain.Humidite[4] >= Humidité[0] && terrain.Humidite[4] <= Humidité[1]) condition++;
+        if (terrain.Humidite[4] >= Humidite[0] && terrain.Humidite[4] <= Humidite[1]) condition++;
         if (terrain.Pluie[4] >= Pluie[0] && terrain.Pluie[4] <= Pluie[1]) condition++;
         if (terrain.Ensoleillement[4] >= Ensoleillement[0] && terrain.Ensoleillement[4] <= Ensoleillement[1]) condition++;
 
         bool estTerrainFavori = TerrainFavori == terrain.Nom;
-        if ((estTerrainFavori && condition >= 2) || (!estTerrainFavori && condition >= 3))
+        if ((estTerrainFavori && condition >= 2 && Croissance != 0) || (!estTerrainFavori && condition >= 3 && Croissance != 0))
         {
+            Affichage n = new Affichage();
             Croissance--;
         }
-        else if ((estTerrainFavori && condition == 0 && Croissance!=0) || (!estTerrainFavori && condition <= 1 && Croissance!=0))
+        else if ((estTerrainFavori && condition == 0 && Croissance != 0) || (!estTerrainFavori && condition <= 1 && Croissance != 0))
         {
             terrain.DetruirePlante(i, j);
         }
