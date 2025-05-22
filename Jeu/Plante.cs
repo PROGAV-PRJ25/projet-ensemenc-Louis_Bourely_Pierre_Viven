@@ -116,7 +116,7 @@ public class PlanteSimple : Plante
         if (terrain.Pluie[4] >= Pluie[0] && terrain.Pluie[4] <= Pluie[1]) condition++;
         if (terrain.Ensoleillement[4] >= Ensoleillement[0] && terrain.Ensoleillement[4] <= Ensoleillement[1]) condition++;
 
-        bool estTerrainFavori = (TerrainFavori == terrain.Nom);
+        bool estTerrainFavori = TerrainFavori == terrain.Nom;
         if ((estTerrainFavori && condition >= 2) || (!estTerrainFavori && condition >= 3))
         {
             Croissance--;
