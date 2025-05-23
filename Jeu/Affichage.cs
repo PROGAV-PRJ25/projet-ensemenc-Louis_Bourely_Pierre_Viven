@@ -304,7 +304,7 @@ public class Affichage
 
     public void Chenille()
     {
-        Console.OutputEncoding = System.Text.Encoding.UTF8; 
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
 
         string chenille = @"
 ⠀⠀⣾⣿⠍⠓⢦⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⠖⠛⣿⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -335,6 +335,98 @@ public class Affichage
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠓⢛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀";
 
         Console.WriteLine(chenille);
+    }
+
+
+
+    public void Accueil()
+    {
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+        string accueil = @"
+                    _,_           +                   __
+                    ','                  /\          `. `.
+            .                        .'  \    +      ""  |
+                                    /     \         /  .'         .
+                        .'\      .'       \       `""`
+        +             .-'   `.   /          `.
+                .     .'        \.'             \
+                .-'           \               \   .-`""-.      . +
+            .'.'               \               \.'       `-.
+            /                    `.           .-'\           `-._
+            .'                       \       .-'                   `-.
+                                                                    `-.
+    .-------------------'''''''''''''''              _.--      .'
+                                    ___..         _.--''        .'jb
+                            --''''             '            .'
+
+    ";
+
+        Console.WriteLine(accueil);
+        Console.ForegroundColor = ConsoleColor.White;
+    }
+    
+
+
+
+    public void Rat()
+    {
+        // Pour bien afficher tous les caractères, surtout les symboles spéciaux
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+        string rat = @"
+         __             _,-""~^""-.
+       _// )      _,-""~`         `.
+     ."" ( /`""-,-""`                 ;
+    / 6                             ;
+   /           ,             ,-""     ;
+  (,__.--.      \           /        ;
+   //'   /`-.\   |          |        `._________
+     _.-'_/`  )  )--...,,,___\     \-----------,)
+   (((""~` _.-'.-'           __`-.   )         //
+         (((""`             (((---~""`         //
+                                            ((________________
+                                            `----""""~~~~^^^```";
+
+        Console.WriteLine(rat);
+
+    }
+    public void Poule()
+    {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+        string poule = @"
+                                              _
+                                   .-.  .--''` )
+                                _ |  |/`   .-'`
+                               ( `\      /`
+                               _)   _.  -'._
+                             /`  .'     .-.-;
+                             `).'      /  \  \
+                            (`,        \_o/_o/__
+                             /           .-''`  ``'-.
+                             {         /` ,___.--''`
+                             {   ;     '-. \ \
+           _   _             {   |'-....-`'.\_\
+          / './ '.           \   \          `""`
+       _  \   \  |            \   \
+      ( '-.J     \_..----.._ __)   `\--..__
+     .-`                    `        `\    ''--...--.
+    (_,.--""`/`         .-             `\       .__ _)
+            |          (                 }    .__ _)
+            \_,         '.               }_  - _.'
+               \_,         '.            } `'--'
+                  '._.     ,_)          /
+                     |    /           .'
+                      \   |    _   .-'
+                       \__/;--.||-'
+                        _||   _||__   __
+                 _ __.-` ""`)(` ""  ```._)
+                (_`,-   ,-'  `''-.   '-._)
+               (  (    /          '.__.'
+                `""`'--'";
+
+        Console.WriteLine(poule);
     }
 }
 

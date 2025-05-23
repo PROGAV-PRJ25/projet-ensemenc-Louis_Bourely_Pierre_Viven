@@ -19,7 +19,7 @@ public class Partie
         Semaine = 1;
         ListePlantes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         ListeSemis = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        ListeItems = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        ListeItems = [0, 0, 0, 0, 0, 0, 0, 0, 0];
         ListeInfoItems = [
             new Item('R',"Raticidre", 3000),             // [0]
             new Item('T',"TirDeFusil", 2500),            // [1]

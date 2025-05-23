@@ -80,7 +80,7 @@ public class PlanteSimple : Plante
         if (terrain.Ensoleillement[4] >= Ensoleillement[0] && terrain.Ensoleillement[4] <= Ensoleillement[1]) condition++;
 
         bool estTerrainFavori = TerrainFavori == terrain.Nom;
-        if ((estTerrainFavori && condition >= 2 && Croissance != 0) || (!estTerrainFavori && condition >= 3 && Croissance != 0))
+        if ((estTerrainFavori && condition >= 2 && Croissance != 0 && Immunite==0) || (!estTerrainFavori && condition >= 3 && Croissance != 0 && Immunite==0))
         {
             Croissance--;
         }
@@ -92,6 +92,10 @@ public class PlanteSimple : Plante
         {
             Affichage = char.ToUpper(Affichage);
         }
-        Immunite--;
+        if (Immunite == 1)
+        {
+            Immunite--;
+        }
+        
     }
 }

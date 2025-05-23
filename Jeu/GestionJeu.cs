@@ -105,7 +105,7 @@ public class GestionJeu
                     return 1;
                 case ConsoleKey.S:
                     return 3;
-                case ConsoleKey.Escape:
+                case ConsoleKey.Spacebar:
                     return 2;
                 case ConsoleKey.Q:
                     return 4;
@@ -213,7 +213,7 @@ public class GestionJeu
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                 }
-                //Console.Write($"{Partie.ListeInfoItems[i].Affichage}-{Partie.ListeInfoItems[i].Nom,-20} : {Partie.ListeItems[i]}        ");
+                Console.Write($"{Partie.ListeInfoItems[i].Affichage}-{Partie.ListeInfoItems[i].Nom,-20} : {Partie.ListeItems[i]}        ");
 
                 if ((i + 1) % 3 == 0)
                     Console.WriteLine();
@@ -230,18 +230,18 @@ public class GestionJeu
                 case ConsoleKey.A:
                     break;
                 case ConsoleKey.B:
-                    if (Partie.ListeSemis[8] >= 1)
+                    if (Partie.ListeItems[8] >= 1)
                     {
                         int[] demandeCase = Afficher.DemandeCasePotage();
                         if (demandeCase[0] != 99)
                         {
                             terrain.Labourer(demandeCase[0], demandeCase[1]);
-                            Partie.ListeSemis[8]--;
+                            Partie.ListeItems[8]--;
                         }
                     }
                     break;
                 case ConsoleKey.S:
-                    if (Partie.ListeSemis[7] >= 1)
+                    if (Partie.ListeItems[7] >= 1)
                     {
                         int[] demandeCase = Afficher.DemandeCasePotage();
                         if (demandeCase[0] != 99)
@@ -250,12 +250,12 @@ public class GestionJeu
                             {
                                 p.Tailler();
                             }
-                            Partie.ListeSemis[7]--;
+                            Partie.ListeItems[7]--;
                         }
                     }
                     break;
                 case ConsoleKey.E:
-                    if (Partie.ListeSemis[6] >= 1)
+                    if (Partie.ListeItems[6] >= 1)
                     {
                         int[] demandeCase = Afficher.DemandeCasePotage();
                         if (demandeCase[0] != 99)
@@ -264,12 +264,12 @@ public class GestionJeu
                             {
                                 p.Croissance--;
                             }
-                            Partie.ListeSemis[6]--;
+                            Partie.ListeItems[6]--;
                         }
                     }
                     break;
                 case ConsoleKey.P:
-                    if (Partie.ListeSemis[5] >= 1)
+                    if (Partie.ListeItems[5] >= 1)
                     {
                         int[] demandeCase = Afficher.DemandeCasePotage();
                         if (demandeCase[0] != 99)
@@ -297,12 +297,12 @@ public class GestionJeu
                                         break;
                                 }
                             }
-                            Partie.ListeSemis[5]--;
+                            Partie.ListeItems[5]--;
                         }
                     }
                     break;
                 case ConsoleKey.C:
-                    if (Partie.ListeSemis[4] >= 1)
+                    if (Partie.ListeItems[4] >= 1)
                     {
                         int[] demandeCase = Afficher.DemandeCasePotage();
                         if (demandeCase[0] != 99)
@@ -311,12 +311,12 @@ public class GestionJeu
                             {
                                 p.Immunite=1;
                             }
-                            Partie.ListeSemis[4]--;
+                            Partie.ListeItems[4]--;
                         }
                     }
                     break;
                 case ConsoleKey.M:
-                    if (Partie.ListeSemis[3] >= 1)
+                    if (Partie.ListeItems[3] >= 1)
                     {
                         int[] demandeCase = Afficher.DemandeCasePotage();
                         if (demandeCase[0] != 99)
@@ -325,7 +325,7 @@ public class GestionJeu
                             {
                                 p.Immunite=-1;
                             }
-                            Partie.ListeSemis[3]--;
+                            Partie.ListeItems[3]--;
                         }
                     }
                     break;

@@ -76,6 +76,8 @@ public class PlanteFilante : PlanteSimple
         base.SimulerCroissance(terrain,i,j);
         Random random = new Random();
         int aleatoire = random.Next(0, 3);
+        Affichage a = new Affichage();
+        a.TexteEnProgressif($"{Extension}        {Croissance}    ",120);
 
         if ((Extension == false) && (Croissance != 0) && (aleatoire == 1))
         {
