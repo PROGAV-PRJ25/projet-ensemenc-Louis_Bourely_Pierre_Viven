@@ -12,6 +12,7 @@ public abstract class Plante
 
 public class SolSimple : Plante
 {
+    public int Jachere { get; set; } = 0;
     public SolSimple(string type) : base()
     {
         switch (type)
@@ -27,6 +28,8 @@ public class SolSimple : Plante
                 return;
             case "Jachère":
                 Affichage = 'x';
+                Random random = new Random();
+                Jachere = random.Next(3, 7);
                 return;
             default:
                 Affichage = '@';
@@ -80,15 +83,17 @@ public class PlanteSimple : Plante
         if (terrain.Ensoleillement[4] >= Ensoleillement[0] && terrain.Ensoleillement[4] <= Ensoleillement[1]) condition++;
 
         bool estTerrainFavori = TerrainFavori == terrain.Nom;
-        if ((estTerrainFavori && condition >= 2 && Croissance != 0 && Immunite==0) || (!estTerrainFavori && condition >= 3 && Croissance != 0 && Immunite==0))
+        Affichage Afficher = new Affichage();
+        Afficher.TexteEnProgressif($"{Croissance}        {Immunite}        {condition}      ", 120);
+        if ((estTerrainFavori && condition >= 2 && Croissance > 0) || (!estTerrainFavori && condition >= 3 && Croissance > 0))
         {
             Croissance--;
         }
-        else if ((estTerrainFavori && condition == 0 && Croissance != 0 && Immunite == 0) || (!estTerrainFavori && condition <= 1 && Croissance != 0 && Immunite == 0))
+        else if ((estTerrainFavori && condition == 0 && Croissance > 0 && Immunite == 0) || (!estTerrainFavori && condition <= 1 && Croissance > 0 && Immunite == 0))
         {
             terrain.DetruirePlante(i, j);
         }
-        if (Croissance == 0)
+        if (Croissance <= 0)
         {
             Affichage = char.ToUpper(Affichage);
         }

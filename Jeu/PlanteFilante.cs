@@ -24,7 +24,7 @@ public class PlanteFilante : PlanteSimple
                 terrain.Planter(CreerZolia(), i - 1, j);
             }
         }
-        else if ((j != terrain.Potager.GetLength(1)) && (terrain.Potager[i, j + 1].Affichage == '•'))
+        else if ((j + 1 < terrain.Potager.GetLength(1)) && (terrain.Potager[i, j + 1].Affichage == '•'))
         {
             if (Nom == "Jaunille")
             {
@@ -39,7 +39,7 @@ public class PlanteFilante : PlanteSimple
                 terrain.Planter(CreerZolia(), i, j+1);
             }
         }
-        else if ((i != terrain.Potager.GetLength(0)) && (terrain.Potager[i + 1, j].Affichage == '•'))
+        else if ((i + 1 < terrain.Potager.GetLength(0)) && (terrain.Potager[i + 1, j].Affichage == '•'))
         {
             if (Nom == "Jaunille")
             {
@@ -76,9 +76,6 @@ public class PlanteFilante : PlanteSimple
         base.SimulerCroissance(terrain,i,j);
         Random random = new Random();
         int aleatoire = random.Next(0, 3);
-        Affichage a = new Affichage();
-        a.TexteEnProgressif($"{Extension}        {Croissance}    ",120);
-
         if ((Extension == false) && (Croissance != 0) && (aleatoire == 1))
         {
             Etendre(i, j, terrain);

@@ -21,16 +21,15 @@ public class Partie
         ListeSemis = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         ListeItems = [0, 0, 0, 0, 0, 0, 0, 0, 0,0];
         ListeInfoItems = [
-            new Item('R',"Raticidre", 3000),             // [0]
-            new Item('T',"TirDeFusil", 2500),            // [1]
-            new Item('I',"InsecticideChenille", 1800),   // [2]
-            new Item('M',"MegaItem", 2000),              // [3]
-            new Item('C',"CasqueAray", 500),            // [4]
-            new Item('P',"PotionMagique", 100),         // [5]
-            new Item('E',"EngraisHyperactif", 1500),     // [6]
-            new Item('S',"Secàtouteur", 5000),              // [7]
-            new Item('B',"Bêchhhhhhut", 20),            // [8]
-            new Item('S',"SupraBêchhhhhhhut",500) //[9]
+            new Item('R',"Raticidre", 3000,"Le Raticidre permet d'enivrer le Rat Mécréant pour le faire fuire de votre Potager."),             // [0]
+            new Item('T',"TirDeFusil", 2500, "Le TirDeFusil tire un cri de Galinacée Hargneuse qui attire le Galinacé Hargneux loin de votre Potager"),            // [1]
+            new Item('I',"InsecticideChenille", 1800, "L'InsecticideChenille protège votre Bulletin Météo contre la Cheeeeeniiiiiiillllle"),   // [2]
+            new Item('M',"MegaItem", 2000,"Le MegaItem protège votre Plante à vie contre toutes les conditions"),              // [3]
+            new Item('C',"CasqueTroué", 500,"Le CasqueTroué protège votre plante contre toutes les conditions pendant un Tour."),            // [4]
+            new Item('P',"PotionMagique", 100,"La PotionMagique donne un effet aléatoir qu peut accèlérer la croissance la ralentir ou bien tuer la plante"),         // [5]
+            new Item('E',"EngraisHyperactif", 1500,"L'EngraisHyperactif avance la Croissance d'une semaine"),     // [6]
+            new Item('S',"SecàtoutHeure", 5000,"Le SecàtoutHeure permet de tailler les plantes"),              // [7]
+            new Item('B',"Bêchhuuuuut", 20,"La Bêchhuuuuut permet de labourer une case d'un Terrain")            // [8]
         ];
         ListeInfoPlantes = [
             new PlanteSimple('a', "Arachnéide", 500, 5000, 7, "Médicinale", "Desert Delicat", [16, 26], [6, 9], [1, 5], [0, 10]),
@@ -179,7 +178,7 @@ public class Sauvegarde  //A finir
         int[] listePlantes = new int[15];
         int nbPlante = 0;
 
-        for (int k = 0; k < listePlantes.Length; k++)
+        for (int k = 0; k < infoPlantes.Length; k++)
         {
             if (infoPlantes[k] == '!')
             {
@@ -198,7 +197,7 @@ public class Sauvegarde  //A finir
         int[] listeSemis = new int[15];
         int nbSemis = 0;
 
-        for (int k = 0; k < listeSemis.Length; k++)
+        for (int k = 0; k < infoSemis.Length; k++)
         {
             if (infoSemis[k] == '!')
             {
@@ -214,10 +213,10 @@ public class Sauvegarde  //A finir
 
 
 
-        int[] listeItems = new int[15];
+        int[] listeItems = new int[9];
         int nbItems = 0;
 
-        for (int k = 0; k < listeItems.Length; k++)
+        for (int k = 0; k < infoItems.Length; k++)
         {
             if (infoItems[k] == '!')
             {
@@ -267,6 +266,9 @@ public class Sauvegarde  //A finir
                     case '%':
                         listeTerrains[nbTerrain].Potager[i, j] = new SolSimple("Friche");
                         break;
+                    case 'x':
+                        listeTerrains[nbTerrain].Potager[i, j] = new SolSimple("Jachère");
+                        break;
                     case '•':
                         listeTerrains[nbTerrain].Potager[i, j] = new SolSimple("Laboure");
                         break;
@@ -311,7 +313,7 @@ public class Sauvegarde  //A finir
                         nombre = "";
                         break;
                     case 'm':
-                        listeTerrains[nbTerrain].Potager[i, j] = new PlanteTailler('ù', "Mutina", 750, 3000, Convert.ToInt32(nombre), "Comestible", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]);
+                        listeTerrains[nbTerrain].Potager[i, j] = new PlanteTailler('m', "Mutina", 750, 3000, Convert.ToInt32(nombre), "Comestible", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]);
                         nombre = "";
                         break;
                     case 'n':
@@ -323,7 +325,7 @@ public class Sauvegarde  //A finir
                         nombre = "";
                         break;
                     case 'k':
-                        listeTerrains[nbTerrain].Potager[i, j] = new PlanteTailler('q', "Kuintefeuille", 2000, 16000, Convert.ToInt32(nombre), "Ornementale", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]);
+                        listeTerrains[nbTerrain].Potager[i, j] = new PlanteTailler('k', "Kuintefeuille", 2000, 16000, Convert.ToInt32(nombre), "Ornementale", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]);
                         nombre = "";
                         break;
                     case 'z':
