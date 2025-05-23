@@ -25,7 +25,7 @@ public class GestionJeu //Classe qui permet de jouer une partie
         bool enCours = true;
         while (enCours)
         {
-            switch (Console.ReadKey().Key)
+            switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.Enter:
                     enCours = false;
@@ -154,7 +154,7 @@ public class GestionJeu //Classe qui permet de jouer une partie
             Console.ForegroundColor = ConsoleColor.White;
 
 
-            switch (Console.ReadKey().Key)
+            switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.Q:
                     enCours = false;
@@ -244,9 +244,9 @@ public class GestionJeu //Classe qui permet de jouer une partie
                         for (int j = 0; j < terrain.Potager.GetLength(1); j++)
                         {
                             terrain.Labourer(i, j);
-                            Partie.ListeItems[9]--;
                         }
                     }
+                    Partie.ListeItems[9]--;
                     break;
                 case ConsoleKey.S: //Sécateur qui taille la plante (peut être réutilisé)
                     if (Partie.ListeItems[7] >= 1)
@@ -489,6 +489,16 @@ public class GestionJeu //Classe qui permet de jouer une partie
             }
 
             Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝\n");
+
+            Console.WriteLine("🏪 Vous pouvez acquérir les Semis de ces Plante au Magasin enchanté...");
+            Console.ResetColor();
+
+            Console.WriteLine("🌦️ À vous de percer le secret des saisons et de choisir les Terrains où elles s’épanouiront, sans quoi elles faneront, hélas... 💀");
+            Console.WriteLine("🛠️ N’ayez crainte d’user des Items mystiques pour stimuler leur croissance... ou pour faire face aux sombres périls qui rôdent parfois... ⚔️");
+
+            Console.WriteLine("🌳 Lorsque votre Plante atteindra sa pleine maturité, elle rayonnera en lettres MAJUSCULES... ✨ Récoltez-la alors sans tarder !");
+            Console.WriteLine("💰 On murmure que ces merveilles se revendent à prix d’or au Magasin... une manne précieuse pour tout Jardinier avisé !\n");
+
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.WriteLine("Tapez la touche de la Plante 🌳 dont vous souhaitez avoir les informations (A-Z). Tapez Q pour Quitter le WikiVerdadura❌\n");
@@ -1009,7 +1019,7 @@ public class GestionJeu //Classe qui permet de jouer une partie
         bool enCours = true;
         while (enCours)
         {
-            Afficher.TexteEnProgressif("La Fée des plantes parcourt votre terrain         ", 50);
+            Afficher.TexteEnProgressif("La Fée des plantes parcourt votre terrain         ", 30);
             for (int i = 0; i < Partie.ListeTerrains[terrain].Potager.GetLength(0); i++)
             {
                 for (int j = 0; j < Partie.ListeTerrains[terrain].Potager.GetLength(1); j++)
@@ -1043,17 +1053,17 @@ public class GestionJeu //Classe qui permet de jouer une partie
         bool enCours = true;
         while (enCours)
         {
-            switch (Console.ReadKey().Key)
+            switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.O:
                     if (Partie.ListeItems[0] >= 1)
                     {
                         Partie.ListeItems[0]--;
-                        Afficher.TexteEnProgressif("Le Rat mécréant🐀​  part la queue entre les jambes grâce au raticide    ", 50);
+                        Afficher.TexteEnProgressif("Le Rat mécréant🐀​  part la queue entre les jambes grâce au raticide    ", 30);
                     }
                     else
                     {
-                        Afficher.TexteEnProgressif("Et non vous n'avez pas de raticide quelle dommage...  🐀​     ", 50);
+                        Afficher.TexteEnProgressif("Et non vous n'avez pas de raticide quelle dommage...  🐀​     ", 30);
                         for (int i = 0; i < Partie.ListeTerrains[terrain].Potager.GetLength(0); i++)
                         {
                             for (int j = 0; j < Partie.ListeTerrains[terrain].Potager.GetLength(1); j++)
@@ -1068,7 +1078,7 @@ public class GestionJeu //Classe qui permet de jouer une partie
                     enCours = false;
                     break;
                 case ConsoleKey.N:
-                    Afficher.TexteEnProgressif("Le rat 🐀​ dévore les plantes oh nooooooo....          ", 50);
+                    Afficher.TexteEnProgressif("Le rat 🐀​ dévore les plantes oh nooooooo....          ", 30);
                     enCours = false;
                     for (int i = 0; i < Partie.ListeTerrains[terrain].Potager.GetLength(0); i++)
                     {
@@ -1098,17 +1108,17 @@ public class GestionJeu //Classe qui permet de jouer une partie
         bool enCours = true;
         while (enCours)
         {
-            switch (Console.ReadKey().Key)
+            switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.O:
                     if (Partie.ListeItems[1] >= 1)
                     {
                         Partie.ListeItems[1]--;
-                        Afficher.TexteEnProgressif("Le Gallinacé Hargneux 🐔​ part les plumes entre les jambes grâce au tir de fusil    ", 50);
+                        Afficher.TexteEnProgressif("Le Gallinacé Hargneux 🐔​ part les plumes entre les jambes grâce au tir de fusil    ", 30);
                     }
                     else
                     {
-                        Afficher.TexteEnProgressif("Et non! vous n'avez pas de tir de fusil quel dommage ...  🐔​      ", 50);
+                        Afficher.TexteEnProgressif("Et non! vous n'avez pas de tir de fusil quel dommage ...  🐔​      ", 30);
                         for (int i = 0; i < Partie.ListeTerrains[terrain].Potager.GetLength(0); i++)
                         {
                             for (int j = 0; j < Partie.ListeTerrains[terrain].Potager.GetLength(1); j++)
@@ -1127,7 +1137,7 @@ public class GestionJeu //Classe qui permet de jouer une partie
                     enCours = false;
                     break;
                 case ConsoleKey.N:
-                    Afficher.TexteEnProgressif("Le Gallinacé Hargneux 🐔​ détruit toutes les plantes comestibles oh noooooo         ", 50);
+                    Afficher.TexteEnProgressif("Le Gallinacé Hargneux 🐔​ détruit toutes les plantes comestibles oh noooooo         ", 30);
                     enCours = false;
                     for (int i = 0; i < Partie.ListeTerrains[terrain].Potager.GetLength(0); i++)
                     {
@@ -1158,23 +1168,23 @@ public class GestionJeu //Classe qui permet de jouer une partie
         bool enCours = true;
         while (enCours)
         {
-            switch (Console.ReadKey().Key)
+            switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.O:
                     if (Partie.ListeItems[2] >= 1)
                     {
                         Partie.ListeItems[2]--;
-                        Afficher.TexteEnProgressif("Vous avez éliminé la cheeeeeniiiiillle 🐛", 50);
+                        Afficher.TexteEnProgressif("Vous avez éliminé la cheeeeeniiiiillle 🐛", 30);
                     }
                     else
                     {
-                        Afficher.TexteEnProgressif("Et non! vous n'avez pas d'insecticide, vous pouvez tirer une croix sur votre bulletin météo ...   🐛     ", 50);
+                        Afficher.TexteEnProgressif("Et non! vous n'avez pas d'insecticide, vous pouvez tirer une croix sur votre bulletin météo ...   🐛     ", 30);
                         Partie.chenille = true;
                     }
                     enCours = false;
                     break;
                 case ConsoleKey.N:
-                    Afficher.TexteEnProgressif("La chenille 🐛 n'est pas éliminée, vous pouvez alors tirer une croix sur votre bulletin météo de la semaine          ", 50);
+                    Afficher.TexteEnProgressif("La chenille 🐛 n'est pas éliminée, vous pouvez alors tirer une croix sur votre bulletin météo de la semaine          ", 30);
                     Partie.chenille = true;
                     enCours = false;
                     break;
@@ -1197,12 +1207,12 @@ public class GestionJeu //Classe qui permet de jouer une partie
         {
             Console.Clear();
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║                                     ✦✦ BULLETIN METEO ✦✦                                      ║");
+            Console.WriteLine("║                                     ✦✦ BULLETIN METEO ⛅✦✦                                    ║");
             Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
             for (int i = 0; i < Partie.ListeTerrains.Length; i++)
             {
-                Console.WriteLine($"║               📍 Terrain : {Partie.ListeTerrains[i].Emoji}{Partie.ListeTerrains[i].Nom,-30}                                     ║");
+                Console.WriteLine($"║             📍 Terrain : {Partie.ListeTerrains[i].Emoji}{Partie.ListeTerrains[i].Nom,-30}                                     ║");
                 Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
 
                 // Données météo formatées et alignées
@@ -1217,7 +1227,7 @@ public class GestionJeu //Classe qui permet de jouer une partie
         }
         while (enCours)
         {
-            switch (Console.ReadKey().Key)
+            switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.Q:
                     enCours = false;
