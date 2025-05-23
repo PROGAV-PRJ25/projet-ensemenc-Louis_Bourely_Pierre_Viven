@@ -22,9 +22,9 @@ public class GestionJeu
     {
         Afficher.Tutoriel(Partie.Nom);
         bool enCours = true;
-        while(enCours)
+        while (enCours)
         {
-            switch(Console.ReadKey().Key)
+            switch (Console.ReadKey().Key)
             {
                 case ConsoleKey.Enter:
                     enCours = false;
@@ -124,7 +124,7 @@ public class GestionJeu
         {
             Console.Clear();
 
-            double prixAgrandir = Afficher.Potager(terrain.Potager,terrain.Nom);
+            double prixAgrandir = Afficher.Potager(terrain.Potager, terrain.Nom);
             Console.WriteLine($"\n💰 Verdamoula actuelle : {Partie.VerdaMoula}\n");
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -452,7 +452,7 @@ public class GestionJeu
             Console.WriteLine($"\n\nTapez l'initial de la Plante pour la planter🌳 \nTapez Q pour Quitter❌​​");
             Console.WriteLine("");
 
-            List<char> touches = new List<char> { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'M', 'N', 'P', 'K', 'Z'};
+            List<char> touches = new List<char> { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'M', 'N', 'P', 'K', 'Z' };
             ConsoleKeyInfo touche = Console.ReadKey(true);
             switch (touche.Key)
             {
@@ -698,91 +698,80 @@ public class GestionJeu
     public void MagasinItems()
     {
         bool enCours = true;
+        ConsoleColor fondInitial = Console.BackgroundColor;
+        ConsoleColor couleurInitiale = Console.ForegroundColor;
+
         while (enCours)
         {
             Console.Clear();
-            Console.WriteLine($"Verdamoula : {Partie.VerdaMoula}");
-            Console.WriteLine($"Vous avez => {Partie.ListeItems[0]}item1,  {Partie.ListeItems[1]}item2,...");
-            Console.WriteLine("mets l'initial pour acheter j'espère ta la thunasse");
 
-            switch (Console.ReadKey(true).Key)
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║                               ✦✦ ACHETEZ DES ITEMS DE QUALITÉ✦✦                               ║");
+            Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
+            Console.ResetColor();
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"\n💰 Verdamoula : {Partie.VerdaMoula}\n");
+            Console.ResetColor();
+
+            Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║ Items disponibles :                                                                           ║");
+            Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
+
+            List<char> touches = new List<char> { 'R', 'T', 'I', 'M', 'C', 'P', 'E', 'S', 'B' };
+            for (int i = 0; i < 9; i++)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($" {touches[i]} ");
+                Console.ResetColor();
+                Console.Write($"- {Partie.ListeInfoItems[i].Nom,-19} : ");
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write($"{Partie.ListeItems[i],-3} unités");
+                Console.ResetColor();
+
+                Console.Write("  → ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($"{Partie.ListeInfoItems[i].PrixAchat,-5} Verdamoula");
+                Console.ResetColor();
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝\n");
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Tapez la touche de l'item que vous souhaitez achetez (A-Z). Tapez Q pour quitter le magasin.\n");
+            Console.ResetColor();
+
+            ConsoleKeyInfo touche = Console.ReadKey(true);
+            switch (touche.Key)
             {
                 case ConsoleKey.Q:
                     enCours = false;
                     break;
-                case ConsoleKey.A:
-                    if (Partie.VerdaMoula >= 5)
-                    {
-                        Partie.VerdaMoula -= 5;
-                        Partie.ListeItems[0]++;
-                    }
-                    break;
-                case ConsoleKey.B:
-                    if (Partie.VerdaMoula >= 5)
-                    {
-                        Partie.VerdaMoula -= 5;
-                        Partie.ListeItems[1]++;
-                    }
-                    break;
-                case ConsoleKey.C:
-                    if (Partie.VerdaMoula >= 150)
-                    {
-                        Partie.VerdaMoula -= 150;
-                        Partie.ListeItems[2]++;
-                    }
-                    break;
-                case ConsoleKey.D:
-                    if (Partie.VerdaMoula >= 10)
-                    {
-                        Partie.VerdaMoula -= 10;
-                        Partie.ListeItems[3]++;
-                    }
-                    break;
-                case ConsoleKey.E:
-                    if (Partie.VerdaMoula >= 3)
-                    {
-                        Partie.VerdaMoula -= 3;
-                        Partie.ListeItems[4]++;
-                    }
-                    break;
-                case ConsoleKey.F:
-                    if (Partie.VerdaMoula >= 30)
-                    {
-                        Partie.VerdaMoula -= 30;
-                        Partie.ListeItems[5]++;
-                    }
-                    break;
-                case ConsoleKey.G:
-                    if (Partie.VerdaMoula >= 20)
-                    {
-                        Partie.VerdaMoula -= 20;
-                        Partie.ListeItems[6]++;
-                    }
-                    break;
-                case ConsoleKey.H:
-                    if (Partie.VerdaMoula >= 8)
-                    {
-                        Partie.VerdaMoula -= 8;
-                        Partie.ListeItems[7]++;
-                    }
-                    break;
+                case ConsoleKey.R:
+                case ConsoleKey.T:
                 case ConsoleKey.I:
-                    if (Partie.VerdaMoula >= 80)
+                case ConsoleKey.M:
+                case ConsoleKey.C:
+                case ConsoleKey.P:
+                case ConsoleKey.E:
+                case ConsoleKey.S:
+                case ConsoleKey.B:
+                    int index = touches.IndexOf(char.ToUpper(touche.KeyChar));
+                    if (index >= 0 && Partie.VerdaMoula >= Partie.ListeInfoItems[index].PrixAchat)
                     {
-                        Partie.VerdaMoula -= 80;
-                        Partie.ListeItems[8]++;
-                    }
-                    break;
-                case ConsoleKey.J:
-                    if (Partie.VerdaMoula >= 300)
-                    {
-                        Partie.VerdaMoula -= 300;
-                        Partie.ListeItems[9]++;
+                        Partie.VerdaMoula -= Partie.ListeInfoItems[index].PrixAchat;
+                        Partie.ListeItems[index]++;
                     }
                     break;
                 default:
                     break;
             }
+
+            Console.BackgroundColor = fondInitial;
+            Console.ForegroundColor = couleurInitiale;
         }
     }
 
@@ -802,7 +791,7 @@ public class GestionJeu
         }
         Partie.Semaine++;
         Random random = new Random();
-        int urgences = 12;//random.Next(1, 51);
+        int urgences = 13;//random.Next(1, 51);
         switch (urgences)
         {
             case 10:
@@ -814,19 +803,50 @@ public class GestionJeu
             case 12:
                 Chenille();
                 break;
+            case 13:
+                FeeDesPlantes();
+                break;
             default:
                 break;
         }
     }
+    public void FeeDesPlantes()
+    {
+        Random random = new Random();
+        int terrain = 0;//random.Next(0, 5);
+        Console.Clear();
+        Console.WriteLine($"YOUPI, une Fée des plantes apparaît sur votre terrain {Partie.ListeTerrains[terrain].Nom}. Chaque plante qui pousse actuellement sur ce terrain a une probablité de voir sa croissance se terminer immédiatement.");
+        bool enCours = true;
+        while (enCours)
+        {
+            Afficher.TexteEnProgressif("La Fée des plantes parcourt votre terrain         ", 50);
+            for (int i = 0; i < Partie.ListeTerrains[terrain].Potager.GetLength(0); i++)
+            {
+                for (int j = 0; j < Partie.ListeTerrains[terrain].Potager.GetLength(1); j++)
+                {
+                    if (Partie.ListeTerrains[terrain].Potager[i, j] is PlanteSimple plante)
+                    {
+                        int croissanceInstantane = 1;//random.Next(0, 3);
+                        if (croissanceInstantane == 1)
+                        {
+                            plante.Croissance = 0;
+                        }
 
+                    }
+                }
+            }
+            enCours = false;
+        }
+    }
 
     public void Rat()
     {
         Random random = new Random();
         int terrain = random.Next(0, 5);
         Console.Clear();
+        Afficher.Rat();
         Console.WriteLine($"Oh non un Rat mécréant sur votre terrain {Partie.ListeTerrains[terrain].Nom} mettez un raticide sinon il va dévorer toutes les plantes du terrain");
-        Console.Write("Pour utiliser le raticide tapez O sinon tapez N ");
+        Console.WriteLine("Pour utiliser le raticide tapez O sinon tapez N ");
         bool enCours = true;
         while (enCours)
         {
@@ -879,8 +899,9 @@ public class GestionJeu
         Random random = new Random();
         int terrain = random.Next(0, 5);
         Console.Clear();
+        Afficher.Poule();
         Console.WriteLine($"Oh non un Gallinacé Hargneux est arrivé sur votre terrain {Partie.ListeTerrains[terrain].Nom} utilisez un tir de fusil sinon il va dévorer toutes les plantes comestibles du terrain");
-        Console.Write("Pour utiliser le tir de fusil tapez O sinon tapez N ");
+        Console.WriteLine("Pour utiliser le tir de fusil tapez O sinon tapez N ");
         bool enCours = true;
         while (enCours)
         {
@@ -983,8 +1004,6 @@ public class GestionJeu
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
             for (int i = 0; i < Partie.ListeTerrains.Length; i++)
             {
-                Console.WriteLine();
-                Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
                 Console.WriteLine($"║               📍 Terrain : {Partie.ListeTerrains[i].Nom,-30}                                     ║");
                 Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
 
