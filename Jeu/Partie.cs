@@ -61,7 +61,7 @@ public class Partie
 
 
 
-public class Sauvegarde  //A finir
+public class Sauvegarde  
 {
     public string Nom { get; set; }
     public double VerdaMoula { get; set; }
