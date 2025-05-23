@@ -287,6 +287,7 @@ public class Affichage
         Console.WriteLine();
         Console.WriteLine("🏰 Un fabuleux Magasin t’attend dans ton monde... pousse ses portes, tu y trouveras merveilles et trésors botaniques ✨");
         Console.WriteLine("🧺 Des semis d’une qualité légendaire t’y attendent, mais prends garde : chaque plante a ses caprices, et toutes ne s’épanouissent pas dans le même sol...");
+        Console.WriteLine("​📖​ De plus de vieux grimoires s'y trouvent et regorgent de tous les savoirs dont tu auras besoin.");
         Console.WriteLine("💰 On raconte que le Magasin rachète les Plantes mûres à un prix... fort alléchant.");
         Console.WriteLine("Les esprits parlent de 'PnL', une magie de richesse mystérieuse qui te permettra d'amasser plein de Verdamoula 💰...");
 
