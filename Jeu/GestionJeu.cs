@@ -437,9 +437,208 @@ public class GestionJeu
                 case ConsoleKey.D3:
                     MagasinItems();
                     break;
+                case ConsoleKey.W:
+                    Wiki();
+                    break;
+                case ConsoleKey.G:
+                    Garage();
+                    break;
                 default:
                     break;
             }
+        }
+    }
+
+    public void Wiki()
+    {
+        bool enCours = true;
+        ConsoleColor fondInitial = Console.BackgroundColor;
+        ConsoleColor couleurInitiale = Console.ForegroundColor;
+        int afficheInfo = -1;
+
+        while (enCours)
+        {
+            Console.Clear();
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║                               ✦✦   WikiVerdadure Plantes    ✦✦                                ║");
+            Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
+            Console.ResetColor();
+
+            Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║ Plantes connues :                                                                             ║");
+            Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
+
+            List<char> touches = new List<char> { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'M', 'N', 'P', 'K', 'Z' };
+
+            for (int i = 0; i < 15; i++)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($" {touches[i]} ");
+                Console.ResetColor();
+                Console.Write($"- {Partie.ListeInfoPlantes[i].Nom,-13}  ");
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝\n");
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Tapez la touche de la Plante dont vous souhaitez avoir les informations (A-Z). Tapez Q pour quitter le WikiVerdadura.\n");
+            Console.ResetColor();
+
+            if (afficheInfo >= 0)
+            {
+
+                Console.WriteLine("═══════════════════════════════════════════════════════════════════════════════════════");
+                Console.WriteLine($"🌳   PLANTE : {Partie.ListeInfoPlantes[afficheInfo].Nom}   ");
+                Console.WriteLine("═══════════════════════════════════════════════════════════════════════════════════════");
+                Console.ResetColor();
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.ResetColor();
+
+                Console.WriteLine($"  📜 Type        : {Partie.ListeInfoPlantes[afficheInfo].Type}");
+                Console.WriteLine($"  🌍 Terrain     : {Partie.ListeInfoPlantes[afficheInfo].TerrainFavori}");
+                Console.WriteLine($"  💰 Achat/Vente : {Partie.ListeInfoPlantes[afficheInfo].PrixAchat} / {Partie.ListeInfoPlantes[afficheInfo].PrixVente}");
+                Console.WriteLine($"  🌡️  Température : entre {Partie.ListeInfoPlantes[afficheInfo].Temperature[0]}-{Partie.ListeInfoPlantes[afficheInfo].Temperature[1]}°C");
+                Console.WriteLine($"  ☀️  Ensoleillement : entre {Partie.ListeInfoPlantes[afficheInfo].Ensoleillement[0]}-{Partie.ListeInfoPlantes[afficheInfo].Ensoleillement[1]}H");
+                Console.WriteLine($"  🌧️  Pluie       : entre {Partie.ListeInfoPlantes[afficheInfo].Pluie[0]}-{Partie.ListeInfoPlantes[afficheInfo].Pluie[1]}mm");
+                Console.WriteLine($"  💧 Humidité    : entre {Partie.ListeInfoPlantes[afficheInfo].Humidite[0]}-{Partie.ListeInfoPlantes[afficheInfo].Humidite[1]}%");
+                Console.WriteLine($"  ⏳ Temps Croissance   : {Partie.ListeInfoPlantes[afficheInfo].Croissance}");
+                Console.Write($"  🛠️  Capacité     : {Partie.ListeInfoPlantes[afficheInfo].GetType()}");
+                if (Partie.ListeInfoPlantes[afficheInfo] is PlanteFilante)
+                {
+                    Console.WriteLine(" (Plante ayant la capcité de se propoger sur une case adjacente une fois dans sa vie aléatoirement)");
+                }
+                else if (Partie.ListeInfoPlantes[afficheInfo] is PlanteTailler)
+                {
+                    Console.WriteLine(" (Plante qui s'affiche en vert lorsqu'elle doit être taillée, nécessite un Sécateur pour la tailler)");
+                }
+                else
+                {
+                    Console.WriteLine("");
+                }
+                Console.WriteLine("──────────────────────────────────────────────────────────────────────────────\n");
+            }
+
+            ConsoleKeyInfo touche = Console.ReadKey(true);
+            switch (touche.Key)
+            {
+                case ConsoleKey.Q:
+                    enCours = false;
+                    break;
+                case ConsoleKey.A:
+                case ConsoleKey.B:
+                case ConsoleKey.C:
+                case ConsoleKey.D:
+                case ConsoleKey.E:
+                case ConsoleKey.F:
+                case ConsoleKey.G:
+                case ConsoleKey.H:
+                case ConsoleKey.I:
+                case ConsoleKey.J:
+                case ConsoleKey.M:
+                case ConsoleKey.N:
+                case ConsoleKey.P:
+                case ConsoleKey.K:
+                case ConsoleKey.Z:
+                    int index = touches.IndexOf(char.ToUpper(touche.KeyChar));
+                    if (index >= 0)
+                    {
+                        afficheInfo = index;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            Console.BackgroundColor = fondInitial;
+            Console.ForegroundColor = couleurInitiale;
+        }
+    }
+
+    public void Garage()
+    {
+        bool enCours = true;
+        ConsoleColor fondInitial = Console.BackgroundColor;
+        ConsoleColor couleurInitiale = Console.ForegroundColor;
+        int afficheInfo = -1;
+
+        while (enCours)
+        {
+            Console.Clear();
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║                               ✦✦  Garage & Conseils en Items    ✦✦                                ║");
+            Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
+            Console.ResetColor();
+
+            Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║ Items connues :                                                                               ║");
+            Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
+
+            List<char> touches = new List<char> { 'R', 'T', 'I', 'M', 'C', 'P', 'E', 'S', 'B', 'U' };
+
+            for (int i = 0; i < 10; i++)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($" {touches[i]} ");
+                Console.ResetColor();
+                Console.Write($"- {Partie.ListeInfoItems[i].Nom,-13}  ");
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝\n");
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Tapez la touche de l'Item dont vous souhaitez avoir les informations (A-Z). Tapez Q pour quitter le garage.\n");
+            Console.ResetColor();
+
+            if (afficheInfo >= 0)
+            {
+
+                Console.WriteLine("═══════════════════════════════════════════════════════════════════════════════════════");
+                Console.WriteLine($"🛠️   Item : {Partie.ListeInfoItems[afficheInfo].Nom}   ");
+                Console.WriteLine("═══════════════════════════════════════════════════════════════════════════════════════");
+                Console.ResetColor();
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.ResetColor();
+
+
+                Console.WriteLine($"  💰 Prix : {Partie.ListeInfoItems[afficheInfo].PrixAchat} ");
+                Console.WriteLine($"  🧾​  Description :  {Partie.ListeInfoItems[afficheInfo].Description}");
+                Console.WriteLine("──────────────────────────────────────────────────────────────────────────────\n");
+            }
+
+            ConsoleKeyInfo touche = Console.ReadKey(true);
+            switch (touche.Key)
+            {
+                case ConsoleKey.Q:
+                    enCours = false;
+                    break;
+                case ConsoleKey.R:
+                case ConsoleKey.T:
+                case ConsoleKey.I:
+                case ConsoleKey.M:
+                case ConsoleKey.C:
+                case ConsoleKey.P:
+                case ConsoleKey.E:
+                case ConsoleKey.S:
+                case ConsoleKey.B:
+                case ConsoleKey.U:
+                    int index = touches.IndexOf(char.ToUpper(touche.KeyChar));
+                    if (index >= 0)
+                    {
+                        afficheInfo = index;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            Console.BackgroundColor = fondInitial;
+            Console.ForegroundColor = couleurInitiale;
         }
     }
 
@@ -641,8 +840,8 @@ public class GestionJeu
             Console.WriteLine("║ Items disponibles :                                                                           ║");
             Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
 
-            List<char> touches = new List<char> { 'R', 'T', 'I', 'M', 'C', 'P', 'E', 'S', 'B' };
-            for (int i = 0; i < 9; i++)
+            List<char> touches = new List<char> { 'R', 'T', 'I', 'M', 'C', 'P', 'E', 'S', 'B', 'U' };
+            for (int i = 0; i < 10; i++)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write($" {touches[i]} ");
@@ -681,6 +880,7 @@ public class GestionJeu
                 case ConsoleKey.E:
                 case ConsoleKey.S:
                 case ConsoleKey.B:
+                case ConsoleKey.U:
                     int index = touches.IndexOf(char.ToUpper(touche.KeyChar));
                     if (index >= 0 && Partie.VerdaMoula >= Partie.ListeInfoItems[index].PrixAchat)
                     {
