@@ -181,10 +181,10 @@ public abstract class Terrain
                 }
             }
         }
-        terrain.Temperature[4] = RecupererTemperature(saison);
-        terrain.Humidite[4] = RecupererHumidite(saison);
-        terrain.Pluie[4] = RecupererPluie(saison);
-        terrain.Ensoleillement[4] = RecupererEnsoleillement(saison);
+        terrain.Temperature[4] = Math.Round(RecupererTemperature(saison),1);
+        terrain.Humidite[4] = Math.Round(RecupererHumidite(saison),1);
+        terrain.Pluie[4] = Math.Round(RecupererPluie(saison),1);
+        terrain.Ensoleillement[4] = Math.Round(RecupererEnsoleillement(saison),1);
     }
 
 }

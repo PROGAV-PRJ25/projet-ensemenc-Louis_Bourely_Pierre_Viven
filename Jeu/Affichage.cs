@@ -215,7 +215,7 @@ public class Affichage
         };
         for (int i = 0; i < casesLettres.Length; i++)
         {
-            if (casePlante == casesLettres[i])
+            if (casePlante.ToUpper() == casesLettres[i])
             {
                 return [coordonnees[i][0], coordonnees[i][1]];
             }
@@ -336,37 +336,6 @@ public class Affichage
 
         Console.WriteLine(chenille);
     }
-
-
-
-    public void Accueil()
-    {
-        Console.ForegroundColor = ConsoleColor.DarkGreen;
-        Console.OutputEncoding = System.Text.Encoding.UTF8;
-
-        string accueil = @"
-                    _,_           +                   __
-                    ','                  /\          `. `.
-            .                        .'  \    +      ""  |
-                                    /     \         /  .'         .
-                        .'\      .'       \       `""`
-        +             .-'   `.   /          `.
-                .     .'        \.'             \
-                .-'           \               \   .-`""-.      . +
-            .'.'               \               \.'       `-.
-            /                    `.           .-'\           `-._
-            .'                       \       .-'                   `-.
-                                                                    `-.
-    .-------------------'''''''''''''''              _.--      .'
-                                    ___..         _.--''        .'jb
-                            --''''             '            .'
-
-    ";
-
-        Console.WriteLine(accueil);
-        Console.ForegroundColor = ConsoleColor.White;
-    }
-
 }
 
 

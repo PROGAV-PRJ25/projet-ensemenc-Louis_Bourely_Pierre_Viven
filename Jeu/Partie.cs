@@ -1,6 +1,6 @@
 public class Partie
 {
-    public bool chenille = false; 
+    public bool chenille = false;
     public string Nom { get; set; }
     public double VerdaMoula { get; set; }
     public int Semaine { get; set; }
@@ -8,6 +8,7 @@ public class Partie
     public PlanteSimple[] ListeInfoPlantes { get; set; }
     public int[] ListeSemis { get; set; }
     public int[] ListeItems { get; set; }
+    public Item[] ListeInfoItems { get; set; }
     public Terrain[] ListeTerrains { get; set; }
 
 
@@ -18,7 +19,18 @@ public class Partie
         Semaine = 1;
         ListePlantes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         ListeSemis = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        ListeItems = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+        ListeItems = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        ListeInfoItems = [
+            new Item('R',"Raticidre", 3000),             // [0]
+            new Item('T',"TirDeFusil", 2500),            // [1]
+            new Item('I',"InsecticideChenille", 1800),   // [2]
+            new Item('M',"MegaItem", 2000),              // [3]
+            new Item('C',"CasqueAray", 500),            // [4]
+            new Item('P',"PotionMagique", 100),         // [5]
+            new Item('E',"EngraisHyperactif", 1500),     // [6]
+            new Item('S',"Secàtouteur", 5000),              // [7]
+            new Item('B',"Bêchhhhhhut", 20)            // [8]
+        ];
         ListeInfoPlantes = [
             new PlanteSimple('a', "Arachnéide", 500, 5000, 7, "Médicinale", "Desert Delicat", [16, 26], [6, 9], [1, 5], [0, 10]),
             new PlanteSimple('b', "Brocélia", 5, 30, 3, "Comestible", "Plaines Paisibles", [18, 23], [8, 9], [3, 5], [17, 22]),
