@@ -29,8 +29,8 @@ public class Partie
             new Item('P',"PotionMagique", 100,"La PotionMagique donne un effet aléatoir qu peut accèlérer la croissance la ralentir ou bien tuer la plante"),         // [5]
             new Item('E',"EngraisHyperactif", 1500,"L'EngraisHyperactif avance la Croissance d'une semaine"),     // [6]
             new Item('S',"SecàtoutHeure", 5000,"Le SecàtoutHeure permet de tailler les plantes"),              // [7]
-            new Item('B',"Bêchhuuuuut", 20,"La Bêchhuuuuut permet de labourer une case d'un Terrain"),
-            new Item('U',"UltraBêchhuuuuut",500,"L'UltraBêchhuuuuut permet de Labourer tous le potager d'un seul coup.")
+            new Item('B',"Bêchhuuuuut", 20,"La Bêchhuuuuut permet de labourer une case d'un Terrain"),  //[8]
+            new Item('U',"UltraBêchhuuuuut",500,"L'UltraBêchhuuuuut permet de Labourer tous le potager d'un seul coup.") //[9]
         ];
         ListeInfoPlantes = [
             new PlanteSimple('a', "Arachnéide", 500, 5000, 7, "Médicinale", "Desert Delicat", [16, 26], [6, 9], [1, 5], [0, 10]),

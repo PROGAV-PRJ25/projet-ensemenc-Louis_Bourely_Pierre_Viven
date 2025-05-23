@@ -8,9 +8,9 @@ public class TerrainMine : Terrain
         Ensoleillement = [14, 14, 8, 8, 14];
         Nom = "Desert Delicat";
     }
-    public override void VerifTerrain(Terrain terrain, int saison)
+    public override void VerifierTerrain(Terrain terrain, int saison)
     {
-        base.VerifTerrain(terrain, saison);
+        base.VerifierTerrain(terrain, saison);
         for (int i = 0; i < Potager.GetLength(0); i++)
         {
             for (int j = 0; j < Potager.GetLength(1); j++)
