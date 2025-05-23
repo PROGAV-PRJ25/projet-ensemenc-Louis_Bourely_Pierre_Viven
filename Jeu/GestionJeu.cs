@@ -1163,6 +1163,7 @@ public class GestionJeu //Classe qui permet de jouer une partie
     {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.Clear();
+        Afficher.Chenille();
         Console.WriteLine($"Oh non une Cheeeeeniiiiiiillllle 🐛 est apparue, utilisez un insecticide à chenille sinon il va dévorer le bulletin météo de la semaine prochaine");
         Console.Write("Pour utiliser un insecticide à Chenille tapez O sinon tapez N ");
         bool enCours = true;
