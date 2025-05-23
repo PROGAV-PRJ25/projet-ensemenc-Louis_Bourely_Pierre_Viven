@@ -1,21 +1,21 @@
 ﻿int largeurConsole = Console.WindowWidth;
 int hauteurConsole = Console.WindowHeight;
 
-Affichage Afficher =new Affichage();
+Affichage Afficher = new Affichage();
 
 Console.Clear();
 Console.ForegroundColor = ConsoleColor.Black;
 
-while(largeurConsole <160 || hauteurConsole<40)
+while (largeurConsole < 160 || hauteurConsole < 40)
 {
     largeurConsole = Console.WindowWidth;
     hauteurConsole = Console.WindowHeight;
     Console.Clear();
-    if(largeurConsole <160 || hauteurConsole<40)
+    if (largeurConsole < 160 || hauteurConsole < 40)
     {
         Console.WriteLine($"Pour une expérience de jeu optimale veuillez ajuster la taille de votre console pour une taille de minimum 160 x 40 \n(vous pouvez utiliser la flèche à gauche de la croix de votre console: Maximse Panel Size)");
         Console.WriteLine($"\nTapez 'ENTRÉE' quand votre écran est à la bonne taille ({largeurConsole} x {hauteurConsole} actuellement)");
-        while(Console.ReadKey(true).Key!=ConsoleKey.Enter)
+        while (Console.ReadKey(true).Key != ConsoleKey.Enter)
         {
         }
     }
@@ -23,31 +23,31 @@ while(largeurConsole <160 || hauteurConsole<40)
 
 
 Console.ForegroundColor = ConsoleColor.White;
-bool jeu=true;
-while(jeu)
+bool jeu = true;
+while (jeu)
 {
     Console.Clear();
     Afficher.Program();
 
-    switch(Console.ReadKey(true).Key)
+    switch (Console.ReadKey(true).Key)
     {
         case ConsoleKey.N:
             Console.Clear();
             Console.Write("Tapez le nom de votre nouveau monde : ");
-            string nom=Console.ReadLine()!;
+            string nom = Console.ReadLine()!;
             GestionJeu partieEnCours = new GestionJeu(nom);
             partieEnCours.Jouer();
             break;
         case ConsoleKey.S:
             Console.Clear();
             Console.Write("Tapez le nom de votre sauvegarde  : ");
-            string nomPartieSauvegarde=Console.ReadLine()!;
+            string nomPartieSauvegarde = Console.ReadLine()!;
             Sauvegarde partieSauvegarde = new Sauvegarde(nomPartieSauvegarde);
             if (partieSauvegarde.infoSemis == "@")
             {
                 Afficher.TexteEnProgressif("Sauvegarde non trouvée veuillez réessayer ou créer une nouvelle partie !", 20);
-                Console.WriteLine(""); 
-                Thread.Sleep(1500);        
+                Console.WriteLine("");
+                Thread.Sleep(1500);
             }
             else
             {
@@ -56,9 +56,9 @@ while(jeu)
             }
             break;
         case ConsoleKey.Q:
-            jeu=false;
+            jeu = false;
             break;
-        default :
+        default:
             break;
     }
 }
