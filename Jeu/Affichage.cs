@@ -265,23 +265,23 @@ public class Affichage
             Console.Clear();
             switch (terrain.Nom)
             {
-                case "Plaines Paisibles​":
+                case "Plaines Paisibles":
                     plantesFavorites = "Erdomania & Brocélia & Humalis";
                     descriptionTerrain = "Les plaines paisibles sont l'endroit rêvé pour une petite balade en famille l'été.\n\nCaractéristiques particulières:Aucune\n";
                     break;
-                case "Foret Facetieuse​":
+                case "Foret Facetieuse":
                     plantesFavorites = "Placinet & Ivoina & Zolia";
-                    descriptionTerrain = "La forêt facétieuse saura assouvir votre soif de sylvothérapie (On le dit quand on fait des calins aux arbres), mais aussi de champignons.\n\nCaractéristiques particulières:Aucune\n";
+                    descriptionTerrain = "La forêt facétieuse saura assouvir votre soif de sylvothérapie (On le dit quand on fait des calins aux arbres),\n mais aussi de champignons.\n\nCaractéristiques particulières:Aucune\n";
                     break;
-                case "Volcan Violent​":
+                case "Volcan Violent":
                     plantesFavorites = "Demonia & Gorhy & Fenecia";
                     descriptionTerrain = "Le volcan violent est le jardin d'eden de tous les aventuriers qui apprécient la chaleur et aiment jouer avec le feu.\n\nCaractéristiques particulières:Aucune\n";
                     break;
-                case "Desert Delicat​":
+                case "Desert Delicat":
                     plantesFavorites = "Cacruz & Jaunille & Arachneides";
-                    descriptionTerrain = "Le désert délicat peut permettre de faire des courses de rally, mais c'est surtout l'occasion d'observer de magnifiques cactus assoifés, il est déconseillé d'y laisser des plantes ayant besoin d'eau.\n\nCaractéristiques particulières: Ce terrain est miné, à chaque semaine, certaines cases explosent aléatoirement (tuant les plantes s'il y en a) et vous devez bécher avant de pouvoir replanter.\n";
+                    descriptionTerrain = "Le désert délicat peut permettre de faire des courses de rally, mais c'est surtout l'occasion d'observer de magnifiques cactus assoifés,\n il est déconseillé d'y laisser des plantes ayant besoin d'eau.\n\nCaractéristiques particulières: Ce terrain est miné, à chaque semaine, certaines cases explosent aléatoirement (tuant les plantes s'il y en a)\n et vous devez bécher avant de pouvoir replanter.\n";
                     break;
-                case "Marecages Malins​":
+                case "Marecages Malins":
                     descriptionTerrain = "Les marécages malins risquent de vous donneer bien du file à retordre, entre les nenuphars et l'eau, faites attention à ne pas vous embourber.\n\nCaractéristiques particulières:Ce terrain nécessite de la jachère, ainsi, il est plus lent et vous obligera à vous armer de patience.\n";
                     plantesFavorites = "Mutina & Nenustar & Kuintefeuille";
                     break;
