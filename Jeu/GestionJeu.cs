@@ -67,7 +67,7 @@ public class GestionJeu
         }
     }
 
-   public int Accueil(Partie partie)
+    public int Accueil(Partie partie)
     {
         bool semaineEnCours = true;
 
@@ -309,7 +309,7 @@ public class GestionJeu
                         {
                             if (terrain.Potager[demandeCase[0], demandeCase[1]] is PlanteSimple p)
                             {
-                                p.Immunite=1;
+                                p.Immunite = 1;
                             }
                             Partie.ListeItems[4]--;
                         }
@@ -323,7 +323,7 @@ public class GestionJeu
                         {
                             if (terrain.Potager[demandeCase[0], demandeCase[1]] is PlanteSimple p)
                             {
-                                p.Immunite=-1;
+                                p.Immunite = -1;
                             }
                             Partie.ListeItems[3]--;
                         }
@@ -703,14 +703,9 @@ public class GestionJeu
         Partie.chenille = false;
         Afficher.TexteEnProgressif("Simulation semaine!!!!", 80);
         Thread.Sleep(800);
-        for (int k = 0; k < Partie.ListeTerrains.Length; k++)
-        {
-            int saison = Partie.Semaine / 13 % 4;
-            Partie.ListeTerrains[k].VerifTerrain(Partie.ListeTerrains[k], saison);
-        }
         Partie.Semaine++;
         Random random = new Random();
-        int urgences = 13;//random.Next(1, 51);
+        int urgences = random.Next(1, 51);
         switch (urgences)
         {
             case 10:
@@ -728,12 +723,18 @@ public class GestionJeu
             default:
                 break;
         }
+        for (int k = 0; k < Partie.ListeTerrains.Length; k++)
+        {
+            int saison = Partie.Semaine / 13 % 4;
+            Partie.ListeTerrains[k].VerifTerrain(Partie.ListeTerrains[k], saison);
+        }
     }
     public void FeeDesPlantes()
     {
         Random random = new Random();
-        int terrain = 0;//random.Next(0, 5);
+        int terrain = random.Next(0, 5);
         Console.Clear();
+        Afficher.Fee();
         Console.WriteLine($"YOUPI, une Fée des plantes apparaît sur votre terrain {Partie.ListeTerrains[terrain].Nom}. Chaque plante qui pousse actuellement sur ce terrain a une probablité de voir sa croissance se terminer immédiatement.");
         bool enCours = true;
         while (enCours)
@@ -745,7 +746,7 @@ public class GestionJeu
                 {
                     if (Partie.ListeTerrains[terrain].Potager[i, j] is PlanteSimple plante)
                     {
-                        int croissanceInstantane = 1;//random.Next(0, 3);
+                        int croissanceInstantane = random.Next(0, 3);
                         if (croissanceInstantane == 1)
                         {
                             plante.Croissance = 0;
