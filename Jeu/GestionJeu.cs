@@ -67,26 +67,46 @@ public class GestionJeu
         }
     }
 
-    public int Accueil(Partie partie)
+   public int Accueil(Partie partie)
     {
         bool semaineEnCours = true;
+
         while (semaineEnCours)
         {
-
             Console.Clear();
-            Console.WriteLine($"Bienvenue dans votre monde {partie.Nom}");
-            Console.WriteLine($"C'est la semaine {partie.Semaine}");
-            Console.WriteLine("Que voulez vous faire ? Entrée pour simuler la semaine et passer à la suivante, Q pour quitter numéro 1 à 5 pour aller sur un terrain S pour sauegarder et quitter");
-            Console.WriteLine($"Vos infos => VerdaMoula:{Partie.VerdaMoula} Semaine:{Partie.Semaine}");
-            Console.WriteLine($"Vous avez => {Partie.ListePlantes[0]}Plante1,  {Partie.ListePlantes[1]}Plante2,...");
-            Console.WriteLine($"Vous avez => {Partie.ListeSemis[0]}Semis1,  {Partie.ListeSemis[1]}Semis2,...");
-            Console.WriteLine($"Vous avez => {Partie.ListeItems[0]}Item1,  {Partie.ListeItems[1]}Item2,...");
-            switch (Console.ReadKey().Key)
+            Afficher.Accueil();
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("═══════════════════════════════════════════════════════════════════");
+            Console.WriteLine($"🏝️   Bienvenue dans votre monde : {partie.Nom}");
+            Console.WriteLine($"📅  Semaine actuelle : {partie.Semaine}");
+            string[] Saisons = ["🌼​ Éveil fleuri ", "☀️ Éclat Profond", "🍂 Le Repli d’Or", "❄️ Repos Blanc"];
+            Console.WriteLine($"📅  Saison : {Saisons[Partie.Semaine / 13 % 4]}");
+            Console.WriteLine($"💰  VerdaMoula : {Partie.VerdaMoula}");
+            Console.WriteLine("═══════════════════════════════════════════════════════════════════");
+            Console.ResetColor();
+
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("🎮 Que souhaitez-vous faire ?");
+            Console.WriteLine("Appuyez sur :");
+            Console.WriteLine("  Entrée        ▶ Simuler la semaine suivante🔜");
+            Console.WriteLine("  Espace        ▶ Sauvegarder et Simuler💾 🔜");
+            Console.WriteLine("  S             ▶ Sauvegarder et quitter💾 ❌​");
+            Console.WriteLine("  1 à 5         ▶ Accéder à un terrain🌍​");
+            Console.WriteLine("  B             ▶ Consulter le bulletin météo⛅​");
+            Console.WriteLine("  M             ▶ Aller au magasin🏪");
+            Console.WriteLine("  Q             ▶ Quitter le jeu❌​​");
+            Console.ResetColor();
+            Console.WriteLine();
+            switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.Enter:
                     return 1;
                 case ConsoleKey.S:
                     return 3;
+                case ConsoleKey.Spacebar:
+                    return 2;
                 case ConsoleKey.Q:
                     return 4;
                 case ConsoleKey.B:
@@ -116,6 +136,7 @@ public class GestionJeu
         }
         return 5;
     }
+
 
     public void VisualisationTerrain(Terrain terrain)
     {
@@ -174,8 +195,31 @@ public class GestionJeu
         {
             Console.Clear();
             Afficher.Potager(terrain.Potager, terrain.Nom);
-            Console.WriteLine($"Vous avez => {Partie.ListeItems[0]}item1,  {Partie.ListeItems[1]}item2,...");
-            Console.WriteLine($"Terrain {terrain} Q pour quitter, Initial de la plante pour plante");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n🛠️ Vos Items disponibles :");
+            Console.ResetColor();
+
+            for (int i = 3; i < Partie.ListeItems.Length; i++)
+            {
+                if (Partie.ListeItems[i] > 2)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+                else if (Partie.ListeItems[i] > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                }
+                Console.Write($"{Partie.ListeInfoItems[i].Affichage}-{Partie.ListeInfoItems[i].Nom,-20} : {Partie.ListeItems[i]}        ");
+
+                if ((i + 1) % 3 == 0)
+                    Console.WriteLine();
+            }
+            Console.ResetColor();
+            Console.WriteLine($"\n\nTapez l'initial d'item pour l'utiliser🛠️ \nTapez Q pour Quitter❌​​");
             Console.WriteLine("");
 
             switch (Console.ReadKey().Key)
@@ -186,231 +230,107 @@ public class GestionJeu
                 case ConsoleKey.A:
                     break;
                 case ConsoleKey.B:
-                    if (Partie.ListeItems[1] >= 1)
+                    if (Partie.ListeItems[8] >= 1)
                     {
                         int[] demandeCase = Afficher.DemandeCasePotage();
                         if (demandeCase[0] != 99)
                         {
                             terrain.Labourer(demandeCase[0], demandeCase[1]);
-                            Partie.ListeItems[0]--;
-                        }
-                    }
-                    else
-                    {
-                        Afficher.TexteEnProgressif("Vous ne possédez pas cette iteme va travailler pour te l'acheter feignasse     ", 50);
-                    }
-                    break;
-                case ConsoleKey.C:
-                    if (Partie.ListeSemis[2] == 0)
-                    {
-                        Afficher.TexteEnProgressif("Vous n'avez pas ce semis va en acheter au magasin sale pauvre         ", 50);
-                    }
-                    else
-                    {
-                        PlanteSimple nouvellePlante = new PlanteTailler('c', "Cacruz", 150, 600, 3, "Comestible", "Desert Delicat", [16, 26], [6, 9], [1, 5], [0, 10]);
-                        int[] demandeCase = Afficher.DemandeCasePotage();
-                        if (demandeCase[0] != 99)
-                        {
-                            terrain.Planter(nouvellePlante, demandeCase[0], demandeCase[1]);
-                            Partie.ListePlantes[2]--;
+                            Partie.ListeItems[8]--;
                         }
                     }
                     break;
-                case ConsoleKey.D:
-                    if (Partie.ListeSemis[3] == 0)
+                case ConsoleKey.S:
+                    if (Partie.ListeItems[7] >= 1)
                     {
-                        Afficher.TexteEnProgressif("Vous n'avez pas ce semis va en acheter au magasin sale pauvre         ", 50);
-                    }
-                    else
-                    {
-                        PlanteSimple nouvellePlante = new PlanteSimple('d', "Demonia", 10, 40, 2, "Comestible", "Volcan Violent", [26, 33], [7, 9], [1, 3], [5, 15]);
                         int[] demandeCase = Afficher.DemandeCasePotage();
                         if (demandeCase[0] != 99)
                         {
-                            terrain.Planter(nouvellePlante, demandeCase[0], demandeCase[1]);
-                            Partie.ListePlantes[3]--;
+                            if (terrain.Potager[demandeCase[0], demandeCase[1]] is PlanteTailler p)
+                            {
+                                p.Tailler();
+                            }
+                            Partie.ListeItems[7]--;
                         }
                     }
                     break;
                 case ConsoleKey.E:
-                    if (Partie.ListeSemis[4] == 0)
+                    if (Partie.ListeItems[6] >= 1)
                     {
-                        Afficher.TexteEnProgressif("Vous n'avez pas ce semis va en acheter au magasin sale pauvre         ", 50);
-                    }
-                    else
-                    {
-                        PlanteSimple nouvellePlante = new PlanteSimple('e', "Erdomania", 3, 12, 2, "Comestible", "Plaines Paisibles", [14, 18], [7, 8], [4, 6], [15, 20]);
                         int[] demandeCase = Afficher.DemandeCasePotage();
                         if (demandeCase[0] != 99)
                         {
-                            terrain.Planter(nouvellePlante, demandeCase[0], demandeCase[1]);
-                            Partie.ListePlantes[4]--;
-                        }
-                    }
-                    break;
-                case ConsoleKey.F:
-                    if (Partie.ListeSemis[5] == 0)
-                    {
-                        Afficher.TexteEnProgressif("Vous n'avez pas ce semis va en acheter au magasin sale pauvre         ", 50);
-                    }
-                    else
-                    {
-                        PlanteSimple nouvellePlante = new PlanteSimple('f', "Fenecia", 30, 240, 8, "Ornementale", "Volcan Violent", [28, 44], [8, 11], [1, 2], [5, 15]);
-                        int[] demandeCase = Afficher.DemandeCasePotage();
-                        if (demandeCase[0] != 99)
-                        {
-                            terrain.Planter(nouvellePlante, demandeCase[0], demandeCase[1]);
-                            Partie.ListePlantes[5]--;
-                        }
-                    }
-                    break;
-                case ConsoleKey.G:
-                    if (Partie.ListeSemis[6] == 0)
-                    {
-                        Afficher.TexteEnProgressif("Vous n'avez pas ce semis va en acheter au magasin sale pauvre         ", 50);
-                    }
-                    else
-                    {
-                        PlanteSimple nouvellePlante = new PlanteFilante('g', "Gorhy", 20, 120, 4, "Comestible", "Volcan Violent", [26, 35], [7, 9], [1, 3], [5, 15]);
-                        int[] demandeCase = Afficher.DemandeCasePotage();
-                        if (demandeCase[0] != 99)
-                        {
-                            terrain.Planter(nouvellePlante, demandeCase[0], demandeCase[1]);
-                            Partie.ListePlantes[6]--;
-                        }
-                    }
-                    break;
-                case ConsoleKey.H:
-                    if (Partie.ListeSemis[7] == 0)
-                    {
-                        Afficher.TexteEnProgressif("Vous n'avez pas ce semis va en acheter au magasin sale pauvre         ", 50);
-                    }
-                    else
-                    {
-                        PlanteSimple nouvellePlante = new PlanteSimple('h', "Humalis", 8, 64, 10, "Médicinale", "Plaines Paisibles", [12, 25], [6, 11], [3, 8], [10, 20]);
-                        int[] demandeCase = Afficher.DemandeCasePotage();
-                        if (demandeCase[0] != 99)
-                        {
-                            terrain.Planter(nouvellePlante, demandeCase[0], demandeCase[1]);
-                            Partie.ListePlantes[7]--;
-                        }
-                    }
-                    break;
-                case ConsoleKey.I:
-                    if (Partie.ListeSemis[8] == 0)
-                    {
-                        Afficher.TexteEnProgressif("Vous n'avez pas ce semis va en acheter au magasin sale pauvre         ", 50);
-                    }
-                    else
-                    {
-                        PlanteSimple nouvellePlante = new PlanteSimple('i', "Ivoina", 80, 480, 5, "Comestible", "Foret Facetieuse", [9, 18], [4, 6], [3, 4], [35, 45]);
-                        int[] demandeCase = Afficher.DemandeCasePotage();
-                        if (demandeCase[0] != 99)
-                        {
-                            terrain.Planter(nouvellePlante, demandeCase[0], demandeCase[1]);
-                            Partie.ListePlantes[8]--;
-                        }
-                    }
-                    break;
-                case ConsoleKey.J:
-                    if (Partie.ListeSemis[9] == 0)
-                    {
-                        Afficher.TexteEnProgressif("Vous n'avez pas ce semis va en acheter au magasin sale pauvre         ", 50);
-                    }
-                    else
-                    {
-                        PlanteSimple nouvellePlante = new PlanteFilante('j', "Jaunille", 300, 1800, 4, "Comestible", "Desert Delicat", [16, 26], [6, 9], [1, 5], [0, 10]);
-                        int[] demandeCase = Afficher.DemandeCasePotage();
-                        if (demandeCase[0] != 99)
-                        {
-                            terrain.Planter(nouvellePlante, demandeCase[0], demandeCase[1]);
-                            Partie.ListePlantes[9]--;
-                        }
-                    }
-                    break;
-                case ConsoleKey.M:
-                    if (Partie.ListeSemis[10] == 0)
-                    {
-                        Afficher.TexteEnProgressif("Vous n'avez pas ce semis va en acheter au magasin sale pauvre         ", 50);
-                    }
-                    else
-                    {
-                        PlanteSimple nouvellePlante = new PlanteTailler('m', "Mutina", 750, 3000, 3, "Comestible", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]);
-                        int[] demandeCase = Afficher.DemandeCasePotage();
-                        if (demandeCase[0] != 99)
-                        {
-                            terrain.Planter(nouvellePlante, demandeCase[0], demandeCase[1]);
-                            Partie.ListePlantes[10]--;
-                        }
-                    }
-                    break;
-                case ConsoleKey.N:
-                    if (Partie.ListeSemis[11] == 0)
-                    {
-                        Afficher.TexteEnProgressif("Vous n'avez pas ce semis va en acheter au magasin sale pauvre         ", 50);
-                    }
-                    else
-                    {
-                        PlanteSimple nouvellePlante = new PlanteSimple('n', "Nénustar", 1250, 7500, 5, "Comestible", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]);
-                        int[] demandeCase = Afficher.DemandeCasePotage();
-                        if (demandeCase[0] != 99)
-                        {
-                            terrain.Planter(nouvellePlante, demandeCase[0], demandeCase[1]);
-                            Partie.ListePlantes[11]--;
+                            if (terrain.Potager[demandeCase[0], demandeCase[1]] is PlanteSimple p)
+                            {
+                                p.Croissance--;
+                            }
+                            Partie.ListeItems[6]--;
                         }
                     }
                     break;
                 case ConsoleKey.P:
-                    if (Partie.ListeSemis[12] == 0)
+                    if (Partie.ListeItems[5] >= 1)
                     {
-                        Afficher.TexteEnProgressif("Vous n'avez pas ce semis va en acheter au magasin sale pauvre         ", 50);
-                    }
-                    else
-                    {
-                        PlanteSimple nouvellePlante = new PlanteSimple('p', "Placinet", 50, 200, 2, "Comestible", "Foret Facetieuse", [9, 18], [4, 6], [3, 4], [35, 45]);
                         int[] demandeCase = Afficher.DemandeCasePotage();
                         if (demandeCase[0] != 99)
                         {
-                            terrain.Planter(nouvellePlante, demandeCase[0], demandeCase[1]);
-                            Partie.ListePlantes[12]--;
+                            if (terrain.Potager[demandeCase[0], demandeCase[1]] is PlanteSimple p)
+                            {
+                                Random random = new Random();
+                                int proba = random.Next(1, 11);
+                                switch (proba)
+                                {
+                                    case 1:
+                                    case 2:
+                                    case 3:
+                                    case 4:
+                                        p.Croissance--;
+                                        break;
+                                    case 5:
+                                    case 6:
+                                        p.Croissance++;
+                                        break;
+                                    case 8:
+                                        terrain.DetruirePlante(demandeCase[0], demandeCase[1]);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            Partie.ListeItems[5]--;
                         }
                     }
                     break;
-                case ConsoleKey.K:
-                    if (Partie.ListeSemis[13] == 0)
+                case ConsoleKey.C:
+                    if (Partie.ListeItems[4] >= 1)
                     {
-                        Afficher.TexteEnProgressif("Vous n'avez pas ce semis va en acheter au magasin sale pauvre         ", 50);
-                    }
-                    else
-                    {
-                        PlanteSimple nouvellePlante = new PlanteTailler('k', "Kuintefeuille", 2000, 16000, 8, "Ornementale", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]);
                         int[] demandeCase = Afficher.DemandeCasePotage();
                         if (demandeCase[0] != 99)
                         {
-                            terrain.Planter(nouvellePlante, demandeCase[0], demandeCase[1]);
-                            Partie.ListePlantes[13]--;
+                            if (terrain.Potager[demandeCase[0], demandeCase[1]] is PlanteSimple p)
+                            {
+                                p.Immunite=1;
+                            }
+                            Partie.ListeItems[4]--;
                         }
                     }
                     break;
-                case ConsoleKey.Z:
-                    if (Partie.ListeSemis[14] == 0)
+                case ConsoleKey.M:
+                    if (Partie.ListeItems[3] >= 1)
                     {
-                        Afficher.TexteEnProgressif("Vous n'avez pas ce semis va en acheter au magasin sale pauvre         ", 50);
-                    }
-                    else
-                    {
-                        PlanteSimple nouvellePlante = new PlanteFilante('z', "Zolia", 100, 1000, 10, "Ornementale", "Foret Facétieuse", [18, 24], [6, 8], [1, 3], [20, 30]);
                         int[] demandeCase = Afficher.DemandeCasePotage();
                         if (demandeCase[0] != 99)
                         {
-                            terrain.Planter(nouvellePlante, demandeCase[0], demandeCase[1]);
-                            Partie.ListePlantes[14]--;
+                            if (terrain.Potager[demandeCase[0], demandeCase[1]] is PlanteSimple p)
+                            {
+                                p.Immunite=-1;
+                            }
+                            Partie.ListeItems[3]--;
                         }
                     }
                     break;
                 default:
                     break;
-
             }
         }
     }
@@ -425,7 +345,7 @@ public class GestionJeu
             Afficher.Potager(terrain.Potager, terrain.Nom);
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\n🌿 Vos semis disponibles :");
+            Console.WriteLine("\n🌱 Vos Semis disponibles :");
             Console.ResetColor();
 
             for (int i = 0; i < Partie.ListeSemis.Length; i++)
@@ -694,7 +614,6 @@ public class GestionJeu
     }
 
 
-
     public void MagasinItems()
     {
         bool enCours = true;
@@ -891,9 +810,6 @@ public class GestionJeu
             }
         }
     }
-
-
-
     public void Galinace()
     {
         Random random = new Random();
