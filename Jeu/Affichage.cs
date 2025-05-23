@@ -200,7 +200,7 @@ public class Affichage
         };
         for (int i = 0; i < casesLettres.Length; i++)
         {
-            if (casePlante == casesLettres[i])
+            if (casePlante.ToUpper() == casesLettres[i])
             {
                 return [coordonnees[i][0], coordonnees[i][1]];
             }
@@ -291,7 +291,7 @@ public class Affichage
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8; // Pour bien afficher les caractères spéciaux
 
-            string chenille = @"
+        string chenille = @"
 ⠀⠀⣾⣿⠍⠓⢦⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⠖⠛⣿⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠙⠉⠀⠀⠈⢳⠀⠀⠀⠀⠀⠀⠀⡼⠁⠀⠀⠙⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠈⣇⠀⠀⠀⠀⠀⢸⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -319,9 +319,68 @@ public class Affichage
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠛⠉⠛⠒⠒⠒⠒⠒⠻⡄⠀⢸⡇⠀⠀⠀⠀⠀⠈⠙⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠓⢛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀";
 
-            Console.WriteLine(chenille);
+        Console.WriteLine(chenille);
+    }
+    public void Rat()
+    {
+        // Pour bien afficher tous les caractères, surtout les symboles spéciaux
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+        string rat = @"
+         __             _,-""~^""-.
+       _// )      _,-""~`         `.
+     ."" ( /`""-,-""`                 ;
+    / 6                             ;
+   /           ,             ,-""     ;
+  (,__.--.      \           /        ;
+   //'   /`-.\   |          |        `._________
+     _.-'_/`  )  )--...,,,___\     \-----------,)
+   (((""~` _.-'.-'           __`-.   )         //
+         (((""`             (((---~""`         //
+                                            ((________________
+                                            `----""""~~~~^^^```";
+
+        Console.WriteLine(rat);
+
+    }
+    public void Poule()
+    {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+        string poule = @"
+                                              _
+                                   .-.  .--''` )
+                                _ |  |/`   .-'`
+                               ( `\      /`
+                               _)   _.  -'._
+                             /`  .'     .-.-;
+                             `).'      /  \  \
+                            (`,        \_o/_o/__
+                             /           .-''`  ``'-.
+                             {         /` ,___.--''`
+                             {   ;     '-. \ \
+           _   _             {   |'-....-`'.\_\
+          / './ '.           \   \          `""`
+       _  \   \  |            \   \
+      ( '-.J     \_..----.._ __)   `\--..__
+     .-`                    `        `\    ''--...--.
+    (_,.--""`/`         .-             `\       .__ _)
+            |          (                 }    .__ _)
+            \_,         '.               }_  - _.'
+               \_,         '.            } `'--'
+                  '._.     ,_)          /
+                     |    /           .'
+                      \   |    _   .-'
+                       \__/;--.||-'
+                        _||   _||__   __
+                 _ __.-` ""`)(` ""  ```._)
+                (_`,-   ,-'  `''-.   '-._)
+               (  (    /          '.__.'
+                `""`'--'";
+
+        Console.WriteLine(poule);
     }
 }
+
 
 
 
