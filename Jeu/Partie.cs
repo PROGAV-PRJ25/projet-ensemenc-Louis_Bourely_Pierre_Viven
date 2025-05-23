@@ -178,7 +178,7 @@ public class Sauvegarde  //A finir
         int[] listePlantes = new int[15];
         int nbPlante = 0;
 
-        for (int k = 0; k < listePlantes.Length; k++)
+        for (int k = 0; k < infoPlantes.Length; k++)
         {
             if (infoPlantes[k] == '!')
             {
@@ -197,7 +197,7 @@ public class Sauvegarde  //A finir
         int[] listeSemis = new int[15];
         int nbSemis = 0;
 
-        for (int k = 0; k < listeSemis.Length; k++)
+        for (int k = 0; k < infoSemis.Length; k++)
         {
             if (infoSemis[k] == '!')
             {
@@ -213,10 +213,10 @@ public class Sauvegarde  //A finir
 
 
 
-        int[] listeItems = new int[15];
+        int[] listeItems = new int[9];
         int nbItems = 0;
 
-        for (int k = 0; k < listeItems.Length; k++)
+        for (int k = 0; k < infoItems.Length; k++)
         {
             if (infoItems[k] == '!')
             {
@@ -266,6 +266,9 @@ public class Sauvegarde  //A finir
                     case '%':
                         listeTerrains[nbTerrain].Potager[i, j] = new SolSimple("Friche");
                         break;
+                    case 'x':
+                        listeTerrains[nbTerrain].Potager[i, j] = new SolSimple("Jachère");
+                        break;
                     case '•':
                         listeTerrains[nbTerrain].Potager[i, j] = new SolSimple("Laboure");
                         break;
@@ -310,7 +313,7 @@ public class Sauvegarde  //A finir
                         nombre = "";
                         break;
                     case 'm':
-                        listeTerrains[nbTerrain].Potager[i, j] = new PlanteTailler('ù', "Mutina", 750, 3000, Convert.ToInt32(nombre), "Comestible", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]);
+                        listeTerrains[nbTerrain].Potager[i, j] = new PlanteTailler('m', "Mutina", 750, 3000, Convert.ToInt32(nombre), "Comestible", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]);
                         nombre = "";
                         break;
                     case 'n':
@@ -322,7 +325,7 @@ public class Sauvegarde  //A finir
                         nombre = "";
                         break;
                     case 'k':
-                        listeTerrains[nbTerrain].Potager[i, j] = new PlanteTailler('q', "Kuintefeuille", 2000, 16000, Convert.ToInt32(nombre), "Ornementale", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]);
+                        listeTerrains[nbTerrain].Potager[i, j] = new PlanteTailler('k', "Kuintefeuille", 2000, 16000, Convert.ToInt32(nombre), "Ornementale", "Marecages Malins", [20, 27], [7, 11], [5, 9], [60, 90]);
                         nombre = "";
                         break;
                     case 'z':

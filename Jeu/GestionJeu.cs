@@ -222,7 +222,7 @@ public class GestionJeu
             Console.WriteLine($"\n\nTapez l'initial d'item pour l'utiliser🛠️ \nTapez Q pour Quitter❌​​");
             Console.WriteLine("");
 
-            switch (Console.ReadKey().Key)
+            switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.Q:
                     enCours = false;
@@ -250,7 +250,6 @@ public class GestionJeu
                             {
                                 p.Tailler();
                             }
-                            Partie.ListeItems[7]--;
                         }
                     }
                     break;
@@ -263,6 +262,10 @@ public class GestionJeu
                             if (terrain.Potager[demandeCase[0], demandeCase[1]] is PlanteSimple p)
                             {
                                 p.Croissance--;
+                                if (p.Croissance <= 0)
+                                {
+                                    p.Affichage = char.ToUpper(p.Affichage);
+                                }
                             }
                             Partie.ListeItems[6]--;
                         }
