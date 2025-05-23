@@ -176,7 +176,7 @@ public abstract class Terrain
             Potager[a, b] = new SolSimple("Laboure");
         }
     }
-    public virtual void VerifTerrain(Terrain terrain, int saison)
+    public virtual void VerifierTerrain(Terrain terrain, int saison)
     {
         for (int i = 0; i < Potager.GetLength(0); i++)
         {

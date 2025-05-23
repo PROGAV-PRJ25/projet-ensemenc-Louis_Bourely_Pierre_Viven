@@ -114,19 +114,19 @@ public class GestionJeu
                     BulletinMeteo();
                     break;
                 case ConsoleKey.D1:
-                    VisualisationTerrain(Partie.ListeTerrains[0]);
+                    VisualiserTerrain(Partie.ListeTerrains[0]);
                     break;
                 case ConsoleKey.D2:
-                    VisualisationTerrain(Partie.ListeTerrains[1]);
+                    VisualiserTerrain(Partie.ListeTerrains[1]);
                     break;
                 case ConsoleKey.D3:
-                    VisualisationTerrain(Partie.ListeTerrains[2]);
+                    VisualiserTerrain(Partie.ListeTerrains[2]);
                     break;
                 case ConsoleKey.D4:
-                    VisualisationTerrain(Partie.ListeTerrains[3]);
+                    VisualiserTerrain(Partie.ListeTerrains[3]);
                     break;
                 case ConsoleKey.D5:
-                    VisualisationTerrain(Partie.ListeTerrains[4]);
+                    VisualiserTerrain(Partie.ListeTerrains[4]);
                     break;
                 case ConsoleKey.M:
                     Magasin();
@@ -139,7 +139,7 @@ public class GestionJeu
     }
 
 
-    public void VisualisationTerrain(Terrain terrain)
+    public void VisualiserTerrain(Terrain terrain)
     {
         bool enCours = true;
         while (enCours)
@@ -473,7 +473,7 @@ public class GestionJeu
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║                               ✦✦   WikiVerdadure Plantes    ✦✦                                ║");
+            Console.WriteLine("║                               ✦✦   WikiVerdadura Plantes    ✦✦                                ║");
             Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
             Console.ResetColor();
 
@@ -944,7 +944,7 @@ public class GestionJeu
         for (int k = 0; k < Partie.ListeTerrains.Length; k++)
         {
             int saison = Partie.Semaine / 13 % 4;
-            Partie.ListeTerrains[k].VerifTerrain(Partie.ListeTerrains[k], saison);
+            Partie.ListeTerrains[k].VerifierTerrain(Partie.ListeTerrains[k], saison);
         }
     }
     public void AverseOR()
