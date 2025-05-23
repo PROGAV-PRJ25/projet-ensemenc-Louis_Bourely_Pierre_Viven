@@ -1,4 +1,4 @@
-public class Item
+public class Item //Classe qui permet de regrouper toutes les informations relatives aux items pour les afficher
 {
     public string Nom { get; set; }
     public int PrixAchat { get; set; }

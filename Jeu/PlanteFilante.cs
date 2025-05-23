@@ -1,13 +1,13 @@
-public class PlanteFilante : PlanteSimple
+public class PlanteFilante : PlanteSimple //Classe héritiaire de PlanteSimple qui rajouter la possibilté à une plante de s'étendre
 {
     public bool Extension { get; set; }
 
     public PlanteFilante(char affichage, string nom, double prixAchat, double prixVente, double croissance, string type, string terrainFavori, double[] temperature, double[] ensoleillement, double[] pluie, double[] humidité) : base(affichage, nom, prixAchat, prixVente, croissance, type, terrainFavori, temperature, ensoleillement, pluie, humidité)
     {
-        Extension = false;
+        Extension = false; //paramètre pour que la plante ne s'étende qu'une seule fois
     }
 
-    public void Etendre(int i, int j, Terrain terrain)
+    public void Etendre(int i, int j, Terrain terrain) //Regarde les cases autour pour s'étendre
     {
         if ((i != 0) && (terrain.Potager[i - 1, j].Affichage == '•'))
         {
@@ -71,7 +71,7 @@ public class PlanteFilante : PlanteSimple
         }
         else { }
     }
-    public override void SimulerCroissance(Terrain terrain, int i, int j)
+    public override void SimulerCroissance(Terrain terrain, int i, int j) //Rajoute une probabilité de s'étendre si elle ne s'est pas déjà étendu
     {
         base.SimulerCroissance(terrain,i,j);
         Random random = new Random();
@@ -82,6 +82,7 @@ public class PlanteFilante : PlanteSimple
             Extension = true;
         }
     }
+    //Fonctions pour créer de nouvelle Plantes
     public PlanteFilante CreerGorhy()
     {
         PlanteFilante nouvellePlante = new PlanteFilante('g', "Gorhy", 20, 120, 4, "Comestible", "Volcan Violent", [26, 35], [7, 9], [1, 3], [5, 15]);

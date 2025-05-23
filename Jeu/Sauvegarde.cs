@@ -1,14 +1,14 @@
-public class Sauvegarde  
+public class Sauvegarde  //Classe permettant d'intéragir avec le csv Sauvegarde pour gérer les sauvegardes
 {
     public string Nom { get; set; }
     public double VerdaMoula { get; set; }
-    public string infoPlantes { get; set; }
+    public string infoPlantes { get; set; } //Stocke les informations en code string
     public string infoSemis { get; set; }
     public string infoItems { get; set; }
     public int Semaine { get; set; }
     public string infoTerrains { get; set; }
 
-    public Sauvegarde(Partie partie)
+    public Sauvegarde(Partie partie) //Créer une sauvegarde à partir d'une partie
     {
         Nom = partie.Nom;
         VerdaMoula = partie.VerdaMoula;
@@ -30,7 +30,6 @@ public class Sauvegarde
                         infoTerrains += plante.Croissance.ToString();
                     }
                     infoTerrains += listeTerrain[k].Potager[i, j].Affichage;
-                    //coder maladie
                     infoTerrains += "!";
                 }
             }
@@ -63,9 +62,9 @@ public class Sauvegarde
 
     }
 
-    public Sauvegarde(string nomSauvegarde)
+    public Sauvegarde(string nomSauvegarde) //Créer une sauvegarde à partir d'une ligne du csv sauvegarde
     {
-        Nom = "@";
+        Nom = "@"; //Erreur si non sauvegarde inexistante
         VerdaMoula = 0;
         Semaine = 0;
         infoPlantes = "@";
@@ -89,7 +88,7 @@ public class Sauvegarde
         }
     }
 
-    public void Sauvegarder()
+    public void Sauvegarder() //Enregistre dans sauvegarder ( et écrase la sauvegarde du même nom)
     {
         string[] lignes = File.ReadAllLines("sauvegarde.csv");
         List<string> nouvellesLignes = [lignes[0]];
@@ -108,7 +107,7 @@ public class Sauvegarde
         File.WriteAllLines("sauvegarde.csv", nouvellesLignes);
     }
 
-    public Partie CreerPartie()
+    public Partie CreerPartie() //Créer une partie à partir des informations du csv
     {
         string nombre = "";
 
@@ -150,7 +149,7 @@ public class Sauvegarde
 
 
 
-        int[] listeItems = new int[9];
+        int[] listeItems = new int[10];
         int nbItems = 0;
 
         for (int k = 0; k < infoItems.Length; k++)
