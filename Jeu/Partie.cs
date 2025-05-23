@@ -19,7 +19,7 @@ public class Partie
         Semaine = 1;
         ListePlantes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         ListeSemis = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        ListeItems = [0, 0, 0, 0, 0, 0, 0, 0, 0,0];
+        ListeItems = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         ListeInfoItems = [
             new Item('R',"Raticidre", 3000,"Le Raticidre permet d'enivrer le Rat Mécréant pour le faire fuire de votre Potager."),             // [0]
             new Item('T',"TirDeFusil", 2500, "Le TirDeFusil tire un cri de Galinacée Hargneuse qui attire le Galinacé Hargneux loin de votre Potager"),            // [1]
@@ -29,7 +29,8 @@ public class Partie
             new Item('P',"PotionMagique", 100,"La PotionMagique donne un effet aléatoir qu peut accèlérer la croissance la ralentir ou bien tuer la plante"),         // [5]
             new Item('E',"EngraisHyperactif", 1500,"L'EngraisHyperactif avance la Croissance d'une semaine"),     // [6]
             new Item('S',"SecàtoutHeure", 5000,"Le SecàtoutHeure permet de tailler les plantes"),              // [7]
-            new Item('B',"Bêchhuuuuut", 20,"La Bêchhuuuuut permet de labourer une case d'un Terrain")            // [8]
+            new Item('B',"Bêchhuuuuut", 20,"La Bêchhuuuuut permet de labourer une case d'un Terrain"),
+            new Item('U',"UltraBêchhuuuuut",500,"L'UltraBêchhuuuuut permet de Labourer tous le potager d'un seul coup.")
         ];
         ListeInfoPlantes = [
             new PlanteSimple('a', "Arachnéide", 500, 5000, 7, "Médicinale", "Desert Delicat", [16, 26], [6, 9], [1, 5], [0, 10]),
