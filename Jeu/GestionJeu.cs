@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Runtime.CompilerServices;
 
 public class GestionJeu
@@ -237,6 +238,16 @@ public class GestionJeu
                         {
                             terrain.Labourer(demandeCase[0], demandeCase[1]);
                             Partie.ListeItems[8]--;
+                        }
+                    }
+                    break;
+                case ConsoleKey.U:
+                    for (int i = 0; i < terrain.Potager.GetLength(0); i++)
+                    {
+                        for (int j = 0; j < terrain.Potager.GetLength(1); j++)
+                        {
+                            terrain.Labourer(i, j);
+                            Partie.ListeItems[9]--;
                         }
                     }
                     break;
@@ -638,8 +649,8 @@ public class GestionJeu
             Console.WriteLine("║ Items disponibles :                                                                           ║");
             Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
 
-            List<char> touches = new List<char> { 'R', 'T', 'I', 'M', 'C', 'P', 'E', 'S', 'B' };
-            for (int i = 0; i < 9; i++)
+            List<char> touches = new List<char> { 'R', 'T', 'I', 'M', 'C', 'P', 'E', 'S', 'B', 'U' };
+            for (int i = 0; i < 10; i++)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write($" {touches[i]} ");
@@ -678,6 +689,7 @@ public class GestionJeu
                 case ConsoleKey.E:
                 case ConsoleKey.S:
                 case ConsoleKey.B:
+                case ConsoleKey.U:
                     int index = touches.IndexOf(char.ToUpper(touche.KeyChar));
                     if (index >= 0 && Partie.VerdaMoula >= Partie.ListeInfoItems[index].PrixAchat)
                     {
@@ -720,6 +732,10 @@ public class GestionJeu
             case 13:
                 FeeDesPlantes();
                 break;
+            case 14:
+            case 15:
+                AverseOR();
+                break;
             default:
                 break;
         }
@@ -727,6 +743,57 @@ public class GestionJeu
         {
             int saison = Partie.Semaine / 13 % 4;
             Partie.ListeTerrains[k].VerifTerrain(Partie.ListeTerrains[k], saison);
+        }
+    }
+    public void AverseOR()
+    {
+        Random random = new Random();
+        int montant = random.Next(0, 10);
+        Console.Clear();
+        Afficher.Pluie();
+        Afficher.TexteEnProgressif("Le ciel est menacant mais les nuages sont d'une couleur jaune dorée. C'est une averse OR(ageuse) qui touche votre monde. Vous allez donc aléatoirement reçevoir de la verdamoula  ", 50);
+        switch (montant)
+        {
+            case 0:
+                Partie.VerdaMoula += 1;
+                Afficher.TexteEnProgressif("Vous avez gagné 1 VerdaMoula   ", 50);
+                break;
+            case 1:
+                Partie.VerdaMoula += 25;
+                Afficher.TexteEnProgressif("Vous avez gagné 25 VerdaMoula   ", 50);
+                break;
+            case 2:
+                Partie.VerdaMoula += 100;
+                Afficher.TexteEnProgressif("Vous avez gagné 100 VerdaMoula   ", 50);
+                break;
+            case 3:
+                Partie.VerdaMoula += 200;
+                Afficher.TexteEnProgressif("Vous avez gagné 200 VerdaMoula   ", 50);
+                break;
+            case 4:
+                Partie.VerdaMoula += 500;
+                Afficher.TexteEnProgressif("Vous avez gagné 500 VerdaMoula   ", 50);
+                break;
+            case 5:
+                Partie.VerdaMoula += 100;
+                Afficher.TexteEnProgressif("Vous avez gagné 100 VerdaMoula   ", 50);
+                break;
+            case 6:
+                Partie.VerdaMoula += 200;
+                Afficher.TexteEnProgressif("Vous avez gagné 200 VerdaMoula   ", 50);
+                break;
+            case 7:
+                Partie.VerdaMoula += 500;
+                Afficher.TexteEnProgressif("Vous avez gagné 500 VerdaMoula   ", 50);
+                break;
+            case 8:
+                Partie.VerdaMoula += 1500;
+                Afficher.TexteEnProgressif("Vous avez gagné 1500 VerdaMoula   ", 50);
+                break;
+            case 9:
+                Partie.VerdaMoula += 5000;
+                Afficher.TexteEnProgressif("Vous avez gagné 5000 VerdaMoula   ", 50);
+                break;
         }
     }
     public void FeeDesPlantes()

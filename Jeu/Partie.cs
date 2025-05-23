@@ -19,7 +19,7 @@ public class Partie
         Semaine = 1;
         ListePlantes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         ListeSemis = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        ListeItems = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+        ListeItems = [0, 0, 0, 0, 0, 0, 0, 0, 0,0];
         ListeInfoItems = [
             new Item('R',"Raticidre", 3000),             // [0]
             new Item('T',"TirDeFusil", 2500),            // [1]
@@ -29,7 +29,8 @@ public class Partie
             new Item('P',"PotionMagique", 100),         // [5]
             new Item('E',"EngraisHyperactif", 1500),     // [6]
             new Item('S',"Secàtouteur", 5000),              // [7]
-            new Item('B',"Bêchhhhhhut", 20)            // [8]
+            new Item('B',"Bêchhhhhhut", 20),            // [8]
+            new Item('S',"SupraBêchhhhhhhut",500) //[9]
         ];
         ListeInfoPlantes = [
             new PlanteSimple('a', "Arachnéide", 500, 5000, 7, "Médicinale", "Desert Delicat", [16, 26], [6, 9], [1, 5], [0, 10]),

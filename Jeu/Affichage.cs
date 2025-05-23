@@ -262,7 +262,54 @@ public class Affichage
 
     public void InfoTerrain(Terrain terrain)
     {
-
+        bool enCours = true;
+        while (enCours)
+        {
+            string plantesFavorites = "";
+            string descriptionTerrain = "";
+            Console.Clear();
+            switch (terrain.Nom)
+            {
+                case "Plaines Paisibles":
+                    plantesFavorites = "Erdomania & Brocélia & Humalis";
+                    descriptionTerrain = "Les plaines paisibles sont l'endroit rêvé pour une petite balade en famille l'été.\n Caractéristiques particulières:Aucune";
+                    break;
+                case "Foret Facetieuse":
+                    plantesFavorites = "Placinet & Ivoina & Zolia";
+                    descriptionTerrain = "La forêt facétieuse saura assouvir votre soif de sylvothérapie (On le dit quand on fait des calins aux arbres), mais aussi de champignons.\n Caractéristiques particulières:Aucune";
+                    break;
+                case "Volcan Violent":
+                    plantesFavorites = "Demonia & Gorhy & Fenecia";
+                    descriptionTerrain = "Le volcan violent est le jardin d'eden de tous les aventuriers qui apprécient la chaleur et aiment jouer avec le feu.\n Caractéristiques particulières:Aucune";
+                    break;
+                case "Desert Delicat":
+                    plantesFavorites = "Cacruz & Jaunille & Arachneides";
+                    descriptionTerrain = "Le désert délicat peut permettre de faire des courses de rally, mais c'est surtout l'occasion d'observer de magnifiques cactus assoifés, il est déconseillé d'y laisser des plantes ayant besoin d'eau.\n Caractéristiques particulières: Ce terrain est miné, à chaque semaine, certaines cases explosent aléatoirement (tuant les plantes s'il y en a) et vous devez bécher avant de pouvoir replanter.";
+                    break;
+                case "Marecages Malins":
+                    descriptionTerrain = "Les marécages malins risquent de vous donneer bien du file à retordre, entre les nenuphars et l'eau, faites attention à ne pas vous embourber.\n Caractéristiques particulières:Ce terrain nécessite de la jachère, ainsi, il est plus lent et vous obligera à vous armer de patience.";
+                    plantesFavorites = "Mutina & Nenustar & Kuintefeuille";
+                    break;
+            }
+            Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine($"║                                ✦✦ INFOS TERRAIN:{terrain.Nom,-17} ✦✦                          ║");
+            Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
+            Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine($" Description du terrain : {descriptionTerrain}");
+            Console.WriteLine($" Température            : Eveil Fleuri:{terrain.Temperature[0]}\t Eclat Profond:{terrain.Temperature[1]}\t Le Repli d'Or:{terrain.Temperature[2]}\t Repos Blanc:{terrain.Temperature[3]} \t °C");
+            Console.WriteLine($" Humidité               : Eveil Fleuri:{terrain.Humidite[0]}\t Eclat Profond:{terrain.Humidite[1]}\t Le Repli d'Or:{terrain.Humidite[2]}\t Repos Blanc:{terrain.Humidite[3]} \t %");
+            Console.WriteLine($" Ensoleillement         : Eveil Fleuri:{terrain.Ensoleillement[0]}\t Eclat Profond:{terrain.Ensoleillement[1]}\t Le Repli d'Or:{terrain.Ensoleillement[2]}\t Repos Blanc:{terrain.Ensoleillement[3]} \t h/j");
+            Console.WriteLine($" Pluie                  : Eveil Fleuri:{terrain.Pluie[0]}\t Eclat Profond:{terrain.Pluie[1]}\t Le Repli d'Or:{terrain.Pluie[2]}\t Repos Blanc:{terrain.Pluie[3]} \t mm");
+            Console.WriteLine($" Plantes favorites      : {plantesFavorites}                                               ");
+            Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
+            Console.WriteLine("Pour quitter tapez Q ❌");
+            switch (Console.ReadKey().Key)
+            {
+                case ConsoleKey.Q:
+                    enCours = false;
+                    break;
+            }
+        }
     }
 
     public void Tutoriel(string nom)
@@ -450,6 +497,45 @@ public class Affichage
 ⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⠟⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⢰⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀";
         Console.WriteLine(Fee);
+    }
+    public void Pluie()
+    {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+        Console.ForegroundColor = ConsoleColor.Yellow;
+
+        string pluie = @"
+                                            ___         
+                                    ,""" + "\"\"\"\"'      `." + @"
+                                   ,'        _.    ,'""""'.`._
+                                  ,'       ,'              `""" + @"'.
+                                 ,'    .-""`.    ,-'            `.
+                                ,'    (        ,'                :
+                              ,'     ,'           __,            `.
+                        ,""""'     .' ;-.    ,  ,'  \             `"""".
+                      ,'           `-(   `._(_,'     )_                `.
+                     ,'         ,---. \ @ ;   \ @ _,'                   `.
+                ,-""'         ,'      ,--'-    `;'                       `.
+               ,'            ,'      (      `. ,'                          `.
+               ;            ,'        \    _,','                            `.
+              ,'            ;          `--'  ,'                              `.
+             ,'             ;          __    (                    ,           `.
+             ;              `____...  `      `.                  ,'           ,'
+             ;    ...----'''' )  _.-  .       `.                ,'    ,'    ,'
+_....----''' '.        _..--""_.-:.-' .'        `.             ,''.   ,' `--'
+              `""     "" _.-'' .-'`-.:..___...--' `-._      ,-""'   `-'" + @"
+        _.--'       _.-'    .'   .' .'               `""""""
+  __.-''        _.-'     .-'   .'  /
+ '          _.-' .-'  .-'        .'
+        _.-'  .-'  .-' .'  .'   /
+    _.-'      .-'   .-'  .'   .'
+_.-'       .-'    .'   .'    /
+       _.-'    .-'   .'    .'
+    .-'            .'
+";
+
+        Console.WriteLine(pluie);
+        Console.ResetColor(); // Pour rétablir la couleur normale après l'affichage
+
     }
 }
 
