@@ -5,7 +5,6 @@ public abstract class Terrain
     public double[] Humidite { get; set; }
     public double[] Pluie { get; set; }
     public double[] Ensoleillement { get; set; }
-
     public Plante[,] Potager { get; set; }
     public int ColonnesDispos { get; set; }
 

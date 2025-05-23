@@ -27,7 +27,7 @@ bool jeu=true;
 while(jeu)
 {
     Console.Clear();
-    Afficher.Accueil();
+    Afficher.Program();
 
     switch(Console.ReadKey(true).Key)
     {

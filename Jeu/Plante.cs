@@ -48,6 +48,7 @@ public class PlanteSimple : Plante
     public double[] Ensoleillement { get; set; }
     public double[] Pluie { get; set; }
     public double[] Humidite { get; set; }
+    public int Immunite { get; set; }
 
     public PlanteSimple(char affichage, string nom, double prixAchat, double prixVente, double croissance, string type, string terrainFavori, double[] temperature, double[] ensoleillement, double[] pluie, double[] humidite) : base()
     {
@@ -62,6 +63,7 @@ public class PlanteSimple : Plante
         Ensoleillement = ensoleillement;
         Pluie = pluie;
         Humidite = humidite;
+        Immunite = 0;
     }
     
     public PlanteSimple Clone()
@@ -80,10 +82,9 @@ public class PlanteSimple : Plante
         bool estTerrainFavori = TerrainFavori == terrain.Nom;
         if ((estTerrainFavori && condition >= 2 && Croissance != 0) || (!estTerrainFavori && condition >= 3 && Croissance != 0))
         {
-            Affichage n = new Affichage();
             Croissance--;
         }
-        else if ((estTerrainFavori && condition == 0 && Croissance != 0) || (!estTerrainFavori && condition <= 1 && Croissance != 0))
+        else if ((estTerrainFavori && condition == 0 && Croissance != 0 && Immunite == 0) || (!estTerrainFavori && condition <= 1 && Croissance != 0 && Immunite == 0))
         {
             terrain.DetruirePlante(i, j);
         }
@@ -91,5 +92,6 @@ public class PlanteSimple : Plante
         {
             Affichage = char.ToUpper(Affichage);
         }
+        Immunite--;
     }
 }

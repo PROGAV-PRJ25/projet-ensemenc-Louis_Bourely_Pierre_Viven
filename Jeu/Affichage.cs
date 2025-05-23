@@ -91,10 +91,24 @@ public class Affichage
     }
 
 
-    public void Plante(Plante plante)    //couleur si malade
+    public void Plante(Plante plante)
     {
         ConsoleColor couleur = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.White;
+        if (plante is PlanteSimple pl)
+        {
+            if (pl.Immunite == 1)
+            {
+                Console.BackgroundColor = ConsoleColor.DarkBlue;
+            }
+            else if (pl.Immunite < 0)
+            {
+                Console.BackgroundColor = ConsoleColor.DarkYellow;
+            }
+
+        }
+
+
         if (plante is SolSimple)
         {
             Console.Write($"| {plante.Affichage} ");
@@ -115,6 +129,7 @@ public class Affichage
             Console.ForegroundColor = ConsoleColor.White;
         }
         Console.ForegroundColor = couleur;
+        Console.BackgroundColor = ConsoleColor.Black;
     }
 
 
@@ -212,7 +227,7 @@ public class Affichage
 
 
 
-    public void Accueil()
+    public void Program()
     {
         ConsoleColor couleurInitiale = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -260,7 +275,7 @@ public class Affichage
         Console.WriteLine($"✨ Salutations, noble Voyageur... bienvenue dans ton royaume enchanté : {nom} ! ✨");
         Console.ResetColor();
 
-        Console.WriteLine("🌱 Je suis Optegar, l’âme millénaire du Potager... un esprit ancien lié à la terre et au souffle des saisons.");
+        Console.WriteLine("🧞​ Je suis Optegar, l’âme millénaire du Potager... un esprit ancien lié à la terre et au souffle des saisons.");
         Console.WriteLine("🧹 Le vent murmure que de grandes tâches t’attendent... les Potagers de ces Terres ne se cultivent pas tout seuls !");
         Console.WriteLine("🌍 Cinq terres magiques t’accueillent, chacune aux charmes et caprices différents... Renseigne-toi bien avant d’y planter quoi que ce soit.");
 
@@ -289,9 +304,9 @@ public class Affichage
 
     public void Chenille()
     {
-        Console.OutputEncoding = System.Text.Encoding.UTF8; // Pour bien afficher les caractères spéciaux
+        Console.OutputEncoding = System.Text.Encoding.UTF8; 
 
-            string chenille = @"
+        string chenille = @"
 ⠀⠀⣾⣿⠍⠓⢦⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⠖⠛⣿⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠙⠉⠀⠀⠈⢳⠀⠀⠀⠀⠀⠀⠀⡼⠁⠀⠀⠙⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠈⣇⠀⠀⠀⠀⠀⢸⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -319,8 +334,39 @@ public class Affichage
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠛⠉⠛⠒⠒⠒⠒⠒⠻⡄⠀⢸⡇⠀⠀⠀⠀⠀⠈⠙⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠓⢛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀";
 
-            Console.WriteLine(chenille);
+        Console.WriteLine(chenille);
     }
+
+
+
+    public void Accueil()
+    {
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+        string accueil = @"
+                    _,_           +                   __
+                    ','                  /\          `. `.
+            .                        .'  \    +      ""  |
+                                    /     \         /  .'         .
+                        .'\      .'       \       `""`
+        +             .-'   `.   /          `.
+                .     .'        \.'             \
+                .-'           \               \   .-`""-.      . +
+            .'.'               \               \.'       `-.
+            /                    `.           .-'\           `-._
+            .'                       \       .-'                   `-.
+                                                                    `-.
+    .-------------------'''''''''''''''              _.--      .'
+                                    ___..         _.--''        .'jb
+                            --''''             '            .'
+
+    ";
+
+        Console.WriteLine(accueil);
+        Console.ForegroundColor = ConsoleColor.White;
+    }
+
 }
 
 
