@@ -10,12 +10,12 @@ public class PlanteTailler : PlanteSimple
     {
         Random random = new Random();
         int aleatoire = random.Next(0, 5);
-        if ((Taillage== true) && (aleatoire == 1))
+        if ((Taillage == true) && (aleatoire == 1) && Croissance != 0)
         {
             Taillage = false;
         }
-        else if (Taillage==true)
-        {base.SimulerCroissance(terrain,i,j);}
+        else if (Taillage == true)
+        { base.SimulerCroissance(terrain, i, j); }
         
     }
     public void Tailler()

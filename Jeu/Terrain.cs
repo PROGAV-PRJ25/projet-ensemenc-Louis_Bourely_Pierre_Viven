@@ -80,10 +80,17 @@ public abstract class Terrain
             Potager[a, b] = plante;
         }
     }
+    
+    
 
     public int[] Recolter()
     {
         int[] recolte = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        string caseNew = "Vierge";
+        if (Nom == "Marecages Malins")
+        {
+            caseNew = "Jachère";
+        }
         for (int i = 0; i < Potager.GetLength(0); i++)
         {
             for (int j = 0; j < Potager.GetLength(1); j++)
@@ -92,63 +99,63 @@ public abstract class Terrain
                 {
                     case 'A':
                         recolte[0] += 1;
-                        Potager[i, j] = new SolSimple("Vierge");
+                        Potager[i, j] = new SolSimple(caseNew);
                         break;
                     case 'B':
                         recolte[1] += 1;
-                        Potager[i, j] = new SolSimple("Vierge");
+                        Potager[i, j] = new SolSimple(caseNew);
                         break;
                     case 'C':
                         recolte[2] += 1;
-                        Potager[i, j] = new SolSimple("Vierge");
+                        Potager[i, j] = new SolSimple(caseNew);
                         break;
                     case 'D':
                         recolte[3] += 1;
-                        Potager[i, j] = new SolSimple("Vierge");
+                        Potager[i, j] = new SolSimple(caseNew);
                         break;
                     case 'E':
                         recolte[4] += 1;
-                        Potager[i, j] = new SolSimple("Vierge");
+                        Potager[i, j] = new SolSimple(caseNew);
                         break;
                     case 'F':
                         recolte[5] += 1;
-                        Potager[i, j] = new SolSimple("Vierge");
+                        Potager[i, j] = new SolSimple(caseNew);
                         break;
                     case 'G':
                         recolte[6] += 1;
-                        Potager[i, j] = new SolSimple("Vierge");
+                        Potager[i, j] = new SolSimple(caseNew);
                         break;
                     case 'H':
                         recolte[7] += 1;
-                        Potager[i, j] = new SolSimple("Vierge");
+                        Potager[i, j] = new SolSimple(caseNew);
                         break;
                     case 'I':
                         recolte[8] += 1;
-                        Potager[i, j] = new SolSimple("Vierge");
+                        Potager[i, j] = new SolSimple(caseNew);
                         break;
                     case 'J':
                         recolte[9] += 1;
-                        Potager[i, j] = new SolSimple("Vierge");
+                        Potager[i, j] = new SolSimple(caseNew);
                         break;
                     case 'M':
                         recolte[10] += 1;
-                        Potager[i, j] = new SolSimple("Vierge");
+                        Potager[i, j] = new SolSimple(caseNew);
                         break;
                     case 'N':
                         recolte[11] += 1;
-                        Potager[i, j] = new SolSimple("Vierge");
+                        Potager[i, j] = new SolSimple(caseNew);
                         break;
                     case 'P':
                         recolte[12] += 1;
-                        Potager[i, j] = new SolSimple("Vierge");
+                        Potager[i, j] = new SolSimple(caseNew);
                         break;
                     case 'K':
                         recolte[13] += 1;
-                        Potager[i, j] = new SolSimple("Vierge");
+                        Potager[i, j] = new SolSimple(caseNew);
                         break;
                     case 'Z':
                         recolte[14] += 1;
-                        Potager[i, j] = new SolSimple("Vierge");
+                        Potager[i, j] = new SolSimple(caseNew);
                         break;
                     default:
                         break;
@@ -258,7 +265,6 @@ public class TerrainMine : Terrain
 }
 public class TerrainAJachere : Terrain
 {
-    public int[,] Jachere;
 
     public TerrainAJachere() : base()
     {
@@ -267,14 +273,6 @@ public class TerrainAJachere : Terrain
         Pluie = [56, 42, 70, 84, 56];
         Ensoleillement = [8, 10, 7, 5, 8];
         Nom = "Marecages Malins";
-        Jachere = new int[Potager.GetLength(0), Potager.GetLength(1)];
-        for (int i = 0; i < Potager.GetLength(0); i++)
-        {
-            for (int j = 0; j < Potager.GetLength(1); j++)
-            {
-                Jachere[i, j] = 0;
-            }
-        }
     }
     public override void VerifTerrain(Terrain terrain, int saison)
     {
@@ -286,15 +284,17 @@ public class TerrainAJachere : Terrain
                 if (Potager[i, j].Affichage == '/')
                 {
                     Potager[i, j] = new SolSimple("Jachère");
-                    Jachere[i, j] = 5;
                 }
-                if (Jachere[i, j] == 1)
+                if (Potager[i, j] is SolSimple s)
                 {
-                    Potager[i, j] = new SolSimple("Laboure");
-                }
-                else if (Jachere[i, j] > 0)
-                {
-                    Jachere[i, j]--;
+                    if (s.Jachere == 1)
+                    {
+                        Potager[i, j] = new SolSimple("Laboure");
+                    }
+                    else if (s.Jachere > 0)
+                    {
+                        s.Jachere--;
+                    }
                 }
             }
         }

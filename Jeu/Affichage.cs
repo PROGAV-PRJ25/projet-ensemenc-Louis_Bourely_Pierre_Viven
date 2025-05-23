@@ -174,7 +174,7 @@ public class Affichage
 
     public int[] DemandeCasePotage()
     {
-        Console.Write("Rentrez la case ou vous souhaitez planter : ");
+        Console.Write("Rentrez la case ou vous souhaitez agir : ");
         string casePlante = Console.ReadLine()!;
 
 
