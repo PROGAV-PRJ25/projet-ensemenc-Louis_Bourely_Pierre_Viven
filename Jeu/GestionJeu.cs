@@ -67,7 +67,7 @@ public class GestionJeu
         }
     }
 
-   public int Accueil(Partie partie)
+    public int Accueil(Partie partie)
     {
         bool semaineEnCours = true;
 
@@ -309,7 +309,7 @@ public class GestionJeu
                         {
                             if (terrain.Potager[demandeCase[0], demandeCase[1]] is PlanteSimple p)
                             {
-                                p.Immunite=1;
+                                p.Immunite = 1;
                             }
                             Partie.ListeItems[4]--;
                         }
@@ -323,7 +323,7 @@ public class GestionJeu
                         {
                             if (terrain.Potager[demandeCase[0], demandeCase[1]] is PlanteSimple p)
                             {
-                                p.Immunite=-1;
+                                p.Immunite = -1;
                             }
                             Partie.ListeItems[3]--;
                         }
@@ -734,6 +734,7 @@ public class GestionJeu
         Random random = new Random();
         int terrain = random.Next(0, 5);
         Console.Clear();
+        Afficher.Fee();
         Console.WriteLine($"YOUPI, une Fée des plantes apparaît sur votre terrain {Partie.ListeTerrains[terrain].Nom}. Chaque plante qui pousse actuellement sur ce terrain a une probablité de voir sa croissance se terminer immédiatement.");
         bool enCours = true;
         while (enCours)
