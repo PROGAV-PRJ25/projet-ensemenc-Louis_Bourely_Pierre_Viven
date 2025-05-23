@@ -1,6 +1,6 @@
-public class TerrainSimple : Terrain
+public class TerrainSimple : Terrain //Classe héritaire de terrain qui permet juste de créer automatiquement les paramètres des terrains selon leur nom
 {
-    public TerrainSimple(string nom) : base()
+    public TerrainSimple(string nom) : base() //3 terrains possibles
     {
         switch (nom)
         {
@@ -10,6 +10,7 @@ public class TerrainSimple : Terrain
                 Pluie = [28, 14, 42, 56, 28];
                 Ensoleillement = [8, 10, 7, 5, 8];
                 Nom = nom;
+                Emoji = "​🌻​​";
                 break;
             case "Foret Facetieuse":
                 Temperature = [12, 21, 17, 8, 12];
@@ -17,6 +18,7 @@ public class TerrainSimple : Terrain
                 Pluie = [28, 14, 42, 56, 28];
                 Ensoleillement = [5, 8, 5, 3, 5];
                 Nom = nom;
+                Emoji = "​🌲​";
                 break;
             case "Volcan Violent":
                 Temperature = [37, 18, 26, 44, 37];
@@ -24,6 +26,7 @@ public class TerrainSimple : Terrain
                 Pluie = [35, 49, 21, 7, 35];
                 Ensoleillement = [7, 5, 8, 10, 7];
                 Nom = nom;
+                Emoji = "​🌋​​";
                 break;
             default:
                 Temperature = [31];

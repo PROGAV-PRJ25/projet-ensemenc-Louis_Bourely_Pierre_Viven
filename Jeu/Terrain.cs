@@ -1,16 +1,18 @@
-public abstract class Terrain
+public abstract class Terrain //Classe abstract des terrains regroupant les paramètres et méthodes utiles à tous
 {
     public string Nom { get; set; }
-    public double[] Temperature { get; set; }
+    public string Emoji { get; set; }
+    public double[] Temperature { get; set; } //Stock les moyennes par saison + la la valeur à la semaine actuelle
     public double[] Humidite { get; set; }
     public double[] Pluie { get; set; }
     public double[] Ensoleillement { get; set; }
-    public Plante[,] Potager { get; set; }
-    public int ColonnesDispos { get; set; }
+    public Plante[,] Potager { get; set; } //Matrice de Plante représenatn le Potager
+    public int ColonnesDispos { get; set; } //Colonne qui ne sont pas en Friche et qui sont déjà débloquées
 
     public Terrain()
     {
         Temperature = [31];
+        Emoji = "";
         Humidite = [48];
         Pluie = [33];
         Ensoleillement = [81];
@@ -33,14 +35,14 @@ public abstract class Terrain
         }
     }
 
-    public static double GenererNombreAleatoire(double min, double max, int decimale)
+    public static double GenererNombreAleatoire(double min, double max, int decimale) //génére un nombre aléatoire pour les conditions
     {
         Random random = new Random();
         double value = min + (random.NextDouble() * (max - min));
         return Math.Round(value, decimale);
     }
 
-    public void AgrandirPotager()
+    public void AgrandirPotager() //Transforme une colonnne de friche en colonne vierge
     {
         ColonnesDispos += 1;
         for (int i = 0; i < Potager.GetLength(0); i++)
@@ -54,7 +56,7 @@ public abstract class Terrain
             }
         }
     }
-
+    //génère une valeur autour de la moyenne de la saison
     public double RecupererTemperature(int saison)
     {
         return Temperature[saison] * GenererNombreAleatoire(0.8, 1.2, 1);
@@ -73,7 +75,7 @@ public abstract class Terrain
     }
 
 
-    public void Planter(Plante plante, int a, int b)
+    public void Planter(Plante plante, int a, int b) //Plante si terrain labouré
     {
         if (Potager[a, b].Affichage == '•')
         {
@@ -83,13 +85,13 @@ public abstract class Terrain
     
     
 
-    public int[] Recolter()
+    public int[] Recolter() //récolte automatiquement toutes les plantes mûres
     {
         int[] recolte = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         string caseNew = "Vierge";
         if (Nom == "Marecages Malins")
         {
-            caseNew = "Jachère";
+            caseNew = "Jachère"; //remplace par une jachère si le terrain est Marecages Malins (TerrainJachere)
         }
         for (int i = 0; i < Potager.GetLength(0); i++)
         {
@@ -164,19 +166,19 @@ public abstract class Terrain
         }
         return recolte;
     }
-    public void DetruirePlante(int a, int b)
+    public void DetruirePlante(int a, int b) //Détruit la plante et remplace par un sol vierge
     {
         Potager[a, b]= new SolSimple("Vierge");
     }
 
-    public void Labourer(int a, int b)
+    public void Labourer(int a, int b) //Remplace un sol vierge par un sol laboure
     {
         if (Potager[a, b].Affichage == '/')
         {
             Potager[a, b] = new SolSimple("Laboure");
         }
     }
-    public virtual void VerifierTerrain(Terrain terrain, int saison)
+    public virtual void VerifierTerrain(Terrain terrain, int saison) //Parcourt le potager pour simuler la croissance des plantes simples 
     {
         for (int i = 0; i < Potager.GetLength(0); i++)
         {
@@ -188,6 +190,7 @@ public abstract class Terrain
                 }
             }
         }
+        //génère de nouvelle valeurs pour la semaine suivante
         terrain.Temperature[4] = Math.Round(RecupererTemperature(saison),1);
         terrain.Humidite[4] = Math.Round(RecupererHumidite(saison),1);
         terrain.Pluie[4] = Math.Round(RecupererPluie(saison),1);

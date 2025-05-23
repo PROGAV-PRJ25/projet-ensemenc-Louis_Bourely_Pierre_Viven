@@ -1,33 +1,34 @@
 using System.Formats.Asn1;
 using System.Reflection.Metadata;
 using System.Xml;
-
+//Classe Affichage permet de stocker les codes d'affichage longs afin de garder un code lisible.
+//Cette classe est composé uniquement de méthode avec simplement le nom de ce qu'elles affichent
 public class Affichage
 {
-
-
-    public double Potager(Plante[,] terrain, string nom)
+    public double Potager(Plante[,] potager, string nom,string emoji)   //Affiche le Potager d'un terrain et renvoie le prix de l'agrandissement en fonction de son nom
     {
-        char[] alphabet = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
-        ConsoleColor couleur = Console.ForegroundColor;
         double prixAgrandir = 0;
-        switch (nom)
+        char[] alphabet = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J' };
+
+        ConsoleColor couleur = Console.ForegroundColor;
+        
+        switch (nom) //Change le prix en fonction du nom du terrain
         {
             case "Marecages Malins":
                 Console.ForegroundColor = ConsoleColor.DarkBlue;
-                prixAgrandir = 200;
+                prixAgrandir = 2000;
                 break;
             case "Desert Delicat":
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
-                prixAgrandir = 800;
+                prixAgrandir = 1000;
                 break;
             case "Foret Facetieuse":
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                prixAgrandir = 400;
+                prixAgrandir = 200;
                 break;
             case "Volcan Violent":
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                prixAgrandir = 1000;
+                prixAgrandir = 50;
                 break;
             case "Plaines Paisibles":
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -39,7 +40,7 @@ public class Affichage
 
 
         Console.Write("  "); //espace pour aligner les chiffres
-        for (int j = 0; j < terrain.GetLength(1); j++) //création de la ligne de nombres du haut 
+        for (int j = 0; j < potager.GetLength(1); j++) //création de la ligne de nombres du haut 
         {
             if (j < 9)
             {
@@ -57,26 +58,26 @@ public class Affichage
         Console.WriteLine();
 
         Console.Write("  ");
-        for (int j = 0; j < terrain.GetLength(1); j++) //création de la délimitation de la première ligne  
+        for (int j = 0; j < potager.GetLength(1); j++) //création de la délimitation de la première ligne  
         {
             Console.Write("+---");
         }
         Console.Write("+");
         Console.WriteLine();
 
-        for (int i = 0; i < terrain.GetLength(0); i++) //Boucle servant à afficher et remplir les cases du plateau 
+        for (int i = 0; i < potager.GetLength(0); i++) //Boucle servant à afficher et remplir les cases du plateau 
         {
             Console.Write(alphabet[i] + " "); //afficher les lettres sur le coté gauche du plateau
 
-            for (int j = 0; j < terrain.GetLength(1); j++)
+            for (int j = 0; j < potager.GetLength(1); j++)
             {
-                Plante(terrain[i, j]); // Appel de la procédure AffichageCase qui permet de mettre les emojis des personnages
+                Plante(potager[i, j]); // Appel de la fonction Plante qui affiche la Plante correctement en fonction de ses paramètres
             }
             Console.Write("|");
             Console.WriteLine();
 
             Console.Write("  ");
-            for (int j = 0; j < terrain.GetLength(1); j++) //création de la délimitation du bas de la ligne
+            for (int j = 0; j < potager.GetLength(1); j++) //création de la délimitation du bas de la ligne
             {
                 Console.Write("+---");
             }
@@ -84,24 +85,26 @@ public class Affichage
             Console.WriteLine();
         }
         Console.WriteLine();
-        Console.WriteLine("--- " + nom.ToUpper() + " ---");
+        Console.WriteLine("--- " + nom.ToUpper() + emoji+ " ---");
         Console.WriteLine();
+
         Console.ForegroundColor = couleur;
+
         return prixAgrandir;
     }
 
-
-    public void Plante(Plante plante)
+    public void Plante(Plante plante) //Affiche la plante en fonction de sa classe et de ses paramètres spéciaux si besoin
     {
         ConsoleColor couleur = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.White;
+
         if (plante is PlanteSimple pl)
         {
-            if (pl.Immunite == 1)
+            if (pl.Immunite == 1) //Affiche le fond en Bleu si la Plante est protégée pour 1 tour
             {
                 Console.BackgroundColor = ConsoleColor.DarkBlue;
             }
-            else if (pl.Immunite < 0)
+            else if (pl.Immunite < 0) //Affiche le fond en Jaune si la Plante est protégée indéfiniment
             {
                 Console.BackgroundColor = ConsoleColor.DarkYellow;
             }
@@ -115,8 +118,7 @@ public class Affichage
         }
         else if (plante is PlanteTailler p)
         {
-            //condition malade
-            if (p.Taillage == false)
+            if (p.Taillage == false) //Affiche la lettre en Vert si elle doit être taillé
             {
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
             }
@@ -131,22 +133,18 @@ public class Affichage
         Console.ForegroundColor = couleur;
         Console.BackgroundColor = ConsoleColor.Black;
     }
-
-
-
-
-    public void TexteEnProgressif(string texte, int vitesse)
+    
+    public void TexteEnProgressif(string texte, int pause) //Affiche du texte lettre par lettre pour un effet visuel agréable, la pause est le temps entre chaque lettre
     {
         for (int i = 0; i < texte.Length; i++)
         {
             Console.Write(texte[i]);
-            Thread.Sleep(vitesse);
+            Thread.Sleep(pause);
         }
         Console.WriteLine("");
     }
 
-
-    public void Magasin()
+    public void Magasin() //Affiche le design et les instruction de l'accueil du magasin
     {
         Console.ForegroundColor = ConsoleColor.Magenta;
 
@@ -168,11 +166,12 @@ public class Affichage
         Console.WriteLine("⠀⠈⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠀⠉⠉⠉⠉⠉⠈⠉⠁⠀");
 
 
-        Console.WriteLine("\n\nBienvenue dans le magasin 🏪​! \nTapez 1 pour acheter des Semis 🌱\nTapez 2 pour vendre vos Plantes🌳\nTapez 3 pour acheter un item 🛠️\nTapez Q pour Quitter❌");
+        Console.WriteLine("\n\nBienvenue dans le magasin 🏪​! \nTapez 1 pour acheter des Semis 🌱\nTapez 2 pour vendre vos Plantes🌳\nTapez 3 pour acheter un item 🛠️\nTapez W pour consulter le WikiVerdadura des Plantes un item 🧾\nTapez G pour demander des renseignement sur les items au Garage 🧰​");
+        Console.WriteLine("Tapez Q pour Quitter❌");
         Console.ForegroundColor = ConsoleColor.White;
     }
 
-    public int[] DemandeCasePotage()
+    public int[] DemandeCasePotage() //Programme permettant de demander avec robustesse la case du Potager sur laquelle le joueur souhaite agir
     {
         Console.Write("Rentrez la case ou vous souhaitez agir : ");
         string casePlante = Console.ReadLine()!;
@@ -220,14 +219,11 @@ public class Affichage
                 return [coordonnees[i][0], coordonnees[i][1]];
             }
         }
-        TexteEnProgressif("Case non valide!      ", 45);
-        return [99, 99];
+        TexteEnProgressif("Case non valide!!!          ", 45);//Affiche l'erreur
+        return [99, 99]; //Retourne 99 si la case n'est pas dans le Terrain
     }
 
-
-
-
-    public void Program()
+    public void Program() //Affiche le design et les instruction de la page des menus du jeu quand on lance 
     {
         ConsoleColor couleurInitiale = Console.ForegroundColor;
         Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -259,8 +255,7 @@ public class Affichage
         Console.WriteLine("Pour quitter tapez Q ❌​​");
     }
 
-
-    public void InfoTerrain(Terrain terrain)
+    public void InfoTerrain(Terrain terrain) //Affiche les caractéristiques de chaque terrain
     {
         bool enCours = true;
         while (enCours)
@@ -270,37 +265,37 @@ public class Affichage
             Console.Clear();
             switch (terrain.Nom)
             {
-                case "Plaines Paisibles":
+                case "Plaines Paisibles​":
                     plantesFavorites = "Erdomania & Brocélia & Humalis";
-                    descriptionTerrain = "Les plaines paisibles sont l'endroit rêvé pour une petite balade en famille l'été.\n Caractéristiques particulières:Aucune";
+                    descriptionTerrain = "Les plaines paisibles sont l'endroit rêvé pour une petite balade en famille l'été.\n\nCaractéristiques particulières:Aucune\n";
                     break;
-                case "Foret Facetieuse":
+                case "Foret Facetieuse​":
                     plantesFavorites = "Placinet & Ivoina & Zolia";
-                    descriptionTerrain = "La forêt facétieuse saura assouvir votre soif de sylvothérapie (On le dit quand on fait des calins aux arbres), mais aussi de champignons.\n Caractéristiques particulières:Aucune";
+                    descriptionTerrain = "La forêt facétieuse saura assouvir votre soif de sylvothérapie (On le dit quand on fait des calins aux arbres), mais aussi de champignons.\n\nCaractéristiques particulières:Aucune\n";
                     break;
-                case "Volcan Violent":
+                case "Volcan Violent​":
                     plantesFavorites = "Demonia & Gorhy & Fenecia";
-                    descriptionTerrain = "Le volcan violent est le jardin d'eden de tous les aventuriers qui apprécient la chaleur et aiment jouer avec le feu.\n Caractéristiques particulières:Aucune";
+                    descriptionTerrain = "Le volcan violent est le jardin d'eden de tous les aventuriers qui apprécient la chaleur et aiment jouer avec le feu.\n\nCaractéristiques particulières:Aucune\n";
                     break;
-                case "Desert Delicat":
+                case "Desert Delicat​":
                     plantesFavorites = "Cacruz & Jaunille & Arachneides";
-                    descriptionTerrain = "Le désert délicat peut permettre de faire des courses de rally, mais c'est surtout l'occasion d'observer de magnifiques cactus assoifés, il est déconseillé d'y laisser des plantes ayant besoin d'eau.\n Caractéristiques particulières: Ce terrain est miné, à chaque semaine, certaines cases explosent aléatoirement (tuant les plantes s'il y en a) et vous devez bécher avant de pouvoir replanter.";
+                    descriptionTerrain = "Le désert délicat peut permettre de faire des courses de rally, mais c'est surtout l'occasion d'observer de magnifiques cactus assoifés, il est déconseillé d'y laisser des plantes ayant besoin d'eau.\n\nCaractéristiques particulières: Ce terrain est miné, à chaque semaine, certaines cases explosent aléatoirement (tuant les plantes s'il y en a) et vous devez bécher avant de pouvoir replanter.\n";
                     break;
-                case "Marecages Malins":
-                    descriptionTerrain = "Les marécages malins risquent de vous donneer bien du file à retordre, entre les nenuphars et l'eau, faites attention à ne pas vous embourber.\n Caractéristiques particulières:Ce terrain nécessite de la jachère, ainsi, il est plus lent et vous obligera à vous armer de patience.";
+                case "Marecages Malins​":
+                    descriptionTerrain = "Les marécages malins risquent de vous donneer bien du file à retordre, entre les nenuphars et l'eau, faites attention à ne pas vous embourber.\n\nCaractéristiques particulières:Ce terrain nécessite de la jachère, ainsi, il est plus lent et vous obligera à vous armer de patience.\n";
                     plantesFavorites = "Mutina & Nenustar & Kuintefeuille";
                     break;
             }
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine($"║                                ✦✦ INFOS TERRAIN:{terrain.Nom,-17} ✦✦                          ║");
+            Console.WriteLine($"║                                ✦✦ INFOS TERRAIN:{terrain.Emoji}{terrain.Nom,-18} ✦✦                       ║");
             Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
             Console.WriteLine($" Description du terrain : {descriptionTerrain}");
-            Console.WriteLine($" Température            : Eveil Fleuri:{terrain.Temperature[0]}\t Eclat Profond:{terrain.Temperature[1]}\t Le Repli d'Or:{terrain.Temperature[2]}\t Repos Blanc:{terrain.Temperature[3]} \t °C");
-            Console.WriteLine($" Humidité               : Eveil Fleuri:{terrain.Humidite[0]}\t Eclat Profond:{terrain.Humidite[1]}\t Le Repli d'Or:{terrain.Humidite[2]}\t Repos Blanc:{terrain.Humidite[3]} \t %");
-            Console.WriteLine($" Ensoleillement         : Eveil Fleuri:{terrain.Ensoleillement[0]}\t Eclat Profond:{terrain.Ensoleillement[1]}\t Le Repli d'Or:{terrain.Ensoleillement[2]}\t Repos Blanc:{terrain.Ensoleillement[3]} \t h/j");
-            Console.WriteLine($" Pluie                  : Eveil Fleuri:{terrain.Pluie[0]}\t Eclat Profond:{terrain.Pluie[1]}\t Le Repli d'Or:{terrain.Pluie[2]}\t Repos Blanc:{terrain.Pluie[3]} \t mm");
-            Console.WriteLine($" Plantes favorites      : {plantesFavorites}                                               ");
+            Console.WriteLine($" Température 🌡️          : 🌼​ Éveil fleuri : {terrain.Temperature[0],-10}☀️ Éclat Profond : {terrain.Temperature[1],-10}🍂 Le Repli d’Or : {terrain.Temperature[2],-10}❄️ Repos Blanc : {terrain.Temperature[3],-5}°C");
+            Console.WriteLine($" Humidité 💧            : 🌼​ Éveil fleuri : {terrain.Humidite[0],-10}☀️ Éclat Profond : {terrain.Humidite[1],-10}🍂 Le Repli d’Or : {terrain.Humidite[2],-10}❄️ Repos Blanc : {terrain.Humidite[3],-5}%");
+            Console.WriteLine($" Ensoleillement ☀️       : 🌼​ Éveil fleuri : {terrain.Ensoleillement[0],-10}☀️ Éclat Profond : {terrain.Ensoleillement[1],-10}🍂 Le Repli d’Or : {terrain.Ensoleillement[2],-10}❄️ Repos Blanc : {terrain.Ensoleillement[3],-5}h/j");
+            Console.WriteLine($" Pluie 🌧️                : 🌼​ Éveil fleuri : {terrain.Pluie[0],-10}☀️ Éclat Profond : {terrain.Pluie[1],-10}🍂 Le Repli d’Or : {terrain.Pluie[2],-10}❄️ Repos Blanc : {terrain.Pluie[3],-5}mm");
+            Console.WriteLine($" Plantes favorites 🌳   : {plantesFavorites}                                               ");
             Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
             Console.WriteLine("Pour quitter tapez Q ❌");
             switch (Console.ReadKey().Key)
@@ -312,7 +307,7 @@ public class Affichage
         }
     }
 
-    public void Tutoriel(string nom)
+    public void Tutoriel(string nom) //Affiche les instruction de tutoriel
     {
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine(
@@ -348,9 +343,7 @@ public class Affichage
         Console.ForegroundColor = ConsoleColor.White;
     }
 
-
-
-    public void Chenille()
+    public void Chenille() //Affiche le design ASCII de chenille
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8;
 
@@ -385,9 +378,7 @@ public class Affichage
         Console.WriteLine(chenille);
     }
 
-
-
-    public void Accueil()
+    public void Accueil() //Affiche le design ASCII de l'accueil
     {
         Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -416,9 +407,7 @@ public class Affichage
     }
 
 
-
-
-    public void Rat()
+    public void Rat() //Affiche le design ASCII du rat
     {
         // Pour bien afficher tous les caractères, surtout les symboles spéciaux
         Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -440,7 +429,7 @@ public class Affichage
         Console.WriteLine(rat);
 
     }
-    public void Poule()
+    public void Poule() //Affiche le design ASCII de la poule
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8;
         string poule = @"
@@ -476,7 +465,7 @@ public class Affichage
 
         Console.WriteLine(poule);
     }
-    public void Fee()
+    public void Fee() //Affiche le design ASCII de la fée
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8;
         string Fee = @"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -499,10 +488,9 @@ public class Affichage
 ⠀⠀⠀⠀⠀⠀⠀⢰⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀";
         Console.WriteLine(Fee);
     }
-    public void Pluie()
+    public void Pluie() //Affiche le design ASCII de la pluie
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8;
-        Console.ForegroundColor = ConsoleColor.Yellow;
 
         string pluie = @"
                                             ___         
@@ -535,7 +523,7 @@ _.-'       .-'    .'   .'    /
 ";
 
         Console.WriteLine(pluie);
-        Console.ResetColor(); // Pour rétablir la couleur normale après l'affichage
+
 
     }
 }

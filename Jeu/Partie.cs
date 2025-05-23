@@ -1,18 +1,18 @@
-public class Partie
+public class Partie  //Classe qui permet de stocker toutes les informations essentielles au déroulement du jeu
 {
-    public bool chenille = false;
-    public string Nom { get; set; }
-    public double VerdaMoula { get; set; }
-    public int Semaine { get; set; }
-    public int[] ListePlantes { get; set; }
-    public PlanteSimple[] ListeInfoPlantes { get; set; }
-    public int[] ListeSemis { get; set; }
-    public int[] ListeItems { get; set; }
-    public Item[] ListeInfoItems { get; set; }
-    public Terrain[] ListeTerrains { get; set; }
+    public bool chenille = false; //Condition pour afficher le bulletin météo
+    public string Nom { get; set; } //nom de la partie
+    public double VerdaMoula { get; set; } //Argent du joueur
+    public int Semaine { get; set; } //Semaine de jeu qui sert aussi à calculer la saison
+    public int[] ListePlantes { get; set; } //Stocke le nombre de plantes récoltées
+    public PlanteSimple[] ListeInfoPlantes { get; set; } //Stocke les informations relatives aux plantes pour les afficher et sert à en créer de nouvelle avec .Clone()
+    public int[] ListeSemis { get; set; } //Stocke le nombre de semis disponibles
+    public int[] ListeItems { get; set; } //Stocke le nombre d'items disponibles
+    public Item[] ListeInfoItems { get; set; } //Stocke les informations des items pour les afficher
+    public Terrain[] ListeTerrains { get; set; } //Stocke tous les terrains (en tableau car il reste dans un ordre précis et ne sont jamais supprimés ou ajoutés)
 
 
-    public Partie(string nom)
+    public Partie(string nom) //Instancie une nouvelle partie avec les paramètres de bases (à changer si ajout de difficultés)
     {
         Nom = nom;
         VerdaMoula = 100;
@@ -29,8 +29,8 @@ public class Partie
             new Item('P',"PotionMagique", 100,"La PotionMagique donne un effet aléatoir qu peut accèlérer la croissance la ralentir ou bien tuer la plante"),         // [5]
             new Item('E',"EngraisHyperactif", 1500,"L'EngraisHyperactif avance la Croissance d'une semaine"),     // [6]
             new Item('S',"SecàtoutHeure", 5000,"Le SecàtoutHeure permet de tailler les plantes"),              // [7]
-            new Item('B',"Bêchhuuuuut", 20,"La Bêchhuuuuut permet de labourer une case d'un Terrain"),  //[8]
-            new Item('U',"UltraBêchhuuuuut",500,"L'UltraBêchhuuuuut permet de Labourer tous le potager d'un seul coup.") //[9]
+            new Item('B',"Bêchhuuuuut", 20,"La Bêchhuuuuut permet de labourer une case d'un Terrain"),
+            new Item('U',"UltraBêchhuuuuut",500,"L'UltraBêchhuuuuut permet de Labourer tous le potager d'un seul coup.")
         ];
         ListeInfoPlantes = [
             new PlanteSimple('a', "Arachnéide", 500, 5000, 7, "Médicinale", "Desert Delicat", [16, 26], [6, 9], [1, 5], [0, 10]),

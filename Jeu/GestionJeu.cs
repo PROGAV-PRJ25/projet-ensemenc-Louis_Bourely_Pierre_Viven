@@ -1,25 +1,25 @@
 using System.Collections;
 using System.Runtime.CompilerServices;
 
-public class GestionJeu
+public class GestionJeu //Classe qui permet de jouer une partie
 {
     Partie Partie { get; set; }
     Affichage Afficher { get; }
 
-    public GestionJeu(Partie partie)
+    public GestionJeu(Partie partie) //Joue avec une partie déjà crée 
     {
         Partie = partie;
         Afficher = new Affichage();
     }
-    public GestionJeu(string nom)
+    public GestionJeu(string nom) //créer une partie avec le nom en paramètre
     {
         Partie = new Partie(nom);
         Afficher = new Affichage();
-        Tutoriel();
+        Tutoriel(); //Lance le tutoriel car c'est une nouvelle partie
     }
 
 
-    public void Tutoriel()
+    public void Tutoriel() //Affiche le tutoriel et permet de passer avec Entrée
     {
         Afficher.Tutoriel(Partie.Nom);
         bool enCours = true;
@@ -36,30 +36,30 @@ public class GestionJeu
         }
     }
 
-    public void Jouer()
+    public void Jouer() //récupère une donnée de accueil et fait une action en réponse 
     {
         bool enCours = true;
         while (enCours)
         {
             switch (Accueil(Partie))
             {
-                case 1:
+                case 1: //Semaine suivante
                     SimulationSemaine();
                     break;
-                case 2:
+                case 2: //Sauvegarde et semaine suivante
                     Sauvegarde sauvegarde = new Sauvegarde(Partie);
                     sauvegarde.Sauvegarder();
                     SimulationSemaine();
                     break;
-                case 3:
+                case 3: //Sauvegarde et quitte
                     Sauvegarde sauvegarde2 = new Sauvegarde(Partie);
                     sauvegarde2.Sauvegarder();
                     enCours = false;
                     break;
-                case 4:
+                case 4: //Quitte sans sauvegarder
                     enCours = false;
                     break;
-                case 5:
+                case 5: 
                     Console.WriteLine("ERREUR @@@");
                     break;
                 default:
@@ -68,7 +68,7 @@ public class GestionJeu
         }
     }
 
-    public int Accueil(Partie partie)
+    public int Accueil(Partie partie) //Accueil du jeu qui permet d'accéder aux différentes parties du jeu et de passer à la semaine suivante de sauvegarder ou quitter
     {
         bool semaineEnCours = true;
 
@@ -77,7 +77,7 @@ public class GestionJeu
             Console.Clear();
             Afficher.Accueil();
 
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Green; //Recap des infos
             Console.WriteLine("═══════════════════════════════════════════════════════════════════");
             Console.WriteLine($"🏝️   Bienvenue dans votre monde : {partie.Nom}");
             Console.WriteLine($"📅  Semaine actuelle : {partie.Semaine}");
@@ -138,15 +138,14 @@ public class GestionJeu
         return 5;
     }
 
-
-    public void VisualiserTerrain(Terrain terrain)
+    public void VisualiserTerrain(Terrain terrain) //Affiche le potager d'un terrain et permet d'effectuer des actions
     {
         bool enCours = true;
         while (enCours)
         {
             Console.Clear();
 
-            double prixAgrandir = Afficher.Potager(terrain.Potager, terrain.Nom);
+            double prixAgrandir = Afficher.Potager(terrain.Potager, terrain.Nom,terrain.Emoji);
             Console.WriteLine($"\n💰 Verdamoula actuelle : {Partie.VerdaMoula}\n");
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
@@ -160,14 +159,14 @@ public class GestionJeu
                 case ConsoleKey.Q:
                     enCours = false;
                     break;
-                case ConsoleKey.A:
+                case ConsoleKey.A: //Agrandit d'une colonne en rempl^ant les friches par des soles vierges
                     if (Partie.VerdaMoula >= prixAgrandir)
                     {
                         terrain.AgrandirPotager();
                         Partie.VerdaMoula -= prixAgrandir;
                     }
                     break;
-                case ConsoleKey.R:
+                case ConsoleKey.R: //recolte les plantes mûres
                     int[] recolte = terrain.Recolter();
                     for (int k = 0; k < recolte.Length; k++)
                     {
@@ -189,18 +188,18 @@ public class GestionJeu
             }
         }
     }
-    public void UtiliserItem(Terrain terrain)
+    public void UtiliserItem(Terrain terrain) //permet d'utiliser un item sur un terrain
     {
         bool enCours = true;
         while (enCours)
         {
             Console.Clear();
-            Afficher.Potager(terrain.Potager, terrain.Nom);
+            Afficher.Potager(terrain.Potager, terrain.Nom,terrain.Emoji);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n🛠️ Vos Items disponibles :");
             Console.ResetColor();
 
-            for (int i = 3; i < Partie.ListeItems.Length; i++)
+            for (int i = 3; i < Partie.ListeItems.Length; i++) //Affiche seulement les items utiles pour les terrains
             {
                 if (Partie.ListeItems[i] > 2)
                 {
@@ -228,9 +227,7 @@ public class GestionJeu
                 case ConsoleKey.Q:
                     enCours = false;
                     break;
-                case ConsoleKey.A:
-                    break;
-                case ConsoleKey.B:
+                case ConsoleKey.B: //Bêche qui laboure une case
                     if (Partie.ListeItems[8] >= 1)
                     {
                         int[] demandeCase = Afficher.DemandeCasePotage();
@@ -241,7 +238,7 @@ public class GestionJeu
                         }
                     }
                     break;
-                case ConsoleKey.U:
+                case ConsoleKey.U: //Super bêche qui laboure le terrain
                     for (int i = 0; i < terrain.Potager.GetLength(0); i++)
                     {
                         for (int j = 0; j < terrain.Potager.GetLength(1); j++)
@@ -251,7 +248,7 @@ public class GestionJeu
                         }
                     }
                     break;
-                case ConsoleKey.S:
+                case ConsoleKey.S: //Sécateur qui taille la plante (peut être réutilisé)
                     if (Partie.ListeItems[7] >= 1)
                     {
                         int[] demandeCase = Afficher.DemandeCasePotage();
@@ -264,7 +261,7 @@ public class GestionJeu
                         }
                     }
                     break;
-                case ConsoleKey.E:
+                case ConsoleKey.E: //Engrais qui avance la croissance d'une semaine
                     if (Partie.ListeItems[6] >= 1)
                     {
                         int[] demandeCase = Afficher.DemandeCasePotage();
@@ -282,7 +279,7 @@ public class GestionJeu
                         }
                     }
                     break;
-                case ConsoleKey.P:
+                case ConsoleKey.P: //Potion qui donne un effet aléatoire entre grandir, rapettir, rien et mourir
                     if (Partie.ListeItems[5] >= 1)
                     {
                         int[] demandeCase = Afficher.DemandeCasePotage();
@@ -315,7 +312,7 @@ public class GestionJeu
                         }
                     }
                     break;
-                case ConsoleKey.C:
+                case ConsoleKey.C: //Casque qui protège la plante des conditions pour un tour
                     if (Partie.ListeItems[4] >= 1)
                     {
                         int[] demandeCase = Afficher.DemandeCasePotage();
@@ -329,7 +326,7 @@ public class GestionJeu
                         }
                     }
                     break;
-                case ConsoleKey.M:
+                case ConsoleKey.M: //MegaItem qui protège la plante des conditions à vie
                     if (Partie.ListeItems[3] >= 1)
                     {
                         int[] demandeCase = Afficher.DemandeCasePotage();
@@ -349,14 +346,13 @@ public class GestionJeu
         }
     }
 
-
-    public void Planter(Terrain terrain)
+    public void Planter(Terrain terrain) // permet de planter une plante sur un terrain
     {
         bool enCours = true;
         while (enCours)
         {
             Console.Clear();
-            Afficher.Potager(terrain.Potager, terrain.Nom);
+            Afficher.Potager(terrain.Potager, terrain.Nom,terrain.Emoji);
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("\n🌱 Vos Semis disponibles :");
@@ -408,7 +404,7 @@ public class GestionJeu
                 case ConsoleKey.P:
                 case ConsoleKey.K:
                 case ConsoleKey.Z:
-                    int index = touches.IndexOf(char.ToUpper(touche.KeyChar));
+                    int index = touches.IndexOf(char.ToUpper(touche.KeyChar)); //Récupère l'index de la lettre pour utilser les informations adéquates
                     if (index >= 0 && Partie.ListeSemis[index] > 0)
                     {
                         int[] demandeCase = Afficher.DemandeCasePotage();
@@ -426,7 +422,7 @@ public class GestionJeu
         }
     }
 
-    public void Magasin()
+    public void Magasin() //menu du magasin
     {
         bool enCours = true;
         while (enCours)
@@ -448,10 +444,10 @@ public class GestionJeu
                 case ConsoleKey.D3:
                     MagasinItems();
                     break;
-                case ConsoleKey.W:
+                case ConsoleKey.W: //Affiche la documentation des plantes
                     Wiki();
                     break;
-                case ConsoleKey.G:
+                case ConsoleKey.G: //Affiche la documentation des items
                     Garage();
                     break;
                 default:
@@ -460,7 +456,7 @@ public class GestionJeu
         }
     }
 
-    public void Wiki()
+    public void Wiki() //Affiche la documentation des plantes
     {
         bool enCours = true;
         ConsoleColor fondInitial = Console.BackgroundColor;
@@ -473,12 +469,12 @@ public class GestionJeu
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║                               ✦✦   WikiVerdadura Plantes    ✦✦                                ║");
+            Console.WriteLine("║                               ✦✦   WikiVerdadura Plantes 🌳    ✦✦                             ║");
             Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
             Console.ResetColor();
 
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║ Plantes connues :                                                                             ║");
+            Console.WriteLine("║ 🌳 Plantes connues :                                                                          ║");
             Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
 
             List<char> touches = new List<char> { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'M', 'N', 'P', 'K', 'Z' };
@@ -495,7 +491,7 @@ public class GestionJeu
             Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝\n");
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("Tapez la touche de la Plante dont vous souhaitez avoir les informations (A-Z). Tapez Q pour quitter le WikiVerdadura.\n");
+            Console.WriteLine("Tapez la touche de la Plante 🌳 dont vous souhaitez avoir les informations (A-Z). Tapez Q pour Quitter le WikiVerdadura❌\n");
             Console.ResetColor();
 
             if (afficheInfo >= 0)
@@ -557,7 +553,7 @@ public class GestionJeu
                     int index = touches.IndexOf(char.ToUpper(touche.KeyChar));
                     if (index >= 0)
                     {
-                        afficheInfo = index;
+                        afficheInfo = index; //Change la plante affichée 
                     }
                     break;
                 default:
@@ -568,7 +564,7 @@ public class GestionJeu
         }
     }
 
-    public void Garage()
+    public void Garage() //Affiche la documentation des items (même principe que Wiki)
     {
         bool enCours = true;
         ConsoleColor fondInitial = Console.BackgroundColor;
@@ -581,12 +577,12 @@ public class GestionJeu
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║                               ✦✦  Garage & Conseils en Items    ✦✦                                ║");
+            Console.WriteLine("║                               ✦✦  Garage & Conseils en Items 🛠️    ✦✦                          ║");
             Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
             Console.ResetColor();
 
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║ Items connues :                                                                               ║");
+            Console.WriteLine("║ 🛠️  Items connues :                                                                            ║");
             Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
 
             List<char> touches = new List<char> { 'R', 'T', 'I', 'M', 'C', 'P', 'E', 'S', 'B', 'U' };
@@ -603,7 +599,7 @@ public class GestionJeu
             Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝\n");
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("Tapez la touche de l'Item dont vous souhaitez avoir les informations (A-Z). Tapez Q pour quitter le garage.\n");
+            Console.WriteLine("Tapez la touche de l'Item 🛠️ dont vous souhaitez avoir les informations (A-Z). Tapez Q pour Quitter le garage❌\n");
             Console.ResetColor();
 
             if (afficheInfo >= 0)
@@ -653,7 +649,7 @@ public class GestionJeu
         }
     }
 
-    public void MagasinSemis()
+    public void MagasinSemis() //Pemret d'acheter des semis
     {
         bool enCours = true;
         ConsoleColor fondInitial = Console.BackgroundColor;
@@ -665,7 +661,7 @@ public class GestionJeu
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║                               ✦✦ ACHETEZ DES SEMIS DE QUALITÉ✦✦                               ║");
+            Console.WriteLine("║                               ✦✦ ACHETEZ DES SEMIS DE QUALITÉ 🌱✦✦                            ║");
             Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
             Console.ResetColor();
 
@@ -674,7 +670,7 @@ public class GestionJeu
             Console.ResetColor();
 
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║ Semis disponibles :                                                                           ║");
+            Console.WriteLine("║ 🌱 Semis disponibles :                                                                        ║");
             Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
 
             List<char> touches = new List<char> { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'M', 'N', 'P', 'K', 'Z' };
@@ -700,7 +696,7 @@ public class GestionJeu
             Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝\n");
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("Tapez la touche du semis que vous souhaitez achetez (A-Z). Tapez Q pour quitter le magasin.\n");
+            Console.WriteLine("Tapez la touche du Semis 🌱 que vous souhaitez achetez (A-Z). Tapez Q pour Quitter le magasin❌\n");
             Console.ResetColor();
 
             ConsoleKeyInfo touche = Console.ReadKey(true);
@@ -740,7 +736,7 @@ public class GestionJeu
         }
     }
 
-    public void MagasinPlantes()
+    public void MagasinPlantes() //Pemret d'acheter des plantes
     {
         bool enCours = true;
         ConsoleColor fondInitial = Console.BackgroundColor;
@@ -752,7 +748,7 @@ public class GestionJeu
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║                           ✦✦ VENDEZ VOS PLANTES AU MEILLEUR PRIX✦✦                            ║");
+            Console.WriteLine("║                           ✦✦ VENDEZ VOS PLANTES AU MEILLEUR PRIX 🌳✦✦                         ║");
             Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
             Console.ResetColor();
 
@@ -761,7 +757,7 @@ public class GestionJeu
             Console.ResetColor();
 
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║ Vos Plantes :                                                                                 ║");
+            Console.WriteLine("║ 🌳 Vos Plantes :                                                                              ║");
             Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
 
             List<char> touches = new List<char> { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'M', 'N', 'P', 'K', 'Z' };
@@ -787,7 +783,7 @@ public class GestionJeu
             Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝\n");
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("Tapez la touche de la plante que vous souhaitez vendre (A-Z). Tapez Q pour quitter le magasin.\n");
+            Console.WriteLine("Tapez la touche de la Plante 🌳 que vous souhaitez vendre (A-Z). Tapez Q pour quitter le magasin❌\n");
             Console.ResetColor();
             ConsoleKeyInfo touche = Console.ReadKey(true);
             switch (touche.Key)
@@ -826,8 +822,7 @@ public class GestionJeu
         }
     }
 
-
-    public void MagasinItems()
+    public void MagasinItems() //Pemret d'acheter des items
     {
         bool enCours = true;
         ConsoleColor fondInitial = Console.BackgroundColor;
@@ -839,7 +834,7 @@ public class GestionJeu
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║                               ✦✦ ACHETEZ DES ITEMS DE QUALITÉ✦✦                               ║");
+            Console.WriteLine("║                               ✦✦ ACHETEZ DES ITEMS DE QUALITÉ 🛠️ ✦✦                            ║");
             Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝");
             Console.ResetColor();
 
@@ -848,7 +843,7 @@ public class GestionJeu
             Console.ResetColor();
 
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║ Items disponibles :                                                                           ║");
+            Console.WriteLine("║ 🛠️  Items disponibles :                                                                       ║");
             Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
 
             List<char> touches = new List<char> { 'R', 'T', 'I', 'M', 'C', 'P', 'E', 'S', 'B', 'U' };
@@ -873,7 +868,7 @@ public class GestionJeu
             Console.WriteLine("╚═══════════════════════════════════════════════════════════════════════════════════════════════╝\n");
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine("Tapez la touche de l'item que vous souhaitez achetez (A-Z). Tapez Q pour quitter le magasin.\n");
+            Console.WriteLine("Tapez la touche de l'Item 🛠️ que vous souhaitez achetez (A-Z). Tapez Q pour quitter le magasin❌\n");
             Console.ResetColor();
 
             ConsoleKeyInfo touche = Console.ReadKey(true);
@@ -909,17 +904,19 @@ public class GestionJeu
     }
 
 
-
-
     public void SimulationSemaine()
     {
-        Console.Clear();
         Partie.chenille = false;
-        Afficher.TexteEnProgressif("Simulation semaine!!!!", 80);
+
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Gray;
+        Afficher.TexteEnProgressif("Simulation de la semaine ...  ", 80);
+        Console.ForegroundColor = ConsoleColor.White;
         Thread.Sleep(800);
-        Partie.Semaine++;
+
+        Partie.Semaine++; //rajoute une semaine
         Random random = new Random();
-        int urgences = random.Next(1, 51);
+        int urgences = random.Next(1, 31); //Génère une probabilté d'une urgence Bonus/Malus
         switch (urgences)
         {
             case 10:
@@ -941,70 +938,74 @@ public class GestionJeu
             default:
                 break;
         }
-        for (int k = 0; k < Partie.ListeTerrains.Length; k++)
+        for (int k = 0; k < Partie.ListeTerrains.Length; k++) //Lance VerificationTerrain dans chaque terrain pour faire simuler la croissance des plantes
         {
             int saison = Partie.Semaine / 13 % 4;
             Partie.ListeTerrains[k].VerifierTerrain(Partie.ListeTerrains[k], saison);
         }
     }
-    public void AverseOR()
+    public void AverseOR() //Urgence de l'averse d'or qui fait gagner de l'argent
     {
         Random random = new Random();
         int montant = random.Next(0, 10);
         Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Yellow;
         Afficher.Pluie();
-        Afficher.TexteEnProgressif("Le ciel est menacant mais les nuages sont d'une couleur jaune dorée. C'est une averse OR(ageuse) qui touche votre monde. Vous allez donc aléatoirement reçevoir de la verdamoula  ", 50);
+        Afficher.TexteEnProgressif("Le ciel est menacant mais les nuages 💨​ sont d'une couleur jaune dorée.\nC'est une averse OR(ageuse) qui touche votre monde. Vous allez donc aléatoirement reçevoir de la verdamoula💰🤑​  \n", 50);
         switch (montant)
         {
             case 0:
                 Partie.VerdaMoula += 1;
-                Afficher.TexteEnProgressif("Vous avez gagné 1 VerdaMoula   ", 50);
+                Afficher.TexteEnProgressif("Vous avez gagné 1 VerdaMoula 💰🤑​💰  ", 50);
                 break;
             case 1:
                 Partie.VerdaMoula += 25;
-                Afficher.TexteEnProgressif("Vous avez gagné 25 VerdaMoula   ", 50);
+                Afficher.TexteEnProgressif("Vous avez gagné 25 VerdaMoula 💰🤑​💰  ", 50);
                 break;
             case 2:
                 Partie.VerdaMoula += 100;
-                Afficher.TexteEnProgressif("Vous avez gagné 100 VerdaMoula   ", 50);
+                Afficher.TexteEnProgressif("Vous avez gagné 100 VerdaMoula 💰🤑​💰  ", 50);
                 break;
             case 3:
                 Partie.VerdaMoula += 200;
-                Afficher.TexteEnProgressif("Vous avez gagné 200 VerdaMoula   ", 50);
+                Afficher.TexteEnProgressif("Vous avez gagné 200 VerdaMoula 💰🤑​💰  ", 50);
                 break;
             case 4:
                 Partie.VerdaMoula += 500;
-                Afficher.TexteEnProgressif("Vous avez gagné 500 VerdaMoula   ", 50);
+                Afficher.TexteEnProgressif("Vous avez gagné 500 VerdaMoula 💰🤑​💰  ", 50);
                 break;
             case 5:
                 Partie.VerdaMoula += 100;
-                Afficher.TexteEnProgressif("Vous avez gagné 100 VerdaMoula   ", 50);
+                Afficher.TexteEnProgressif("Vous avez gagné 100 VerdaMoula 💰🤑​💰  ", 50);
                 break;
             case 6:
                 Partie.VerdaMoula += 200;
-                Afficher.TexteEnProgressif("Vous avez gagné 200 VerdaMoula   ", 50);
+                Afficher.TexteEnProgressif("Vous avez gagné 200 VerdaMoula 💰🤑​💰  ", 50);
                 break;
             case 7:
                 Partie.VerdaMoula += 500;
-                Afficher.TexteEnProgressif("Vous avez gagné 500 VerdaMoula   ", 50);
+                Afficher.TexteEnProgressif("Vous avez gagné 500 VerdaMoula 💰🤑​💰  ", 50);
                 break;
             case 8:
                 Partie.VerdaMoula += 1500;
-                Afficher.TexteEnProgressif("Vous avez gagné 1500 VerdaMoula   ", 50);
+                Afficher.TexteEnProgressif("Vous avez gagné 1500 VerdaMoula 💰🤑​💰  ", 50);
                 break;
             case 9:
                 Partie.VerdaMoula += 5000;
-                Afficher.TexteEnProgressif("Vous avez gagné 5000 VerdaMoula   ", 50);
+                Afficher.TexteEnProgressif("Vous avez gagné 5000 VerdaMoula 💰🤑​💰  ", 50);
                 break;
         }
+        Console.ForegroundColor = ConsoleColor.White;
     }
-    public void FeeDesPlantes()
+    public void FeeDesPlantes() //Urgence de la fee des plantes qui accélere la croissance des plantes d'un terrain
     {
         Random random = new Random();
         int terrain = random.Next(0, 5);
         Console.Clear();
+
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
         Afficher.Fee();
-        Console.WriteLine($"YOUPI, une Fée des plantes apparaît sur votre terrain {Partie.ListeTerrains[terrain].Nom}. Chaque plante qui pousse actuellement sur ce terrain a une probablité de voir sa croissance se terminer immédiatement.");
+        Console.WriteLine($"YOUPI, une Fée des plantes apparaît sur votre terrain {Partie.ListeTerrains[terrain].Nom}{Partie.ListeTerrains[terrain].Emoji}.\nChaque plante qui pousse actuellement sur ce terrain a une probablité de voir sa croissance se terminer immédiatement.");
         bool enCours = true;
         while (enCours)
         {
@@ -1026,15 +1027,18 @@ public class GestionJeu
             }
             enCours = false;
         }
+        Console.ForegroundColor = ConsoleColor.White;
     }
 
-    public void Rat()
+    public void Rat() //Urgence du rat qui détruit toute les plante sauf utilisation du raticide
     {
         Random random = new Random();
         int terrain = random.Next(0, 5);
+
+        Console.ForegroundColor = ConsoleColor.Red;
         Console.Clear();
         Afficher.Rat();
-        Console.WriteLine($"Oh non un Rat mécréant sur votre terrain {Partie.ListeTerrains[terrain].Nom} mettez un raticide sinon il va dévorer toutes les plantes du terrain");
+        Console.WriteLine($"Oh non un Rat mécréant 🐀​ sur votre terrain {Partie.ListeTerrains[terrain].Nom}{Partie.ListeTerrains[terrain].Emoji} mettez un raticide sinon il va dévorer toutes les plantes du terrain");
         Console.WriteLine("Pour utiliser le raticide tapez O sinon tapez N ");
         bool enCours = true;
         while (enCours)
@@ -1045,11 +1049,11 @@ public class GestionJeu
                     if (Partie.ListeItems[0] >= 1)
                     {
                         Partie.ListeItems[0]--;
-                        Afficher.TexteEnProgressif("Le Rat mécréant part la queue entre les jambes grâce au raticide    ", 50);
+                        Afficher.TexteEnProgressif("Le Rat mécréant🐀​  part la queue entre les jambes grâce au raticide    ", 50);
                     }
                     else
                     {
-                        Afficher.TexteEnProgressif("Et non vous n'avez pas de raticide c'est tchao        ", 50);
+                        Afficher.TexteEnProgressif("Et non vous n'avez pas de raticide quelle dommage...  🐀​     ", 50);
                         for (int i = 0; i < Partie.ListeTerrains[terrain].Potager.GetLength(0); i++)
                         {
                             for (int j = 0; j < Partie.ListeTerrains[terrain].Potager.GetLength(1); j++)
@@ -1064,7 +1068,7 @@ public class GestionJeu
                     enCours = false;
                     break;
                 case ConsoleKey.N:
-                    Afficher.TexteEnProgressif("Le rat dévore ça il se regale          ", 50);
+                    Afficher.TexteEnProgressif("Le rat 🐀​ dévore les plantes oh nooooooo....          ", 50);
                     enCours = false;
                     for (int i = 0; i < Partie.ListeTerrains[terrain].Potager.GetLength(0); i++)
                     {
@@ -1079,14 +1083,17 @@ public class GestionJeu
                     break;
             }
         }
+        Console.ForegroundColor = ConsoleColor.White;
     }
-    public void Galinace()
+    public void Galinace() //Urgence du galinace qui détruit toute les plante commestible sauf utilisation du tir de fusil
     {
         Random random = new Random();
         int terrain = random.Next(0, 5);
+
+        Console.ForegroundColor = ConsoleColor.Red;
         Console.Clear();
         Afficher.Poule();
-        Console.WriteLine($"Oh non un Gallinacé Hargneux est arrivé sur votre terrain {Partie.ListeTerrains[terrain].Nom} utilisez un tir de fusil sinon il va dévorer toutes les plantes comestibles du terrain");
+        Console.WriteLine($"Oh non un Gallinacé Hargneux 🐔​ est arrivé sur votre terrain {Partie.ListeTerrains[terrain].Nom}{Partie.ListeTerrains[terrain].Emoji} utilisez un tir de fusil sinon il va dévorer toutes les plantes comestibles du terrain");
         Console.WriteLine("Pour utiliser le tir de fusil tapez O sinon tapez N ");
         bool enCours = true;
         while (enCours)
@@ -1097,11 +1104,11 @@ public class GestionJeu
                     if (Partie.ListeItems[1] >= 1)
                     {
                         Partie.ListeItems[1]--;
-                        Afficher.TexteEnProgressif("Le Gallinacé Hargneux part les plumes entre les jambes grâce au tir de fusil    ", 50);
+                        Afficher.TexteEnProgressif("Le Gallinacé Hargneux 🐔​ part les plumes entre les jambes grâce au tir de fusil    ", 50);
                     }
                     else
                     {
-                        Afficher.TexteEnProgressif("Et non! vous n'avez pas de tir de fusil c'est tchao        ", 50);
+                        Afficher.TexteEnProgressif("Et non! vous n'avez pas de tir de fusil quel dommage ...  🐔​      ", 50);
                         for (int i = 0; i < Partie.ListeTerrains[terrain].Potager.GetLength(0); i++)
                         {
                             for (int j = 0; j < Partie.ListeTerrains[terrain].Potager.GetLength(1); j++)
@@ -1120,7 +1127,7 @@ public class GestionJeu
                     enCours = false;
                     break;
                 case ConsoleKey.N:
-                    Afficher.TexteEnProgressif("Le Gallinacé Hargneux détruit toutes les plantes comestibles          ", 50);
+                    Afficher.TexteEnProgressif("Le Gallinacé Hargneux 🐔​ détruit toutes les plantes comestibles oh noooooo         ", 50);
                     enCours = false;
                     for (int i = 0; i < Partie.ListeTerrains[terrain].Potager.GetLength(0); i++)
                     {
@@ -1140,11 +1147,13 @@ public class GestionJeu
             }
 
         }
+        Console.ForegroundColor = ConsoleColor.White;
     }
-    public void Chenille()
+    public void Chenille() //Urgence de la chenille qui fait disparaitre le bulletin méteo sauf utilisation de l'insecticide
     {
+        Console.ForegroundColor = ConsoleColor.Red;
         Console.Clear();
-        Console.WriteLine($"Oh non une Cheeeeeniiiiiiillllle est apparue, utilisez un insecticide à chenille sinon il va dévorer le bulletin météo de la semaine prochaine");
+        Console.WriteLine($"Oh non une Cheeeeeniiiiiiillllle 🐛 est apparue, utilisez un insecticide à chenille sinon il va dévorer le bulletin météo de la semaine prochaine");
         Console.Write("Pour utiliser un insecticide à Chenille tapez O sinon tapez N ");
         bool enCours = true;
         while (enCours)
@@ -1155,31 +1164,34 @@ public class GestionJeu
                     if (Partie.ListeItems[2] >= 1)
                     {
                         Partie.ListeItems[2]--;
-                        Afficher.TexteEnProgressif("Vous avez éliminé la cheeeeeniiiiillle", 50);
+                        Afficher.TexteEnProgressif("Vous avez éliminé la cheeeeeniiiiillle 🐛", 50);
                     }
                     else
                     {
-                        Afficher.TexteEnProgressif("Et non! vous n'avez pas d'insecticide, vous pouvez tirer une croix sur votre bulletin météo        ", 50);
+                        Afficher.TexteEnProgressif("Et non! vous n'avez pas d'insecticide, vous pouvez tirer une croix sur votre bulletin météo ...   🐛     ", 50);
                         Partie.chenille = true;
                     }
                     enCours = false;
                     break;
                 case ConsoleKey.N:
-                    Afficher.TexteEnProgressif("La chenille n'est pas éliminée, vous pouvez alors tirer une croix sur votre bulletin météo de la semaine          ", 50);
+                    Afficher.TexteEnProgressif("La chenille 🐛 n'est pas éliminée, vous pouvez alors tirer une croix sur votre bulletin météo de la semaine          ", 50);
                     Partie.chenille = true;
                     enCours = false;
                     break;
             }
         }
+        Console.ForegroundColor = ConsoleColor.White;
     }
 
-    public void BulletinMeteo()
+    public void BulletinMeteo() //Affiche le bulletin météo
     {
         bool enCours = true;
         Console.Clear();
         if (Partie.chenille)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Afficher.Chenille();
+            Console.ForegroundColor = ConsoleColor.White;
         }
         else
         {
@@ -1190,7 +1202,7 @@ public class GestionJeu
             Console.WriteLine("╔═══════════════════════════════════════════════════════════════════════════════════════════════╗");
             for (int i = 0; i < Partie.ListeTerrains.Length; i++)
             {
-                Console.WriteLine($"║               📍 Terrain : {Partie.ListeTerrains[i].Nom,-30}                                     ║");
+                Console.WriteLine($"║               📍 Terrain : {Partie.ListeTerrains[i].Emoji}{Partie.ListeTerrains[i].Nom,-30}                                     ║");
                 Console.WriteLine("╠═══════════════════════════════════════════════════════════════════════════════════════════════╣");
 
                 // Données météo formatées et alignées

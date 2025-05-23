@@ -1,12 +1,13 @@
-public class TerrainMine : Terrain
+public class TerrainMine : Terrain //Classe héritière de Terrain qui fait exploser aléatoirement des cases 
 {
-    public TerrainMine() : base()
+    public TerrainMine() : base() //un seul terrain miné
     {
         Temperature = [30, 30, 18, 18, 30];
         Humidite = [0, 0, 0, 0, 0];
         Pluie = [0, 0, 14, 28, 0];
         Ensoleillement = [14, 14, 8, 8, 14];
         Nom = "Desert Delicat";
+        Emoji = "​​🌵​​";
     }
     public override void VerifierTerrain(Terrain terrain, int saison)
     {
@@ -16,11 +17,10 @@ public class TerrainMine : Terrain
             for (int j = 0; j < Potager.GetLength(1); j++)
             {
                 Random rng = new Random();
-                int chance = rng.Next(0, 256);
+                int chance = rng.Next(0, 256); //une chance sur 256 de faire exploser la case
                 if (chance == 13)
                 {
-                    Potager[i, j] = new SolSimple("Friche");
-                    DetruirePlante(i, j);
+                    DetruirePlante(i, j); //Transforme en sol vierge
                 }
             }
         }
